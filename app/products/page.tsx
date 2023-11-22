@@ -21,4 +21,6 @@ const products = await prisma.product.findMany();
   )
 }
 export const dynamic = "force-dynamic"
+export const revalidate = false
+
 export default Products
