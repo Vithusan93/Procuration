@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const Products = async () => {
-    const products = await prisma.product.findMany();
+const products = await prisma.product.findMany();
   return (
     <>
     <div>Products</div>
@@ -20,5 +20,5 @@ const Products = async () => {
     </>
   )
 }
-
+export const dynamic = "force-dynamic"
 export default Products
