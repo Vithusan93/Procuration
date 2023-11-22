@@ -1,8 +1,10 @@
 import prisma from '@/prisma/client'
-import { Table } from '@radix-ui/themes'
+import { Table} from '@radix-ui/themes'
+
 
 const AppointmentsPage = async () => {
   const appointments = await prisma.appointment.findMany()
+
 
   return (
     <div>
@@ -23,9 +25,13 @@ const AppointmentsPage = async () => {
               <Table.Cell className='hidden md:table-cell'>{appointment.date.toDateString()}</Table.Cell>
               <Table.Cell className='hidden md:table-cell'>{appointment.isPublished.toString()}</Table.Cell>
             </Table.Row>
+            
           ))}
+          
         </Table.Body>
+        
       </Table.Root>
+      
     </div>
   )
 }
