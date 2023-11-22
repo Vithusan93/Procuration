@@ -127,7 +127,7 @@ const HomePage:  React.FC =() => {
       
 
 
-      <div> <Link href={"/sroducts"}>Products</Link></div>
+      <div> <Link href={"/products"}>Products</Link></div>
     </main>
   )
 }
