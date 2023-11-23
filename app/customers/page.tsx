@@ -1,25 +1,39 @@
 import prisma from '@/prisma/client'
 import Link from 'next/link'
 import React from 'react'
+import { Table} from '@radix-ui/themes'
+
 
 const Customers= async () => {
 const customers= await prisma.customer.findMany();
   return (
     <>
-    <div>Customers</div>
-    <div>
+          <Table.Root variant='surface'>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell className='hidden md:table-cell'>FirstName</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden md:table-cell'>LastName</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden md:table-cell'>Email</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden md:table-cell'>Phone</Table.ColumnHeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+
         {customers.map((customer)=> (
-            <div key={customer.id}>
-                <div>{customer.firstname}</div>
-                <div>{customer.lastname}</div>
-                <div>{customer.email}</div>
-                <div>{customer.phone}</div>
-            </div>
+            <Table.Row  key={customer.id}>
+                <Table.Cell className='hidden md:table-cell'>{customer.firstname}</Table.Cell>
+                <Table.Cell className='hidden md:table-cell'>{customer.lastname}</Table.Cell>
+                <Table.Cell className='hidden md:table-cell'>{customer.email}</Table.Cell>
+                <Table.Cell className='hidden md:table-cell'>{customer.phone.toString()}</Table.Cell>
+            </Table.Row>
         ))}
-    </div>
+         </Table.Body>
+        
+        </Table.Root>
     <Link href={"/customers/new"}>
         <button>Add Customer</button>
     </Link>
+
     </>
   )
 }
@@ -27,3 +41,4 @@ export const dynamic = "force-dynamic"
 export const revalidate = false
 
 export default Customers
+
