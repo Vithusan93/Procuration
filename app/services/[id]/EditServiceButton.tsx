@@ -5,11 +5,9 @@ import React from "react";
 const EditServiceButton = ({ serviceId }: { serviceId: number }) => {
   return (
     <div>
-      <Theme>
-        <Button>
-          <Link href={`/services/${serviceId}/edit`}>Editer Service</Link>
-        </Button>
-      </Theme>
+      <Button>
+        <Link href={`/services/${serviceId}/edit`}>Editer Service</Link>
+      </Button>
     </div>
   );
 };

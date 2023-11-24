@@ -1,80 +1,74 @@
 "use client";
 import React from "react";
-import { Theme } from "@radix-ui/themes";
-import { Flex, Text, Card, Button, TextArea } from "@radix-ui/themes";
-import { useState } from "react";
+import {
+  Flex,
+  Text,
+  Card,
+  Button,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
+import { useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+import { Form } from "@radix-ui/react-form";
+import { useRouter } from "next/navigation";
+import { Service } from "@prisma/client";
 
-interface Service {
-  name: string;
-  duration: string;
-  price: string;
-}
+const ServiceForm = ({ service }: { service?: Service }) => {
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<Service>();
 
-const ServiceForm = () => {
-  const [service, setService] = useState<Service>({
-    name: "",
-    duration: "",
-    price: "",
-  });
-
-  const handleAddButtonClick = async () => {
-    const response = await fetch("/api/services", {
-      method: "POST",
-      body: JSON.stringify(service),
-    });
-    console.log(response);
-  };
-
-  const handleInputChange = (key: keyof Service, value: string) => {
-    setService((prevService) => ({
-      ...prevService,
-      [key]: value,
-    }));
-  };
+  console.log();
 
   return (
     <div>
-      <Theme>
+      <Form
+        className="max-w-xl space-y-3"
+        onSubmit={handleSubmit(async (data) => {
+          try {
+            await fetch("/api/services", {
+              method: "POST",
+              body: JSON.stringify(data),
+            });
+            router.push("/services");
+          } catch (error) {
+            console.log(error);
+          }
+        })}
+      >
         <Flex direction="column" gap="3" style={{ maxWidth: 350 }}>
           <Card variant="surface">
-            <Text as="div" size="2" weight="bold">
-              Name
-              <TextArea
+            Name
+            <TextField.Root>
+              <TextField.Input
                 defaultValue={service?.name}
-                size="1"
-                placeholder="input service name"
-                value={service.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
+                placeholder="Service Name"
+                {...register("name")}
               />
-            </Text>
-            <Text as="div" size="2">
-              Duration
-              <TextArea
+            </TextField.Root>
+            Duration
+            <TextField.Root>
+              <TextField.Input
                 defaultValue={service?.duration}
-                size="1"
-                placeholder="input service duration"
-                value={service.duration}
-                onChange={(e) => handleInputChange("duration", e.target.value)}
+                placeholder="Service Duration"
+                {...register("duration")}
               />
-              Min
-            </Text>
-            <Text as="div" size="2" weight="bold">
-              Price
-              <TextArea
+            </TextField.Root>
+            Price
+            <TextField.Root>
+              <TextField.Input
                 defaultValue={service?.price}
-                size="1"
-                placeholder="input service price"
-                value={service.price}
-                onChange={(e) => handleInputChange("price", e.target.value)}
+                placeholder="Service Price"
+                {...register("price")}
               />
-            </Text>
-
-            <Button size="3" variant="soft" onClick={handleAddButtonClick}>
-              Add
+            </TextField.Root>
+            <Button size="3" variant="soft">
+              Add Service
             </Button>
           </Card>
         </Flex>
-      </Theme>
+      </Form>
     </div>
   );
 };

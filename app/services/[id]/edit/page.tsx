@@ -1,36 +1,22 @@
 import React from "react";
 
-const page = () => {
-  return <div>page</div>;
+import ServiceForm from "../../ServiceForm";
+import { string } from "zod";
+import prisma from "@/prisma/client";
+import { parse } from "path";
+import { Service } from "@prisma/client";
+
+interface Props {
+  params: { id: string };
+}
+
+const EditServicePage = async ({ params }: Props) => {
+  const service = await prisma.service.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!service) return;
+  return <ServiceForm service={service} />;
 };
 
-export default page;
-
-{
-  /* 
-import React from 'react'
-import ServiceForm from '../../ServiceForm'
-import { string } from 'zod'
-import prisma from '@/prisma/client'
-import { parse } from 'path'
-
-interface Props{
-    params: {id : string}
-}
-
-
-const EditServicePage = async({params}: Props) => {
-    const service = await prisma.service.findUnique({
-where:{id: parseInt(params.id)}
-    })
-
-    if (!service) not found();
-  return (
-    
-        <ServiceForm service= {ser}/>
-    
-  )
-}
-
-export default EditServicePage*/
-}
+export default EditServicePage;
