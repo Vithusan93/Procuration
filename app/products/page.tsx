@@ -8,11 +8,11 @@ const Products = async () => {
   return (
     <>
       <Theme>
-        {/* 
-        <div className="flex flex-end">
-          <Button>Add Product</Button>
+        <div className="mb-5 ">
+          <Button radius="large" variant="soft">
+            <Link href={"/products/new"}>Add Product</Link>
+          </Button>
         </div>
-        */}
         <Table.Root variant="surface">
           <Table.Header>
             <Table.Row>
@@ -34,7 +34,7 @@ const Products = async () => {
             {products.map((product) => (
               <Table.Row key={product.id}>
                 <Table.Cell className="hidden md:table-cell">
-                  {product.name}
+                  <Link href={`/products/${product.id}`}>{product.name}</Link>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {product.description}
@@ -49,9 +49,6 @@ const Products = async () => {
             ))}
           </Table.Body>
         </Table.Root>
-        <Link href={"/products/new"}>
-          <Button>Add New Product</Button>
-        </Link>
       </Theme>
     </>
   );

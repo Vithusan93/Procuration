@@ -8,6 +8,11 @@ const Customers = async () => {
   return (
     <>
       <Theme>
+        <div className="mb-5 ">
+          <Button radius="large" variant="soft">
+            <Link href={"/customers/new"}>Add Customer</Link>
+          </Button>
+        </div>
         <Table.Root variant="surface">
           <Table.Header>
             <Table.Row>
@@ -29,7 +34,9 @@ const Customers = async () => {
             {customers.map((customer) => (
               <Table.Row key={customer.id}>
                 <Table.Cell className="hidden md:table-cell">
-                  {customer.firstname}
+                  <Link href={`/customers/${customer.id}`}>
+                    {customer.firstname}
+                  </Link>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {customer.lastname}
@@ -44,9 +51,6 @@ const Customers = async () => {
             ))}
           </Table.Body>
         </Table.Root>
-        <Link href={"/customers/new"}>
-          <Button>Add Customer</Button>
-        </Link>
       </Theme>
     </>
   );
