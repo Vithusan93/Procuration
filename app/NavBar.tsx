@@ -12,6 +12,7 @@ const NavBar = () => {
     { label: "Customers", href: "/customers" },
     { label: "Products", href: "/products" },
     { label: "Services", href: "/services" },
+    { label: "Staffs", href: "/staffs" },
     { label: "Appointment", href: "/appointment" },
   ];
 

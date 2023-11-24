@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   console.log(body);
 
-  const customer = await prisma.customer.create({
+  const staff = await prisma.staff.create({
     data: {
       firstname: body.firstname,
       lastname: body.lastname,
@@ -14,5 +14,5 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  return NextResponse.json(customer, { status: 201 });
+  return NextResponse.json(staff, { status: 201 });
 }

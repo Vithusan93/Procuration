@@ -16,7 +16,6 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-
 model Appointment {
   id          Int      @id @default(autoincrement())
   date        DateTime
@@ -34,16 +33,24 @@ model Product {
 }
 
 model Service {
-  id          Int    @id @default(autoincrement())
-  name        String
-  duration    Int
-  price       Int
+  id       Int    @id @default(autoincrement())
+  name     String
+  duration Int
+  price    Int
 }
 
 model Customer {
-  id          Int    @id @default(autoincrement())
-  firstname   String
-  lastname    String
-  email       String
-  phone       Int
+  id        Int    @id @default(autoincrement())
+  firstname String
+  lastname  String
+  email     String
+  phone     Int
+}
+
+model Staff {
+  id        Int    @id @default(autoincrement())
+  firstname String
+  lastname  String
+  email     String
+  phone     Int
 }

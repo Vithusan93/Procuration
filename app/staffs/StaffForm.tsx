@@ -3,13 +3,13 @@ import React from "react";
 import { Theme } from "@radix-ui/themes";
 import { Flex, Text, Card, Button, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { Customer } from "@prisma/client";
+import { Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
 
-const CustomerForm = ({ customer }: { customer?: Customer }) => {
+const StaffForm = ({ staff }: { staff?: Staff }) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<Customer>();
+  const { register, handleSubmit } = useForm<Staff>();
 
   return (
     <div>
@@ -17,18 +17,18 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
-            if (customer) {
-              await fetch("/api/customers/" + customer.id, {
+            if (staff) {
+              await fetch("/api/staffs/" + staff.id, {
                 method: "PATCH",
                 body: JSON.stringify(data),
               });
-              router.push("/customers");
+              router.push("/staffs");
             } else {
-              await fetch("/api/customers", {
+              await fetch("/api/staffs", {
                 method: "POST",
                 body: JSON.stringify(data),
               });
-              router.push("/customers");
+              router.push("/staffs");
             }
           } catch (error) {
             console.log(error);
@@ -40,37 +40,37 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
             FirstName
             <TextField.Root>
               <TextField.Input
-                defaultValue={customer?.firstname}
-                placeholder="Customer FisrtName"
+                defaultValue={staff?.firstname}
+                placeholder="Staff FisrtName"
                 {...register("firstname")}
               />
             </TextField.Root>
             LastName
             <TextField.Root>
               <TextField.Input
-                defaultValue={customer?.lastname}
-                placeholder="Customer LastName"
+                defaultValue={staff?.lastname}
+                placeholder="StaffLastName"
                 {...register("lastname")}
               />
             </TextField.Root>
             Email
             <TextField.Root>
               <TextField.Input
-                defaultValue={customer?.email}
-                placeholder="Customer Email"
+                defaultValue={staff?.email}
+                placeholder="Staff Email"
                 {...register("email")}
               />
             </TextField.Root>
             Phone Number
             <TextField.Root>
               <TextField.Input
-                defaultValue={customer?.phone}
-                placeholder="Customer Number"
+                defaultValue={staff?.phone}
+                placeholder="Staff Number"
                 {...register("phone")}
               />
             </TextField.Root>
             <Button size="3" variant="soft">
-              {customer ? "Update PCustomer" : "Submit New Customer"}
+              {staff ? "Update Staff" : "Submit New Staff"}
             </Button>
           </Card>
         </Flex>
@@ -79,4 +79,4 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
   );
 };
 
-export default CustomerForm;
+export default StaffForm;

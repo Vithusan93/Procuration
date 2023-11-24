@@ -17,11 +17,19 @@ const ProductForm = ({ product }: { product?: Product }) => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
-            await fetch("/api/products", {
-              method: "POST",
-              body: JSON.stringify(data),
-            });
-            router.push("/products");
+            if (product) {
+              await fetch("/api/products/" + product.id, {
+                method: "PATCH",
+                body: JSON.stringify(data),
+              });
+              router.push("/products");
+            } else {
+              await fetch("/api/products", {
+                method: "POST",
+                body: JSON.stringify(data),
+              });
+              router.push("/products");
+            }
           } catch (error) {
             console.log(error);
           }
@@ -62,7 +70,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
             </TextField.Root>
             <Button size="3" variant="soft">
-              Add Product
+              {product ? "Update Product" : "Submit New Product"}
             </Button>
           </Card>
         </Flex>

@@ -27,11 +27,19 @@ const ServiceForm = ({ service }: { service?: Service }) => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
-            await fetch("/api/services", {
-              method: "POST",
-              body: JSON.stringify(data),
-            });
-            router.push("/services");
+            if (service) {
+              await fetch("/api/services/" + service.id, {
+                method: "PATCH",
+                body: JSON.stringify(data),
+              });
+              router.push("/services");
+            } else {
+              await fetch("/api/services", {
+                method: "POST",
+                body: JSON.stringify(data),
+              });
+              router.push("/services");
+            }
           } catch (error) {
             console.log(error);
           }
@@ -64,7 +72,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
               />
             </TextField.Root>
             <Button size="3" variant="soft">
-              Add Service
+              {service ? "Update Service" : "Submit New Service"}
             </Button>
           </Card>
         </Flex>
