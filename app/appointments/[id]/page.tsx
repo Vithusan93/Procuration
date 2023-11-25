@@ -3,28 +3,28 @@ import { notFound } from "next/navigation";
 import React from "react";
 import { Grid, Box, Theme } from "@radix-ui/themes";
 import Link from "next/link";
-import EditCustomerButton from "./EditCustomerButton";
-import CustomerDetails from "./CustomerDetails";
+import EditAppointmentButton from "./EditAppointmentButton";
+import AppointmentDetails from "./AppointmentDetails";
 
 interface Props {
   params: { id: string };
 }
 
-const CustomerDetailPage = async ({ params }: Props) => {
-  const customer = await prisma.customer.findUnique({
+const AppointmentDetailPage = async ({ params }: Props) => {
+  const appointment = await prisma.appointment.findUnique({
     where: { id: parseInt(params.id) },
   });
 
-  if (!customer) notFound();
+  if (!appointment) notFound();
 
   return (
     <div>
       <Theme>
         <Grid columns="3" gap="3" width="auto">
           <Box height="9">
-            <CustomerDetails customer={customer} />
+            <AppointmentDetails appointment={appointment} />
 
-            <EditCustomerButton customerId={customer.id} />
+            <EditAppointmentButton appointmentId={appointment.id} />
           </Box>
         </Grid>
       </Theme>
@@ -32,4 +32,4 @@ const CustomerDetailPage = async ({ params }: Props) => {
   );
 };
 
-export default CustomerDetailPage;
+export default AppointmentDetailPage;

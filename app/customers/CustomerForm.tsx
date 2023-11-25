@@ -12,9 +12,9 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
   const { register, handleSubmit } = useForm<Customer>();
 
   return (
-    <div>
+    <div className="flex items-center max-w-7xl mx-auto w-full">
       <Form
-        className="max-w-xl space-y-3"
+        className="max-w-xl space-y-3 space-x-2 "
         onSubmit={handleSubmit(async (data) => {
           try {
             if (customer) {
@@ -35,7 +35,13 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
           }
         })}
       >
-        <Flex direction="column" gap="3" style={{ maxWidth: 350 }}>
+        <Flex
+          direction="column"
+          gap="6"
+          style={{ maxWidth: 350 }}
+          align="center"
+          justify="center"
+        >
           <Card variant="surface">
             FirstName
             <TextField.Root>
@@ -69,8 +75,8 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
                 {...register("phone")}
               />
             </TextField.Root>
-            <Button size="3" variant="soft">
-              {customer ? "Update PCustomer" : "Submit New Customer"}
+            <Button size="3" variant="classic">
+              {customer ? "Update Customer" : "Submit New Customer"}
             </Button>
           </Card>
         </Flex>

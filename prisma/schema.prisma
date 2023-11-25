@@ -18,9 +18,10 @@ datasource db {
 
 model Appointment {
   id          Int      @id @default(autoincrement())
-  date        DateTime
-  mail        String
+  email       String
+  date        DateTime @default("2020-03-19T14:21:00+02:00")
   service     String
+  staff       String
   isPublished Boolean  @default(false)
 }
 

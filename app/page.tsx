@@ -16,7 +16,9 @@ import { Flex, Text, Card, Button, TextArea } from "@radix-ui/themes";
 
 const HomePage: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Theme appearance="dark"></Theme>
+    </main>
   );
 };
 export default HomePage;
