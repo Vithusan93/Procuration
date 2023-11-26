@@ -16,15 +16,6 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model Appointment {
-  id          Int      @id @default(autoincrement())
-  email       String
-  date        DateTime @default("2020-03-19T14:21:00+02:00")
-  service     String
-  staff       String
-  isPublished Boolean  @default(false)
-}
-
 model Product {
   id          Int    @id @default(autoincrement())
   name        String
@@ -34,24 +25,44 @@ model Product {
 }
 
 model Service {
-  id       Int    @id @default(autoincrement())
-  name     String
-  duration Int
-  price    Int
+  id          Int           @id @default(autoincrement())
+  name        String
+  duration    Int
+  price       Int
+  Appointment Appointment[]
 }
 
 model Customer {
-  id        Int    @id @default(autoincrement())
-  firstname String
-  lastname  String
-  email     String
-  phone     Int
+  id           Int           @id @default(autoincrement())
+  firstname    String
+  lastname     String
+  email        String
+  phone        Int
+  Appointments Appointment[]
 }
 
 model Staff {
-  id        Int    @id @default(autoincrement())
-  firstname String
-  lastname  String
-  email     String
-  phone     Int
+  id           Int           @id @default(autoincrement())
+  firstname    String
+  lastname     String
+  email        String
+  phone        Int
+  Appointments Appointment[]
+}
+
+model Appointment {
+  id Int @id @default(autoincrement())
+
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  serviceId Int
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  time     DateTime
+  duration Int // Minutes
+  status   String // Enum not supported in sqlite (handle in api)
 }

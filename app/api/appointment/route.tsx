@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     data: {
       email: body.email,
       service: body.service,
-      //date: body.date,
+      date: body.date,
       staff: body.staff,
       //isPublished: body.isPublished,
     },

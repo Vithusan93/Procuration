@@ -7,8 +7,8 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
       <p>{appointment.email}</p>
       <p>{appointment.service}</p>
       <p>{appointment.staff}</p>
-      {/*<p>{appointment.date.toString()}</p>*/}
-      {/* <p>{appointment.isPublished}</p>*/}
+      <p>{appointment.date.toString()}</p>
+      <p>{appointment.isPublished}</p>
     </div>
   );
 };

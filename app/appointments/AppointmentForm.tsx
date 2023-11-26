@@ -28,13 +28,16 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
       <Form
         className="max-w-xl space-y-3 space-x-2 "
         onSubmit={handleSubmit(async (data) => {
+          if (data.date) {
+            data.date = new Date(data.date);
+          }
           try {
             if (appointment) {
               await fetch("/api/appointment/" + appointment.id, {
                 method: "PATCH",
                 body: JSON.stringify(data),
               });
-              router.push("/appointments ");
+              router.push("/appointments");
             } else {
               await fetch("/api/appointment", {
                 method: "POST",

@@ -46,6 +46,9 @@ const Appointment = async () => {
               <Table.Cell className="hidden md:table-cell">
                 {appointment.date.toString()}
               </Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                {appointment.isPublished}
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
