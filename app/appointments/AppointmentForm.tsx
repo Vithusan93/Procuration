@@ -1,29 +1,16 @@
 "use client";
 import { Appointment } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
-import { Button, Heading, Text } from "@radix-ui/themes";
+import { Button, Heading, Text, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CustomerSelect from "./CustomerSelect";
-import StaffSelect from "./StaffSelect";
-import SelectControl from "@/components/SelectControl";
 import ServiceSelect from "./ServiceSelect";
+import StaffSelect from "./StaffSelect";
 
 const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
   const router = useRouter();
   const { register, handleSubmit, control } = useForm<Appointment>();
-  {
-    /* 
-                defaultValue={
-                  appointment?.date
-                    ? appointment?.date.toISOString().slice(0, 16)
-                    : undefined
-                }*/
-  }
-  console.log(register("email"));
-  const isoDateString = appointment?.date
-    ? appointment?.date.toISOString()
-    : undefined;
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -92,60 +79,31 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
               </label>
             </div>
 
-            {/* <Flex
-              direction="column"
-              gap="6"
-              style={{ maxWidth: 350 }}
-              align="center"
-              justify="center"
-            >
-              <Card variant="surface">
-                Email
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={appointment?.email}
-                    placeholder="Appointment Email"
-                    {...register("email")}
-                  />
-                </TextField.Root>
-                Service
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={appointment?.service}
-                    placeholder="Appointment Service"
-                    {...register("service")}
-                  />
-                </TextField.Root>
-                Date
+            <div className="bg-gray-300 w-full p-2">
+              <div className="">Calendar view (TODO)</div>
+              <label htmlFor="time">
+                <span className="font-semibold">Appointment Time</span>
                 <TextField.Root>
                   <TextField.Input
                     type="datetime-local"
                     placeholder="Appointment Date"
-                    {...register("date")}
+                    {...register("time")}
                   />
                 </TextField.Root>
-                Staff
+              </label>
+              <label htmlFor="time">
+                <span className="font-semibold">
+                  Duration{" "}
+                  <span className="text-gray-800 text-sm ml-2">Minutes</span>
+                </span>
                 <TextField.Root>
                   <TextField.Input
-                    defaultValue={appointment?.staff}
-                    placeholder="Appointment Staff"
-                    {...register("staff")}
+                    type="number"
+                    placeholder="Duration in Minutes"
+                    {...register("duration")}
                   />
-                  Statue
                 </TextField.Root>
-                <Text as="label" size="2">
-                  <Flex gap="2">
-                    <Switch
-                      defaultChecked={appointment?.isPublished}
-                      {...register("isPublished")}
-                    />
-                    Sync settings
-                  </Flex>
-                </Text>
-              </Card>
-            </Flex> */}
-            <div className="bg-gray-300 w-full p-2">
-              <div className="">Calendar view (TODO)</div>
+              </label>
             </div>
           </div>
           <div className="flex bg-gray-200 p-3 justify-center items-center gap-2">

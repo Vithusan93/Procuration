@@ -8,11 +8,13 @@ export async function POST(request: NextRequest) {
 
   const appointment = await prisma.appointment.create({
     data: {
-      email: body.email,
-      service: body.service,
-      date: body.date,
-      staff: body.staff,
-      //isPublished: body.isPublished,
+      customerId: parseInt(body.customerId),
+      staffId: parseInt(body.staffId),
+      serviceId: parseInt(body.serviceid),
+      duration: parseInt(body.duration),
+      staff: { connect: { id: parseInt(body.staffId) } },
+      time: body.time,
+      status: "pending",
     },
   });
 
