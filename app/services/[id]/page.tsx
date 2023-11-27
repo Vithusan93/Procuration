@@ -1,10 +1,10 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
-import { Button, Theme } from "@radix-ui/themes";
 import Link from "next/link";
 import EditServiceButton from "./EditServiceButton";
 import ServiceDetails from "./ServiceDetails";
+import { Grid, Box, Theme } from "@radix-ui/themes";
 
 interface Props {
   params: { id: string };
@@ -20,12 +20,13 @@ const ServiceDetailPage = async ({ params }: Props) => {
   return (
     <div>
       <Theme>
-        <div>
-          <ServiceDetails service={service} />
-        </div>
-        <div>
-          <EditServiceButton serviceId={service.id} />
-        </div>
+        <Grid columns="3" gap="3" width="auto">
+          <Box height="9">
+            <ServiceDetails service={service} />
+
+            <EditServiceButton serviceId={service.id} />
+          </Box>
+        </Grid>
       </Theme>
     </div>
   );

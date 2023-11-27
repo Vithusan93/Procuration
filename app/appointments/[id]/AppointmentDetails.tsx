@@ -4,6 +4,7 @@ import React from "react";
 const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
   return (
     <div>
+      {/* */}
       <p>{appointment.email}</p>
       <p>{appointment.service}</p>
       <p>{appointment.staff}</p>

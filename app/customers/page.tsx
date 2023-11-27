@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
 import Link from "next/link";
 import React from "react";
-import { Button, Table, Theme, Box, Container } from "@radix-ui/themes";
+import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
 
 const Customers = async () => {
   const customers = await prisma.customer.findMany();
@@ -9,6 +9,11 @@ const Customers = async () => {
     <>
       <Theme>
         <Container size="4">
+          <div className="flex flex-col w-full">
+            <div className="bg-gray-200 w-full p-4">
+              <Heading className="text-gray-900">Customer Liste</Heading>
+            </div>
+          </div>
           <Table.Root variant="surface">
             <Table.Header>
               <Table.Row>
@@ -49,9 +54,11 @@ const Customers = async () => {
           </Table.Root>
         </Container>
         <Container className="mb-5 ">
-          <Button size="3" variant="classic">
-            <Link href={"/customers/new"}>Add Customer</Link>
-          </Button>
+          <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
+            <Button size="3" variant="classic">
+              <Link href={"/customers/new"}>Add Customer</Link>
+            </Button>
+          </div>
         </Container>
       </Theme>
     </>
