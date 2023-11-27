@@ -10,9 +10,8 @@ export async function POST(request: NextRequest) {
     data: {
       customerId: parseInt(body.customerId),
       staffId: parseInt(body.staffId),
-      serviceId: parseInt(body.serviceid),
+      serviceId: parseInt(body.serviceId),
       duration: parseInt(body.duration),
-      staff: { connect: { id: parseInt(body.staffId) } },
       time: body.time,
       status: "pending",
     },

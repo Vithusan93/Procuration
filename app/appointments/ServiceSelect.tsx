@@ -23,7 +23,7 @@ const ServiceSelect = ({
       setServices(data);
     };
     fetchServices();
-  });
+  }, []);
 
   const options = services.map((service) => ({
     value: service.id.toString(),

@@ -19,6 +19,10 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
         onSubmit={handleSubmit(async (data) => {
           console.log(data);
 
+          if (data.time) {
+            data.time = new Date(data.time);
+          }
+
           try {
             if (appointment) {
               await fetch("/api/appointment/" + appointment.id, {

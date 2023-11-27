@@ -22,7 +22,7 @@ const StaffSelect = ({
       setStaffs(data);
     };
     fetchStaffs();
-  });
+  }, []);
 
   const options = staffs.map((staff) => ({
     value: staff.id.toString(),

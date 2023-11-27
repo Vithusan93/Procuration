@@ -23,7 +23,7 @@ const CustomerSelect = ({
       setCustomers(data);
     };
     fetchCustomers();
-  });
+  }, []);
 
   const options = customers.map((customer) => ({
     value: customer.id.toString(),

@@ -3,7 +3,9 @@ import { Button, Container, Table } from "@radix-ui/themes";
 import Link from "next/link";
 
 const Appointment = async () => {
-  const appointments = await prisma.appointment.findMany();
+  const appointments = await prisma.appointment.findMany({
+    include: { customer: true, staff: true, service: true },
+  });
 
   return (
     <div>
@@ -32,22 +34,22 @@ const Appointment = async () => {
             <Table.Row key={appointment.id}>
               <Table.Cell className="hidden md:table-cell">
                 <Link href={`/appointments/${appointment.id}`}>
-                  {appointment.email}
+                  {appointment.customer.firstname}
                 </Link>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {" "}
-                {appointment.service}
+                {appointment.service.name}
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {" "}
-                {appointment.staff}
+                {appointment.staff.firstname}
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {appointment.date.toString()}
+                {appointment.time.toString()}
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {appointment.isPublished}
+                {appointment.status}
               </Table.Cell>
             </Table.Row>
           ))}
