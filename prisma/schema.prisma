@@ -22,6 +22,7 @@ model Product {
   description String
   price       Int
   stock       Int
+  Bills       Bill[]
 }
 
 model Service {
@@ -30,6 +31,7 @@ model Service {
   duration    Int
   price       Int
   Appointment Appointment[]
+  Bills       Bill[]
 }
 
 model Customer {
@@ -39,6 +41,7 @@ model Customer {
   email        String
   phone        Int
   Appointments Appointment[]
+  Bills        Bill[]
 }
 
 model Staff {
@@ -48,6 +51,7 @@ model Staff {
   email        String
   phone        Int
   Appointments Appointment[]
+  Bills        Bill[]
 }
 
 model Appointment {
@@ -65,4 +69,20 @@ model Appointment {
   time     DateTime
   duration Int // Minutes
   status   String // Enum not supported in sqlite (handle in api)
+}
+
+model Bill {
+  id Int @id @default(autoincrement())
+
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  serviceId Int
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
 }
