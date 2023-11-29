@@ -12,23 +12,19 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   console.log(body);
 
-  const bill = await prisma.bill.create({
-    data: {
-        
-    
-            customerId?: body.id,
-            productId: body.id,
-            serviceId: body.id,
-            staffId: parseInt(body.phone),
-        
-
-        }
-    //  firstname: body.firstname,
-     // lastname: body.lastname,
-     // email: body.email,
-     // phone: parseInt(body.phone),
-    },
-  });
-
-  return NextResponse.json(bill, { status: 201 });
+  // const bill = await prisma.bill.create({
+  // data: {
+  //         customerId?: body.id,
+  //       productId: body.id,
+  //     serviceId: body.id,
+  //   staffId: parseInt(body.phone),
 }
+//  firstname: body.firstname,
+// lastname: body.lastname,
+// email: body.email,
+// phone: parseInt(body.phone),
+//},
+//});
+
+// return NextResponse.json(bill, { status: 201 });
+//}
