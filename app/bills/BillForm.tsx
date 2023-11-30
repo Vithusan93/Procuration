@@ -1,25 +1,27 @@
 "use client";
 import React from "react";
 import { Theme } from "@radix-ui/themes";
-import { Flex, Button, TextField, Heading, Select } from "@radix-ui/themes";
+import {
+  Flex,
+  Button,
+  TextField,
+  Heading,
+  Select,
+  Text,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { Customer } from "@prisma/client";
+import { Bill, Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
+import StaffSelect from "./StaffSelect";
+import CustomerSelect from "./CustomerSelect";
 
 import { useEffect } from "react";
 import jsPDF from "jspdf";
 
-interface BillForm {
-  customer: String;
-  service: String;
-  product: String;
-  staff: String;
-}
-
-const BillFormPage = () => {
-  const { register, handleSubmit } = useForm<BillForm>();
-  console.log(register("customer"));
+const BillFormPage = ({ bills }: { bills?: Bill }) => {
+  const { register, handleSubmit, control } = useForm<Bill>();
+  //console.log(register("customer"));
   const router = useRouter();
 
   /*  useEffect(() => {
@@ -52,26 +54,36 @@ const BillFormPage = () => {
       >
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
-            <Heading className="text-gray-900">
-              New Bill{/*{customer ? " Edit Customer" : "New Customer"}*/}
-            </Heading>
+            <Heading className="text-gray-900">Invoice</Heading>
           </div>
           <div className="flex p-2 bg-gray-100">
             <div className="w-1/4">
               <Flex gap="3" direction="column" style={{ maxWidth: 400 }}>
+                <TextField.Root>
+                  <TextField.Input
+                    radius="large"
+                    variant="classic"
+                    size="3"
+                    defaultValue={bills?.billnumber}
+                    placeholder="Bill Number"
+                    {...register("billnumber")}
+                  />
+                </TextField.Root>
                 Customer
-                <Select.Root size="3" defaultValue="apple">
-                  <Select.Trigger />
-                  <Select.Content>
-                    <Select.Item value="apple">Customers</Select.Item>
-                  </Select.Content>
-                </Select.Root>
+                <CustomerSelect
+                  name="customerId"
+                  label="Customer"
+                  placeholder="Customer"
+                  control={control}
+                />
                 Staff
                 <Select.Root size="3" defaultValue="apple">
-                  <Select.Trigger />
-                  <Select.Content>
-                    <Select.Item value="apple">Staff</Select.Item>
-                  </Select.Content>
+                  <StaffSelect
+                    name="staffId"
+                    label="Staff"
+                    placeholder="Staff"
+                    control={control}
+                  />
                 </Select.Root>
                 Date
                 <TextField.Input
@@ -79,29 +91,16 @@ const BillFormPage = () => {
                   type="date"
                   placeholder="Search the docs…"
                 />
-                Service
-                <Select.Root size="3" defaultValue="apple">
-                  <Select.Trigger />
-                  <Select.Content>
-                    <Select.Item value="service">Service</Select.Item>
-                    <Select.Item value="product">Product</Select.Item>
-                  </Select.Content>
-                </Select.Root>
-                Product
-                <Select.Root size="3" defaultValue="apple">
-                  <Select.Trigger />
-                  <Select.Content>
-                    <Select.Item value="apple">Product</Select.Item>
-                  </Select.Content>
-                </Select.Root>
               </Flex>
             </div>
           </div>
         </div>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
+          <Button color="gray" size="3" variant="outline">
+            Save
+          </Button>
           <Button size="3" variant="classic">
-            Create Bill
-            {/* {customer ? "Update Customer" : "Submit New Customer"}*/}
+            {bills ? "Update Bills" : "Export Facture"}
           </Button>
         </div>
       </Form>

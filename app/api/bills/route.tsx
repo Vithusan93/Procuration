@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
-  const bills = await prisma.bill.findMany({
+  const bill = await prisma.bill.findMany({
     // orderBy: { firstname: "asc" },
   });
-  return NextResponse.json(bills);
+  return NextResponse.json(bill);
 }
 export async function POST(request: NextRequest) {
   const body = await request.json();
