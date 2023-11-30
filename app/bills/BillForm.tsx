@@ -45,11 +45,26 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
       <Form
         className="w-full"
         onSubmit={handleSubmit(async (data) => {
-          await fetch("/api/bills", {
-            method: "POST",
-            body: JSON.stringify(data),
-          });
-          router.push("/bills");
+          if (data.createdAt) {
+            data.createdAt = new Date(data.createdAt);
+          }
+          try {
+            if (bills) {
+              await fetch("/api/bills/" + bills.id, {
+                method: "PATCH",
+                body: JSON.stringify(data),
+              });
+              router.push("/bills");
+            } else {
+              await fetch("/api/bills", {
+                method: "POST",
+                body: JSON.stringify(data),
+              });
+              router.push("/bills");
+            }
+          } catch (error) {
+            console.log(error);
+          }
         })}
       >
         <div className="flex flex-col w-full">
@@ -59,6 +74,7 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
           <div className="flex p-2 bg-gray-100">
             <div className="w-1/4">
               <Flex gap="3" direction="column" style={{ maxWidth: 400 }}>
+                <span className="font-semibold">Invoice Number</span>
                 <TextField.Root>
                   <TextField.Input
                     radius="large"
@@ -69,14 +85,14 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                     {...register("billnumber")}
                   />
                 </TextField.Root>
-                Customer
+                <span className="font-semibold">Customer</span>
                 <CustomerSelect
                   name="customerId"
                   label="Customer"
                   placeholder="Customer"
                   control={control}
                 />
-                Staff
+                <span className="font-semibold">Staff</span>
                 <Select.Root size="3" defaultValue="apple">
                   <StaffSelect
                     name="staffId"
@@ -85,12 +101,16 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                     control={control}
                   />
                 </Select.Root>
-                Date
-                <TextField.Input
-                  radius="none"
-                  type="date"
-                  placeholder="Search the docs…"
-                />
+                <label htmlFor="time">
+                  <span className="font-semibold">Date Facture</span>
+                  <TextField.Root>
+                    <TextField.Input
+                      type="date"
+                      placeholder="Date"
+                      {...register("createdAt")}
+                    />
+                  </TextField.Root>
+                </label>
               </Flex>
             </div>
           </div>

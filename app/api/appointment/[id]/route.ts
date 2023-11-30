@@ -20,7 +20,7 @@ export async function PATCH(
     const updatedAppointment = await prisma.appointment.update({
       where: { id: appointment.id },
       data:{
-        email: body.email,
+       // email: body.email,
         service: body.service,
         //date: body.date,
         staff: body.staff,
