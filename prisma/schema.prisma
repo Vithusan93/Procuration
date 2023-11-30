@@ -17,21 +17,21 @@ datasource db {
 }
 
 model Product {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String
-  price       Int
-  stock       Int
-  Bills       Bill[]
+  id                Int              @id @default(autoincrement())
+  name              String
+  description       String
+  price             Int
+  stock             Int
+  Billinvoiproducts Invoiceproduct[]
 }
 
 model Service {
-  id          Int           @id @default(autoincrement())
-  name        String
-  duration    Int
-  price       Int
-  Appointment Appointment[]
-  Bills       Bill[]
+  id                Int              @id @default(autoincrement())
+  name              String
+  duration          Int
+  price             Int
+  Appointment       Appointment[]
+  Billinvoiservices Invoiceservice[]
 }
 
 model Customer {
@@ -71,6 +71,56 @@ model Appointment {
   status   String // Enum not supported in sqlite (handle in api)
 }
 
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
 model Bill {
   id Int @id @default(autoincrement())
 
@@ -80,9 +130,37 @@ model Bill {
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
 
+  billnumber Int
+
+  datecreate        DateTime         @default(now())
+  Billinvoiservices Invoiceservice[]
+  Billinvoiproducts Invoiceproduct[]
+}
+
+model Invoiceservice {
+  id Int @id @default(autoincrement())
+
+  billId Int
+  bill   Bill @relation(fields: [billId], references: [id])
+
   serviceId Int
   service   Service @relation(fields: [serviceId], references: [id])
 
+  price Int
+
+  duration Int
+}
+
+model Invoiceproduct {
+  id Int @id @default(autoincrement())
+
+  billId Int
+  bill   Bill @relation(fields: [billId], references: [id])
+
   productId Int
-  Product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  price Int
+
+  quantity Int
 }

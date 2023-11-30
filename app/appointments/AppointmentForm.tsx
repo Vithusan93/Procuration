@@ -114,7 +114,7 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
             <Button color="gray" size="3" variant="outline">
               Cancel
             </Button>
-            <Button size="3" variant="solid">
+            <Button size="3" variant="classic">
               {appointment ? "Update Appointment" : "Book"}
             </Button>
           </div>
