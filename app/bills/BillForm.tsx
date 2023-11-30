@@ -1,15 +1,7 @@
 "use client";
 import React from "react";
 import { Theme } from "@radix-ui/themes";
-import {
-  Flex,
-  Text,
-  Button,
-  TextField,
-  Heading,
-  Select,
-  Box,
-} from "@radix-ui/themes";
+import { Flex, Button, TextField, Heading, Select } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";

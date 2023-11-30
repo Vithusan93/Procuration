@@ -20,18 +20,18 @@ model Product {
   id                Int              @id @default(autoincrement())
   name              String
   description       String
-  price             Int
+  price             Decimal
   stock             Int
-  Billinvoiproducts Invoiceproduct[]
+  Billinvoiproducts InvoiceProduct[]
 }
 
 model Service {
   id                Int              @id @default(autoincrement())
   name              String
   duration          Int
-  price             Int
+  price             Decimal
   Appointment       Appointment[]
-  Billinvoiservices Invoiceservice[]
+  Billinvoiservices InvoiceService[]
 }
 
 model Customer {
@@ -132,12 +132,12 @@ model Bill {
 
   billnumber Int
 
-  datecreate        DateTime         @default(now())
-  Billinvoiservices Invoiceservice[]
-  Billinvoiproducts Invoiceproduct[]
+  createdAt         DateTime         @default(now())
+  Billinvoiservices InvoiceService[]
+  Billinvoiproducts InvoiceProduct[]
 }
 
-model Invoiceservice {
+model InvoiceService {
   id Int @id @default(autoincrement())
 
   billId Int
@@ -146,12 +146,12 @@ model Invoiceservice {
   serviceId Int
   service   Service @relation(fields: [serviceId], references: [id])
 
-  price Int
+  price Decimal
 
   duration Int
 }
 
-model Invoiceproduct {
+model InvoiceProduct {
   id Int @id @default(autoincrement())
 
   billId Int
@@ -160,7 +160,7 @@ model Invoiceproduct {
   productId Int
   product   Product @relation(fields: [productId], references: [id])
 
-  price Int
+  price Decimal
 
   quantity Int
 }
