@@ -8,7 +8,7 @@ const EditBillButton = ({ billId }: { billId: number }) => {
       <Theme>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
           <Button>
-            <Link href={`/bills/${billId}/edit`}>Editer Bill</Link>
+            <Link href={`/bills/${billId}/edit`}>Edit Bill</Link>
           </Button>
         </div>
       </Theme>

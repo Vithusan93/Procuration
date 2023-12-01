@@ -1,8 +1,10 @@
 import { Bill } from "@prisma/client";
 import React from "react";
 import Link from "next/link";
+import prisma from "@/prisma/client";
 
 import { Flex, Text, Table, Box, Heading, Container } from "@radix-ui/themes";
+
 const BillDetails = ({ bill }: { bill: Bill }) => {
   return (
     <div>
@@ -10,7 +12,7 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
-              {bill ? " Bill Details " : "New Invoice"}
+              {bill ? " Bill Detail" : " New Invoice"}
             </Heading>
 
             <Box
@@ -20,22 +22,36 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
               }}
             >
               <Table.Root variant="surface">
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeaderCell className="hidden md:table-cell">
+                      Firstname
+                    </Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell className="hidden md:table-cell">
+                      Invoice Number
+                    </Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell className="hidden md:table-cell">
+                      Date
+                    </Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell className="hidden md:table-cell">
+                      Staff Name
+                    </Table.ColumnHeaderCell>
+                  </Table.Row>
+                </Table.Header>
                 <Table.Body>
                   <Table.Cell className="hidden md:table-cell">
                     {" "}
-                    <p>{bill.customerId}</p>
+                    {bill.customer.firstname}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    <p>{bill.billnumber}</p>
+                    {bill.billnumber}
+                  </Table.Cell>
+
+                  <Table.Cell className="hidden md:table-cell">
+                    {bill.createdAt.toString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    <p>{bill.customerId}</p>
-                  </Table.Cell>
-                  <Table.Cell className="hidden md:table-cell">
-                    <p>{bill.createdAt.toString()}</p>
-                  </Table.Cell>
-                  <Table.Cell className="hidden md:table-cell">
-                    <p>{bill.staffId}</p>
+                    {bill.staff.firstname}
                   </Table.Cell>
                 </Table.Body>
               </Table.Root>

@@ -1,14 +1,7 @@
 "use client";
 import React from "react";
 import { Theme } from "@radix-ui/themes";
-import {
-  Flex,
-  Button,
-  TextField,
-  Heading,
-  Select,
-  Text,
-} from "@radix-ui/themes";
+import { Flex, Button, TextField, Heading, Select } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { Bill, Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
@@ -69,7 +62,9 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
       >
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
-            <Heading className="text-gray-900">Invoice</Heading>
+            <Heading className="text-gray-900">
+              {bills ? " Edit Invoice" : " New Invoice"}
+            </Heading>
           </div>
           <div className="flex p-2 bg-gray-100">
             <div className="w-1/4">
@@ -120,7 +115,7 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
             Save
           </Button>
           <Button size="3" variant="classic">
-            {bills ? "Update Bills" : "Export Facture"}
+            {bills ? "Update Invoice" : "Save Invoice Customer"}
           </Button>
         </div>
       </Form>

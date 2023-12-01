@@ -13,6 +13,7 @@ interface Props {
 const BillDetailPage = async ({ params }: Props) => {
   const bill = await prisma.bill.findUnique({
     where: { id: parseInt(params.id) },
+    include: { customer: true, staff: true },
   });
 
   if (!bill) notFound();

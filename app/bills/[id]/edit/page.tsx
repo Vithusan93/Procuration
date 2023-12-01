@@ -16,7 +16,7 @@ const EditBillPage = async ({ params }: Props) => {
   });
 
   if (!bill) return;
-  return <BillFormPage bill={bill} />;
+  return <BillFormPage bills={bill} />;
 };
 
 export default EditBillPage;

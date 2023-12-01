@@ -26,9 +26,6 @@ const Bill = async () => {
                 Invoice Number
               </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell className="hidden md:table-cell">
-                Bill Id
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
                 Date
               </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell className="hidden md:table-cell">
@@ -48,15 +45,12 @@ const Bill = async () => {
                   {" "}
                   {bill.billnumber}
                 </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  {" "}
-                  {bill.customerId}
-                </Table.Cell>
+
                 <Table.Cell className="hidden md:table-cell">
                   {bill.createdAt.toString()}
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
-                  {bill.staffId}
+                  {bill.staff.firstname}
                 </Table.Cell>
               </Table.Row>
             ))}
