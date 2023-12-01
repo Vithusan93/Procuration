@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   console.log("dans le request post api");
   console.log(body);
 
-  const invoiceproduct = await prisma.invoiceProduct.create({
+  const invoiceProduct = await prisma.invoiceProduct.create({
     data: {
       billId: parseInt(body.billId),
       productId: parseInt(body.productId),
@@ -21,5 +21,5 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  return NextResponse.json(invoiceproduct, { status: 201 });
+  return NextResponse.json(invoiceProduct, { status: 201 });
 }

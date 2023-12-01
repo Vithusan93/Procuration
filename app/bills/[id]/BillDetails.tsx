@@ -25,7 +25,7 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
                 <Table.Header>
                   <Table.Row>
                     <Table.ColumnHeaderCell className="hidden md:table-cell">
-                      Firstname
+                      Customer Name
                     </Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell className="hidden md:table-cell">
                       Invoice Number
