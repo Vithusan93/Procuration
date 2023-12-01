@@ -9,24 +9,24 @@ export async function PATCH(
     const body = await request.json();
     console.log(body);
   
-    const invoiceProduct = await prisma.invoiceProduct.findUnique({
+    const invoiceService = await prisma.invoiceService.findUnique({
       where: {
         id: parseInt(params.id),
       },
     });
-    if (!invoiceProduct )
-      return NextResponse.json({ error: "Invalid Invoice-Product" }, { status: 404 });
+    if (!invoiceService)
+      return NextResponse.json({ error: "Invalid Invoice-Service" }, { status: 404 });
   
-    const updateinvoiceProduct = await prisma.invoiceProduct.update({
-      where: { id: invoiceProduct.id },
+    const updateinvoiceService = await prisma.invoiceService.update({
+      where: { id: invoiceService.id },
       data: {
         billId: parseInt(body.billId),
-        productId: parseInt(body.productId),
+        serviceId: parseInt(body.serviceId),
         price: parseInt(body.price),
-        quantity: parseInt(body.quantity),
+        duration: parseInt(body.duration),
       },
     });
   
-    return NextResponse.json(updateinvoiceProduct);
+    return NextResponse.json(updateinvoiceService);
   }
     
