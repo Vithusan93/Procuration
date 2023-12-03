@@ -27,6 +27,7 @@ const CustomerSelect = ({
 
   const options = customers.map((customer) => ({
     value: customer.id.toString(),
+
     label: customer.firstname,
   }));
 

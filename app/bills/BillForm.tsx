@@ -1,13 +1,23 @@
 "use client";
 import React from "react";
 import { Theme } from "@radix-ui/themes";
-import { Flex, Button, TextField, Heading, Select } from "@radix-ui/themes";
+import {
+  Flex,
+  Button,
+  TextField,
+  Heading,
+  Table,
+  Select,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { Bill, Customer } from "@prisma/client";
+import { Bill, Service } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
 import StaffSelect from "./StaffSelect";
 import CustomerSelect from "./CustomerSelect";
+import ServiceSelect from "./ServiceSelect";
+import ProductSelect from "./ProductSelect";
+import prisma from "@/prisma/client";
 
 import { useEffect } from "react";
 import jsPDF from "jspdf";
@@ -16,6 +26,19 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
   const { register, handleSubmit, control } = useForm<Bill>();
   //console.log(register("customer"));
   const router = useRouter();
+
+  async function fetchServices() {
+    try {
+      const services = await prisma.service.findMany();
+      console.log(services);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des services:", error);
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+
+  fetchServices();
 
   /*  useEffect(() => {
     const generatePDF = () => {
@@ -68,7 +91,12 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
           </div>
           <div className="flex p-2 bg-gray-100">
             <div className="w-1/4">
-              <Flex gap="3" direction="column" style={{ maxWidth: 400 }}>
+              <Flex
+                gap="3"
+                direction="row"
+                align="center"
+                style={{ maxWidth: 400 }}
+              >
                 <span className="font-semibold">Invoice Number</span>
                 <TextField.Root>
                   <TextField.Input
@@ -88,14 +116,14 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                   control={control}
                 />
                 <span className="font-semibold">Staff</span>
-                <Select.Root size="3" defaultValue="apple">
-                  <StaffSelect
-                    name="staffId"
-                    label="Staff"
-                    placeholder="Staff"
-                    control={control}
-                  />
-                </Select.Root>
+
+                <StaffSelect
+                  name="staffId"
+                  label="Staff"
+                  placeholder="Staff"
+                  control={control}
+                />
+
                 <label htmlFor="time">
                   <span className="font-semibold">Date Facture</span>
                   <TextField.Root>
@@ -107,9 +135,91 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                   </TextField.Root>
                 </label>
               </Flex>
+              <Flex direction="row" gap="6">
+                <Flex direction="column">
+                  <span className="font-semibold">Service</span>
+                  <ServiceSelect
+                    name="serviceId"
+                    label="Service"
+                    placeholder="Service"
+                    control={control}
+                  />
+                  <div className="bg-gray-300 w-full p-1 direction=row">
+                    <Table.Root variant="surface">
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Buy
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Label
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Quantity
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Price
+                          </Table.ColumnHeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
+                        {/* 
+                        {services.map((service) => (
+                          <Table.Row key={service.id}>
+                            <Table.Cell className="hidden md:table-cell">
+                              {}
+                            </Table.Cell>
+                            <Table.Cell className="hidden md:table-cell">
+                              {}
+                            </Table.Cell>
+                            <Table.Cell className="hidden md:table-cell">
+                              {}
+                            </Table.Cell>
+                            <Table.Cell className="hidden md:table-cell">
+                              {}
+                            </Table.Cell>
+                          </Table.Row>
+                        ))}*/}
+                      </Table.Body>
+                    </Table.Root>
+                  </div>
+                </Flex>
+
+                <Flex direction="column">
+                  <span className="font-semibold">Product</span>
+                  <ProductSelect
+                    name="productId"
+                    label="Product"
+                    placeholder="Product"
+                    control={control}
+                  />
+                  <div className="bg-gray-300 w-full p-1 direction=column">
+                    <Table.Root variant="surface">
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Buy
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Label
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Quantity
+                          </Table.ColumnHeaderCell>
+                          <Table.ColumnHeaderCell className="hidden md:table-cell">
+                            Price
+                          </Table.ColumnHeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body></Table.Body>
+                    </Table.Root>
+                  </div>
+                </Flex>
+              </Flex>
             </div>
           </div>
         </div>
+
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
             Save
