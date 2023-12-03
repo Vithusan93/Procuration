@@ -33,8 +33,6 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
       console.log(services);
     } catch (error) {
       console.error("Erreur lors de la récupération des services:", error);
-    } finally {
-      await prisma.$disconnect();
     }
   }
 
@@ -137,13 +135,6 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
               </Flex>
               <Flex direction="row" gap="6">
                 <Flex direction="column">
-                  <span className="font-semibold">Service</span>
-                  <ServiceSelect
-                    name="serviceId"
-                    label="Service"
-                    placeholder="Service"
-                    control={control}
-                  />
                   <div className="bg-gray-300 w-full p-1 direction=row">
                     <Table.Root variant="surface">
                       <Table.Header>
@@ -163,11 +154,16 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                         </Table.Row>
                       </Table.Header>
                       <Table.Body>
-                        {/* 
                         {services.map((service) => (
                           <Table.Row key={service.id}>
                             <Table.Cell className="hidden md:table-cell">
-                              {}
+                              <span className="font-semibold">Service</span>
+                              <ServiceSelect
+                                name="serviceId"
+                                label="Service"
+                                placeholder="Service"
+                                control={control}
+                              />
                             </Table.Cell>
                             <Table.Cell className="hidden md:table-cell">
                               {}
@@ -179,7 +175,7 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                               {}
                             </Table.Cell>
                           </Table.Row>
-                        ))}*/}
+                        ))}
                       </Table.Body>
                     </Table.Root>
                   </div>
