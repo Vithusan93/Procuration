@@ -1,22 +1,16 @@
 "use client";
-import React from "react";
-import { Theme } from "@radix-ui/themes";
-import {
-  Flex,
-  Text,
-  Button,
-  TextField,
-  Heading,
-  Grid,
-  Box,
-} from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
 import { Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
+import { Box, Button, Flex, Heading, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 
-const CustomerForm = ({ customer }: { customer?: Customer }) => {
-  const router = useRouter();
+const CustomerForm = ({
+  customer,
+  onSuccess,
+}: {
+  customer?: Customer;
+  onSuccess: (customer: Customer) => void;
+}) => {
   const { register, handleSubmit } = useForm<Customer>();
 
   return (
@@ -26,24 +20,25 @@ const CustomerForm = ({ customer }: { customer?: Customer }) => {
         onSubmit={handleSubmit(async (data) => {
           try {
             if (customer) {
-              await fetch("/api/customers/" + customer.id, {
+              const response = await fetch("/api/customers/" + customer.id, {
                 method: "PATCH",
                 body: JSON.stringify(data),
               });
-              router.push("/customers");
+              const updatedCustomer: Customer = await response.json();
+              onSuccess(updatedCustomer);
             } else {
-              await fetch("/api/customers", {
+              const response = await fetch("/api/customers", {
                 method: "POST",
                 body: JSON.stringify(data),
               });
-              router.push("/customers");
+              const newCustomer: Customer = await response.json();
+              onSuccess(newCustomer);
             }
           } catch (error) {
             console.log(error);
           }
         })}
       >
-        {" "}
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">

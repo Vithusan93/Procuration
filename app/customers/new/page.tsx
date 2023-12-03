@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
-import CustomerForm from "../CustomerForm";
+import CustomerManager from "../CustomerManager";
 
 const NewCustomerPage = () => {
-  return <CustomerForm />;
+  return <CustomerManager />;
 };
 
 export default NewCustomerPage;
