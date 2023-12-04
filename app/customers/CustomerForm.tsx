@@ -46,64 +46,60 @@ const CustomerForm = ({
             </Heading>
           </div>
           <div className="flex p-2 bg-gray-100">
-            <div className="w-1/4">
-              <Flex gap="3" direction="column" style={{ maxWidth: 400 }}>
-                <Box height="9">
-                  FirstName
-                  <Flex
-                    direction="column"
-                    gap="3"
-                    style={{ maxWidth: 400 }}
-                  ></Flex>
-                  <TextField.Root>
-                    <TextField.Input
-                      radius="large"
-                      variant="classic"
-                      size="3"
-                      defaultValue={customer?.firstname}
-                      placeholder="Customer FisrtName"
-                      {...register("firstname")}
-                    />
-                  </TextField.Root>
-                </Box>
-                <Box height="9">
-                  LastName
-                  <TextField.Root>
-                    <TextField.Input
-                      radius="large"
-                      size="3"
-                      defaultValue={customer?.lastname}
-                      placeholder="Customer LastName"
-                      {...register("lastname")}
-                    />
-                  </TextField.Root>
-                </Box>
-                <Box height="9">
-                  Email
-                  <TextField.Root>
-                    <TextField.Input
-                      radius="large"
-                      size="3"
-                      defaultValue={customer?.email}
-                      placeholder="Customer Email"
-                      {...register("email")}
-                    />
-                  </TextField.Root>
-                </Box>
-                <Box height="9">
-                  Phone Number
-                  <TextField.Root>
-                    <TextField.Input
-                      radius="large"
-                      size="3"
-                      defaultValue={customer?.phone}
-                      placeholder="Customer Number"
-                      {...register("phone")}
-                    />
-                  </TextField.Root>
-                </Box>
-              </Flex>
-            </div>
+            <Flex gap="1">
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">FirstName</span>
+                <TextField.Root>
+                  <TextField.Input
+                    radius="large"
+                    variant="classic"
+                    size="3"
+                    defaultValue={customer?.firstname}
+                    placeholder="Customer FisrtName"
+                    {...register("firstname")}
+                  />
+                </TextField.Root>
+              </Box>
+
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">LastName</span>
+                <TextField.Root>
+                  <TextField.Input
+                    radius="large"
+                    size="3"
+                    defaultValue={customer?.lastname}
+                    placeholder="Customer LastName"
+                    {...register("lastname")}
+                  />
+                </TextField.Root>
+              </Box>
+
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">Email</span>
+                <TextField.Root>
+                  <TextField.Input
+                    radius="large"
+                    size="3"
+                    defaultValue={customer?.email}
+                    placeholder="Customer Email"
+                    {...register("email")}
+                  />
+                </TextField.Root>
+              </Box>
+
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">Phone Number</span>
+                <TextField.Root>
+                  <TextField.Input
+                    radius="large"
+                    size="3"
+                    defaultValue={customer?.phone}
+                    placeholder="Customer Number"
+                    {...register("phone")}
+                  />
+                </TextField.Root>
+              </Box>
+            </Flex>
           </div>
         </div>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">

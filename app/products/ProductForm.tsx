@@ -43,50 +43,60 @@ const ProductForm = ({ product }: { product?: Product }) => {
           </div>
         </div>
         <div className="flex p-2 bg-gray-100">
-          <div className="w-1/4">
-            <Flex direction="column" gap="3" style={{ maxWidth: 400 }}>
-              <Box height="9">
-                Name
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={product?.name}
-                    placeholder="Product Name"
-                    {...register("name")}
-                  />
-                </TextField.Root>
-              </Box>
-              <Box height="9">
-                Description
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={product?.description}
-                    placeholder="Product Description"
-                    {...register("description")}
-                  />
-                </TextField.Root>
-              </Box>
-              <Box height="9">
-                Price
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={product?.price.toString()}
-                    placeholder="Product Price"
-                    {...register("price")}
-                  />
-                </TextField.Root>
-              </Box>
-              <Box height="9">
-                Stock
-                <TextField.Root>
-                  <TextField.Input
-                    defaultValue={product?.stock}
-                    placeholder="Product Stock"
-                    {...register("stock")}
-                  />
-                </TextField.Root>
-              </Box>
-            </Flex>
-          </div>
+          <Flex gap="1">
+            <Box className="w-1/2" p="2">
+              <span className="font-semibold">Name</span>
+              <TextField.Root>
+                <TextField.Input
+                  radius="large"
+                  variant="classic"
+                  size="3"
+                  defaultValue={product?.name}
+                  placeholder="Product Name"
+                  {...register("name")}
+                />
+              </TextField.Root>
+            </Box>
+            <Box className="w-1/2" p="2">
+              <span className="font-semibold">Description</span>
+              <TextField.Root>
+                <TextField.Input
+                  radius="large"
+                  variant="classic"
+                  size="3"
+                  defaultValue={product?.description}
+                  placeholder="Product Description"
+                  {...register("description")}
+                />
+              </TextField.Root>
+            </Box>
+            <Box className="w-1/2" p="2">
+              <span className="font-semibold">Price</span>
+              <TextField.Root>
+                <TextField.Input
+                  radius="large"
+                  variant="classic"
+                  size="3"
+                  defaultValue={product?.price.toString()}
+                  placeholder="Product Price"
+                  {...register("price")}
+                />
+              </TextField.Root>
+            </Box>
+            <Box className="w-1/2" p="2">
+              <span className="font-semibold">Stock</span>
+              <TextField.Root>
+                <TextField.Input
+                  radius="large"
+                  variant="classic"
+                  size="3"
+                  defaultValue={product?.stock}
+                  placeholder="Product Stock"
+                  {...register("stock")}
+                />
+              </TextField.Root>
+            </Box>
+          </Flex>
         </div>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
           <Button size="3" variant="classic">
