@@ -4,11 +4,11 @@ import React from "react";
 const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
   return (
     <div>
-      <p>{appointment.customerId.}</p>
-      <p>{appointment.service}</p>
-      <p>{appointment.staff}</p>
-      <p>{appointment.date.toString()}</p>
-      <p>{appointment.isPublished}</p>
+      <p>{appointment.customerId}</p>
+      <p>{appointment.serviceId}</p>
+      <p>{appointment.status}</p>
+      <p>{appointment.time.toString()}</p>
+      <p>{appointment.duration}</p>
     </div>
   );
 };

@@ -41,7 +41,7 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
                 <Table.Body>
                   <Table.Cell className="hidden md:table-cell">
                     {" "}
-                    {bill.customer.firstname}
+                    {/*bill.customer.firstname*/}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {bill.billnumber}
@@ -51,7 +51,7 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
                     {bill.createdAt.toString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {bill.staff.firstname}
+                    {/*bill.staff.firstname*/}
                   </Table.Cell>
                 </Table.Body>
               </Table.Root>

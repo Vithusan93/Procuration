@@ -85,7 +85,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
                 Price
                 <TextField.Root>
                   <TextField.Input
-                    defaultValue={service?.price}
+                    defaultValue={service?.price.toString()}
                     placeholder="Service Price"
                     {...register("price")}
                   />

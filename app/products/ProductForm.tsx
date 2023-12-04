@@ -69,7 +69,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                 Price
                 <TextField.Root>
                   <TextField.Input
-                    defaultValue={product?.price}
+                    defaultValue={product?.price.toString()}
                     placeholder="Product Price"
                     {...register("price")}
                   />

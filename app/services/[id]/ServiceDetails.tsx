@@ -27,7 +27,7 @@ const ServiceDetails = ({ service }: { service: Service }) => {
                     <p>{service.duration}</p>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    <p>{service.price}</p>
+                    <p>{service.price.toString()}</p>
                   </Table.Cell>
                 </Table.Body>
               </Table.Root>

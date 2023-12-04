@@ -27,7 +27,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
                     <p>{product.description}</p>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    <p>{product.price}</p>
+                    <p>{product.price.toString()}</p>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     <p>{product.stock}</p>
