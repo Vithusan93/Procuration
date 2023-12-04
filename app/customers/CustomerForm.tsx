@@ -95,7 +95,6 @@ const CustomerForm = ({
                   <TextField.Input
                     radius="large"
                     variant="classic"
-                    size="3"
                     defaultValue={customer?.phone}
                     placeholder="Customer Number"
                     {...register("phone")}
