@@ -101,7 +101,7 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                   {...register("billnumber")}
                 />
               </TextField.Root>
-              <Flex gap="2" align={"center"}>
+              <Flex gap="3" align={"center"}>
                 <label
                   htmlFor="customerId"
                   className="flex align-middle gap-2 items-center my-2"
@@ -122,17 +122,27 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
                 >
                   Add new customer
                 </Button>
+                <div>
+                  <Box className="w-1/2" p="2">
+                    <label
+                      htmlFor="customerId"
+                      className="flex align-middle gap-2 items-center my-2"
+                    >
+                      <span className="font-semibold">Staff</span>
+
+                      <StaffSelect
+                        name="staffId"
+                        label="Staff"
+                        placeholder="Staff"
+                        control={control}
+                      />
+                    </label>
+                  </Box>
+                </div>
               </Flex>
             </Box>
-            <Box className="w-1/2" p="2">
-              <span className="font-semibold">Staff</span>
-              <StaffSelect
-                name="staffId"
-                label="Staff"
-                placeholder="Staff"
-                control={control}
-              />
 
+            <Box className="w-1/2" p="2">
               <label htmlFor="time">
                 <span className="font-semibold">Date Facture</span>
                 <TextField.Root>
@@ -146,15 +156,21 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
             </Box>
           </Flex>
 
-          <Flex direction="row" gap="6">
+          <Flex direction="column" gap="1">
             <div className="bg-gray-300 w-full p-1 direction=row">
-              <span className="font-semibold">Service</span>
-              <ServiceSelect
-                name="serviceId"
-                label="Service"
-                placeholder="Service"
-                control={control}
-              />
+              <label
+                htmlFor="customerId"
+                className="flex align-middle gap-2 items-center my-2"
+              >
+                <span className="font-semibold">Service</span>
+
+                <ServiceSelect
+                  name="serviceId"
+                  label="Service"
+                  placeholder="Service"
+                  control={control}
+                />
+              </label>
               <Table.Root variant="surface">
                 <Table.Header>
                   <Table.Row>
@@ -186,34 +202,41 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
             </div>
           </Flex>
 
-          <Flex direction="column">
-            <span className="font-semibold">Product</span>
-            <ProductSelect
-              name="productId"
-              label="Product"
-              placeholder="Product"
-              control={control}
-            />
-            <div className="bg-gray-300 w-full p-1 direction=column">
-              <Table.Root variant="surface">
-                <Table.Header>
-                  <Table.Row>
-                    <Table.ColumnHeaderCell className="hidden md:table-cell">
-                      Buy
-                    </Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell className="hidden md:table-cell">
-                      Label
-                    </Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell className="hidden md:table-cell">
-                      Quantity
-                    </Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell className="hidden md:table-cell">
-                      Price
-                    </Table.ColumnHeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body></Table.Body>
-              </Table.Root>
+          <Flex direction="column" gap="6">
+            <div className="bg-gray-300 w-full p-1 direction=row">
+              <label
+                htmlFor="customerId"
+                className="flex align-middle gap-2 items-center my-2"
+              >
+                <span className="font-semibold">Product</span>
+                <ProductSelect
+                  name="productId"
+                  label="Product"
+                  placeholder="Product"
+                  control={control}
+                />
+              </label>
+              <div className="bg-gray-300  p-1 direction=row">
+                <Table.Root variant="surface">
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        Buy
+                      </Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        Label
+                      </Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        Quantity
+                      </Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className="hidden md:table-cell">
+                        Price
+                      </Table.ColumnHeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body></Table.Body>
+                </Table.Root>
+              </div>
             </div>
           </Flex>
         </div>
@@ -223,7 +246,7 @@ const BillFormPage = ({ bills }: { bills?: Bill }) => {
             Save
           </Button>
           <Button size="3" variant="classic">
-            {bills ? "Update Invoice" : "Save Invoice Customer"}
+            {bills ? "Update Invoice" : "Add Invoice Customer"}
           </Button>
         </div>
       </Form>

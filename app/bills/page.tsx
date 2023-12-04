@@ -47,7 +47,7 @@ const Bill = async () => {
                 </Table.Cell>
 
                 <Table.Cell className="hidden md:table-cell">
-                  {bill.createdAt.toString()}
+                  {bill.createdAt.toLocaleDateString()}
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {bill.staff.firstname}
