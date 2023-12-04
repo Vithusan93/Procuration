@@ -66,6 +66,7 @@ const CustomerForm = ({
                 <TextField.Root>
                   <TextField.Input
                     radius="large"
+                    variant="classic"
                     size="3"
                     defaultValue={customer?.lastname}
                     placeholder="Customer LastName"
@@ -79,6 +80,7 @@ const CustomerForm = ({
                 <TextField.Root>
                   <TextField.Input
                     radius="large"
+                    variant="classic"
                     size="3"
                     defaultValue={customer?.email}
                     placeholder="Customer Email"
@@ -92,6 +94,7 @@ const CustomerForm = ({
                 <TextField.Root>
                   <TextField.Input
                     radius="large"
+                    variant="classic"
                     size="3"
                     defaultValue={customer?.phone}
                     placeholder="Customer Number"

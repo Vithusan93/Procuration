@@ -54,37 +54,40 @@ const ServiceForm = ({ service }: { service?: Service }) => {
           </div>
 
           <div className="flex p-2 bg-gray-100">
-            <div className="w-1/4"></div>
-            <Flex direction="column" gap="3" style={{ maxWidth: 400 }}>
-              <Box height="9">
-                Name
-                <Flex
-                  direction="column"
-                  gap="3"
-                  style={{ maxWidth: 400 }}
-                ></Flex>
+            <Flex gap="1">
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">Service Name</span>
                 <TextField.Root>
                   <TextField.Input
+                    radius="large"
+                    variant="classic"
+                    size="3"
                     defaultValue={service?.name}
                     placeholder="Service Name"
                     {...register("name")}
                   />
                 </TextField.Root>
               </Box>
-              <Box height="9">
-                Duration
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">Duration</span>
                 <TextField.Root>
                   <TextField.Input
+                    radius="large"
+                    variant="classic"
+                    size="3"
                     defaultValue={service?.duration}
                     placeholder="Service Duration"
                     {...register("duration")}
                   />
                 </TextField.Root>
               </Box>
-              <Box height="9">
-                Price
+              <Box className="w-1/2" p="2">
+                <span className="font-semibold">Price</span>
                 <TextField.Root>
                   <TextField.Input
+                    radius="large"
+                    variant="classic"
+                    size="3"
                     defaultValue={service?.price.toString()}
                     placeholder="Service Price"
                     {...register("price")}
@@ -94,7 +97,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
             </Flex>
           </div>
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-            <Button size="3" variant="soft">
+            <Button size="3" variant="classic">
               {service ? "Update Service" : "Submit New Service"}
             </Button>
           </div>
