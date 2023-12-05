@@ -12,6 +12,7 @@ interface Props {
 const EditAppointmentPage = async ({ params }: Props) => {
   const appointment = await prisma.appointment.findUnique({
     where: { id: parseInt(params.id) },
+    include: { customer: true },
   });
 
   if (!appointment) return;

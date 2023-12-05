@@ -20,7 +20,7 @@ const Appointment = async () => {
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeaderCell className="hidden md:table-cell">
-                  Email
+                  Customer
                 </Table.ColumnHeaderCell>
                 <Table.ColumnHeaderCell className="hidden md:table-cell">
                   Service

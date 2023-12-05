@@ -16,21 +16,21 @@ datasource db {
 //}
 
 model Product {
-  id                Int              @id @default(autoincrement())
-  name              String
-  description       String
-  price             Decimal
-  stock             Int
-  Billinvoiproducts InvoiceProduct[]
+  id              Int              @id @default(autoincrement())
+  name            String
+  description     String
+  price           Decimal
+  stock           Int
+  ProductInvoices InvoiceProduct[]
 }
 
 model Service {
-  id                Int              @id @default(autoincrement())
-  name              String
-  duration          Int
-  price             Decimal
-  Appointment       Appointment[]
-  Billinvoiservices InvoiceService[]
+  id              Int              @id @default(autoincrement())
+  name            String
+  duration        Int
+  price           Decimal
+  Appointment     Appointment[]
+  ServiceInvoices InvoiceService[]
 }
 
 model Customer {
@@ -131,9 +131,9 @@ model Bill {
 
   billnumber Int
 
-  createdAt         DateTime         @default(now())
-  Billinvoiservices InvoiceService[]
-  Billinvoiproducts InvoiceProduct[]
+  createdAt       DateTime         @default(now())
+  InvoiceServices InvoiceService[]
+  InvoiceProducts InvoiceProduct[]
 }
 
 model InvoiceService {

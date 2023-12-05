@@ -29,7 +29,7 @@ const Bill = async () => {
                 Date
               </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell className="hidden md:table-cell">
-                Sataff Name
+                Staff Name
               </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
@@ -42,7 +42,6 @@ const Bill = async () => {
                   </Link>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
-                  {" "}
                   {bill.billnumber}
                 </Table.Cell>
 

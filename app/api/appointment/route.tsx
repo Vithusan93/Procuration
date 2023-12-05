@@ -15,6 +15,9 @@ export async function POST(request: NextRequest) {
       time: body.time,
       status: "pending",
     },
+    include: {
+      customer: true,
+    },
   });
 
   return NextResponse.json(appointment, { status: 201 });

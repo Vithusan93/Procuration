@@ -5,6 +5,7 @@ import prisma from "@/prisma/client";
 import { parse } from "path";
 
 import BillFormPage from "../../BillForm";
+import InvoiceProductPanel from "../../InvoiceProductPanel";
 
 interface Props {
   params: { id: string };
@@ -16,7 +17,11 @@ const EditBillPage = async ({ params }: Props) => {
   });
 
   if (!bill) return;
-  return <BillFormPage bills={bill} />;
+  return (
+    <div className="max-w-7xl mx-auto">
+      <BillFormPage bill={bill} />
+    </div>
+  );
 };
 
 export default EditBillPage;

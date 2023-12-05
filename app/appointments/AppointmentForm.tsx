@@ -1,16 +1,51 @@
 "use client";
-import { Appointment } from "@prisma/client";
+import { Appointment, Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
-import { Button, Heading, Text, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Heading,
+  Text,
+  TextField,
+  Popover,
+  Box,
+  Flex,
+  TextArea,
+  Checkbox,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import CustomerSelect from "./CustomerSelect";
 import ServiceSelect from "./ServiceSelect";
 import StaffSelect from "./StaffSelect";
 
 const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
   const router = useRouter();
-  const { register, handleSubmit, control } = useForm<Appointment>();
+  const { register, handleSubmit, control, setValue } = useForm<Appointment>();
+
+  const [readOnly, setReadOnly] = useState(true);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customer, setCustomer] = useState<Customer>();
+  const [customerInput, setCustomerInput] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      const response = await fetch(`/api/customers?search=${search}`, {
+        cache: "no-store",
+      });
+      const data: Customer[] = await response.json();
+      setCustomers(data);
+    };
+    fetchCustomers();
+  }, [search]);
+
+  const customerSelect = (customer?: Customer) => {
+    setCustomer(customer);
+    setCustomers([]);
+    if (customer) {
+      setValue("customerId", customer.id);
+    }
+  };
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -48,7 +83,45 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
           </div>
           <div className="flex p-2 bg-gray-100">
             <div className="w-1/4">
-              <label>
+              <TextField.Root>
+                Customer
+                <Popover.Root>
+                  <Popover.Trigger>
+                    <Button type="button">Select Customer</Button>
+                  </Popover.Trigger>
+                  <Popover.Content style={{ width: 360 }}>
+                    <div className="flex flex-col bg-red-700 text-gray-900">
+                      <TextField.Input
+                        placeholder="Search customer"
+                        readOnly={readOnly}
+                        onClick={() => {
+                          setCustomer(undefined);
+                          setReadOnly(false);
+                        }}
+                        onBlur={() => setReadOnly(true)}
+                        onChange={({ target }) => {
+                          setCustomerInput(target.value);
+                          setSearch(target.value);
+                        }}
+                        value={customerInput}
+                      />
+                      {customers.map((customer) => (
+                        <div
+                          className="bg-gray-200 p-2 text-gray-900 rounded hover:bg-gray-300 m-1"
+                          onClick={() => {
+                            customerSelect(customer);
+                            setCustomerInput(customer.firstname);
+                          }}
+                        >
+                          {customer.firstname} {customer.lastname}
+                        </div>
+                      ))}
+                    </div>
+                  </Popover.Content>
+                </Popover.Root>
+              </TextField.Root>
+
+              {/* <label>
                 <Text as="div" size="2" mb="1" weight="bold">
                   Customer
                 </Text>
@@ -58,7 +131,8 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
                   placeholder="Customer"
                   control={control}
                 />
-              </label>
+              </label> */}
+
               <label>
                 <Text as="div" size="2" mb="1" weight="bold">
                   Staff
@@ -97,13 +171,14 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
               </label>
               <label htmlFor="time">
                 <span className="font-semibold">
-                  Duration{" "}
+                  Duration
                   <span className="text-gray-800 text-sm ml-2">Minutes</span>
                 </span>
                 <TextField.Root>
                   <TextField.Input
                     type="number"
                     placeholder="Duration in Minutes"
+                    defaultValue={appointment?.duration}
                     {...register("duration")}
                   />
                 </TextField.Root>

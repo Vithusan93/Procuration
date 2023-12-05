@@ -2,6 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
 export async function GET(request: NextRequest) {
+  const search = request.nextUrl.searchParams.get("search");
+
+  // Define the default orderBy option
+  if (search) {
+    const customers = await prisma.customer.findMany({
+      where: {
+        OR: [
+          { firstname: { contains: search, mode: "insensitive" } },
+          { lastname: { contains: search, mode: "insensitive" } },
+        ],
+      },
+    });
+    return NextResponse.json(customers);
+  }
   const customers = await prisma.customer.findMany({
     orderBy: { firstname: "asc" },
   });
