@@ -8,12 +8,14 @@ const EditAppointmentButton = ({
   appointmentId: number;
 }) => {
   return (
-    <div>
-      <Button>
-        <Link href={`/appointments/${appointmentId}/edit`}>
-          Editer Appointment
-        </Link>
-      </Button>
+    <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
+      <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
+        <Button>
+          <Link href={`/appointments/${appointmentId}/edit`}>
+            Editer Appointment
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 };
