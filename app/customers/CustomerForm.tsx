@@ -1,8 +1,16 @@
 "use client";
 import { Customer } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
-import { Box, Button, Flex, Heading, TextField } from "@radix-ui/themes";
+import { Box, Button, Flex, Heading, TextField ,Callout,Text} from "@radix-ui/themes";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {zodResolver} from '@hookform/resolvers/zod';
+import { createCustomerSchema } from "../validationSchemas";
+import { z } from "zod";
+import { text } from "stream/consumers";
+import ErrorMessage from "@/components/ErrorMessage";
+
+type CustomerForm = z.infer<typeof createCustomerSchema>;
 
 const CustomerForm = ({
   customer,
@@ -11,10 +19,15 @@ const CustomerForm = ({
   customer?: Customer;
   onSuccess: (customer: Customer) => void;
 }) => {
-  const { register, handleSubmit } = useForm<Customer>();
+  const { register, handleSubmit,formState:{errors} } = useForm<Customer>({
+    resolver: zodResolver(createCustomerSchema)
+  });
+  const [error, setError] = useState("");
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
+
+
       <Form
         className="w-full "
         onSubmit={handleSubmit(async (data) => {
@@ -27,7 +40,7 @@ const CustomerForm = ({
               const updatedCustomer: Customer = await response.json();
               onSuccess(updatedCustomer);
             } else {
-              const response = await fetch("/api/customers", {
+              const response = await fetch("/api/customers/new", {
                 method: "POST",
                 body: JSON.stringify(data),
               });
@@ -35,11 +48,14 @@ const CustomerForm = ({
               onSuccess(newCustomer);
             }
           } catch (error) {
-            console.log(error);
+            setError('An unexpcted error  occurred.');
           }
         })}
       >
         <div className="flex flex-col w-full">
+        {error &&<Callout.Root color="red" className="mb-5">
+        <Callout.Text> {error}</Callout.Text>
+        </Callout.Root>}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {customer ? " Edit Customer" : "New Customer"}
@@ -50,6 +66,8 @@ const CustomerForm = ({
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">FirstName</span>
                 <TextField.Root>
+                
+                  
                   <TextField.Input
                     radius="large"
                     variant="classic"
@@ -59,6 +77,7 @@ const CustomerForm = ({
                     {...register("firstname")}
                   />
                 </TextField.Root>
+<ErrorMessage>{errors.firstname?.message}</ErrorMessage>
               </Box>
 
               <Box className="w-1/2" p="2">
@@ -73,6 +92,7 @@ const CustomerForm = ({
                     {...register("lastname")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.lastname?.message}</ErrorMessage>
               </Box>
 
               <Box className="w-1/2" p="2">
@@ -87,6 +107,7 @@ const CustomerForm = ({
                     {...register("email")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.email?.message}</ErrorMessage>
               </Box>
 
               <Box className="w-1/2" p="2">
@@ -100,6 +121,7 @@ const CustomerForm = ({
                     {...register("phone")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               </Box>
             </Flex>
           </div>

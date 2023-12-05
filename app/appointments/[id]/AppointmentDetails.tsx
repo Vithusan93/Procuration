@@ -51,25 +51,26 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
                   <Table.Row>
                     <Table.Cell className="hidden md:table-cell">
                       <Link href={`/appointments/${appointment.id}`}>
-                        <p>{appointment.customerId}</p>
+                   {/*     <p>{appointment.customerId}</p>*/}
                       </Link>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
                       {" "}
-                      <p>{appointment.serviceId}</p>
+                   {/*   <p>{appointment.serviceId}</p>*/}
                     </Table.Cell>
 
                     <Table.Cell className="hidden md:table-cell">
-                      <p>{appointment.status}</p>
+                   {/*   <p>{appointment.status}</p>*/}
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                      <p>{appointment.time.toLocaleDateString()}</p>
+                   {/*   <p>{appointment.time.toLocaleDateString()}</p>*/}
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                      <p>{appointment.staffId}</p>
+                   {/* */}
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>
+                
               </Table.Root>
             </Box>
           </div>

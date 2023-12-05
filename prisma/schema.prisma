@@ -163,3 +163,5 @@ model InvoiceProduct {
 
   quantity Int
 }
+
+

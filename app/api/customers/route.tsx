@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { createCustomerSchema } from "@/app/validationSchemas";
+
+
+
 
 export async function GET(request: NextRequest) {
   const search = request.nextUrl.searchParams.get("search");
@@ -24,6 +28,9 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  const validation = createCustomerSchema.safeParse(body);
+  if(!validation.success)
+  return NextResponse.json(validation.error.format(),{status:400});
   console.log(body);
 
   const customer = await prisma.customer.create({
