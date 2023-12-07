@@ -6,20 +6,26 @@ import {
   Button,
   TextField,
   Heading,
-  Grid,
+  Callout,
   Box,
 } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
+import { createServiceSchema } from "../validationSchemas";
+import { z } from "zod";
+import {zodResolver} from '@hookform/resolvers/zod';
+import { useState } from "react";
+import ErrorMessage from "@/components/ErrorMessage";
 import "easymde/dist/easymde.min.css";
 import { Form } from "@radix-ui/react-form";
 import { useRouter } from "next/navigation";
 import { Service } from "@prisma/client";
 
+type ServiceForm = z.infer<typeof createServiceSchema>;
+
 const ServiceForm = ({ service }: { service?: Service }) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<Service>();
-
+  const { register, handleSubmit,formState:{errors}  } = useForm<Service>({resolver: zodResolver(createServiceSchema)});
+  const [error, setError] = useState("");
   console.log();
 
   return (
@@ -42,11 +48,14 @@ const ServiceForm = ({ service }: { service?: Service }) => {
               router.push("/services");
             }
           } catch (error) {
-            console.log(error);
+            setError('An unexpcted error  occurred.');
           }
         })}
       >
         <div className="flex flex-col w-full">
+        {error &&<Callout.Root color="red" className="mb-5">
+        <Callout.Text> {error}</Callout.Text>
+        </Callout.Root>}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {service ? " Edit Service" : "New Service"}
@@ -67,6 +76,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
                     {...register("name")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.name?.message}</ErrorMessage>
               </Box>
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">Duration</span>
@@ -80,6 +90,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
                     {...register("duration")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.duration?.message}</ErrorMessage>
               </Box>
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">Price</span>
@@ -93,6 +104,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
                     {...register("price")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.price?.message}</ErrorMessage>
               </Box>
             </Flex>
           </div>

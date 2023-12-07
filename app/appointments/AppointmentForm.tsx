@@ -17,6 +17,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ServiceSelect from "./ServiceSelect";
 import StaffSelect from "./StaffSelect";
+import { createServiceSchema } from "../validationSchemas";
+import { z } from "zod";
+import {zodResolver} from '@hookform/resolvers/zod';
+
+import ErrorMessage from "@/components/ErrorMessage";
+
 
 const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
   const router = useRouter();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { createServiceSchema } from "@/app/validationSchemas";
 
 export async function GET(request: NextRequest) {
   const services = await prisma.service.findMany({
@@ -10,6 +11,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  const validation = createServiceSchema.safeParse(body);
+
   console.log(body);
 
   const service = await prisma.service.create({

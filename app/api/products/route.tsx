@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { createProductSchema } from "@/app/validationSchemas";
 
 export async function GET(request: NextRequest) {
   const products = await prisma.product.findMany({
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   //TODO: Add authentication
   const body = await request.json();
-  console.log(body);
+ const validation = createProductSchema.safeParse(body);
 
   const product = await prisma.product.create({
     data: {

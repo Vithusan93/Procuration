@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
+import { createAppointmentSchema } from "@/app/validationSchemas";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log("dans le request post api");
+  const validation = createAppointmentSchema.safeParse(body);
   console.log(body);
 
   const appointment = await prisma.appointment.create({

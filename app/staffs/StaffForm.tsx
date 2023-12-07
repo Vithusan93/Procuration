@@ -1,15 +1,22 @@
 "use client";
 import React from "react";
-import { Theme } from "@radix-ui/themes";
-import { Flex, Heading, Box, Button, TextField } from "@radix-ui/themes";
+import { Flex, Heading, Box, Button, TextField,Callout } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
+import { createStaffSchema } from "../validationSchemas";
+import { z } from "zod";
+import {zodResolver} from '@hookform/resolvers/zod';
+import { useState } from "react";
+import ErrorMessage from "@/components/ErrorMessage";
+
+type StaffForm = z.infer<typeof createStaffSchema>;
 
 const StaffForm = ({ staff }: { staff?: Staff }) => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<Staff>();
+  const { register, handleSubmit,formState:{errors}  } = useForm<Staff>({resolver: zodResolver(createStaffSchema)});
+  const [error, setError] = useState("");
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -31,11 +38,14 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
               router.push("/staffs");
             }
           } catch (error) {
-            console.log(error);
+            setError('An unexpcted error  occurred.');
           }
         })}
       >
         <div className="flex flex-col w-full">
+        {error &&<Callout.Root color="red" className="mb-5">
+        <Callout.Text> {error}</Callout.Text>
+        </Callout.Root>}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {staff ? " Edit Staff" : "New Staff"}
@@ -55,6 +65,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
                     {...register("firstname")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.firstname?.message}</ErrorMessage>
               </Box>
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">LastName</span>
@@ -68,6 +79,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
                     {...register("lastname")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.lastname?.message}</ErrorMessage>
               </Box>
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">Email</span>
@@ -81,6 +93,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
                     {...register("email")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.email?.message}</ErrorMessage>
               </Box>
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">Phone Number</span>
@@ -94,6 +107,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
                     {...register("phone")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               </Box>
             </Flex>
           </div>
