@@ -23,6 +23,7 @@ export async function PATCH(
       customerId: parseInt(body.customerId),
       staffId: parseInt(body.staffId),
       duration: parseInt(body.duration),
+      
     },
     include: { customer: true },
   });

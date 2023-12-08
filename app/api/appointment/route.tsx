@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       serviceId: parseInt(body.serviceId),
       duration: parseInt(body.duration),
       time: body.time,
-      status: "pending",
+      //status: body.status
     },
     include: {
       customer: true,
