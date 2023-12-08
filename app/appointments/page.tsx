@@ -1,3 +1,4 @@
+import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 import prisma from "@/prisma/client";
 import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
 import Link from "next/link";
@@ -56,7 +57,7 @@ const Appointment = async () => {
                     {appointment.time.toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {appointment.status}
+                    <AppointmentStatusBadge status={appointment.status}/>
                   </Table.Cell>
                 </Table.Row>
               ))}
