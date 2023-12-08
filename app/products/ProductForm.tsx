@@ -19,7 +19,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const { register, handleSubmit,formState:{errors}  } = useForm<Product>({resolver: zodResolver(createProductSchema)});
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false)
-
+  
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">

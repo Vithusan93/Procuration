@@ -67,7 +67,7 @@ model Appointment {
 
   time     DateTime
   duration Int // Minutes
-  status   String // Enum not supported in sqlite (handle in api)
+  status   Status   @default(PENDIND) // Enum not supported in sqlite (handle in api)
 }
 
 model Account {
@@ -165,3 +165,8 @@ model InvoiceProduct {
 }
 
 
+enum Status {
+  PENDIND
+  ACCEPTING
+  FINISHING
+}

@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import {zodResolver} from '@hookform/resolvers/zod';
 import { createCustomerSchema } from "../validationSchemas";
 import { z } from "zod";
-import { text } from "stream/consumers";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
 
@@ -26,37 +25,39 @@ const CustomerForm = ({
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false)
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (customer) {
+        
+        const response = await fetch("/api/customers/" + customer.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        const updatedCustomer: Customer = await response.json();
+        onSuccess(updatedCustomer);
+      } else {
+        setSubmitting(true);
+        const response = await fetch("/api/customers/", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        const newCustomer: Customer = await response.json();
+        onSuccess(newCustomer);
+        
+      }
+    } catch (error) {
+      setError('An unexpcted error  occurred.');
+      setSubmitting(false);
+    }
+  })
+
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
 
 
       <Form
         className="w-full "
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            if (customer) {
-              
-              const response = await fetch("/api/customers/" + customer.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              const updatedCustomer: Customer = await response.json();
-              onSuccess(updatedCustomer);
-            } else {
-              setSubmitting(true);
-              const response = await fetch("/api/customers/", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              const newCustomer: Customer = await response.json();
-              onSuccess(newCustomer);
-              
-            }
-          } catch (error) {
-            setError('An unexpcted error  occurred.');
-            setSubmitting(false);
-          }
-        })}
+        onSubmit={onSubmit}
       >
         <div className="flex flex-col w-full">
         {error &&<Callout.Root color="red" className="mb-5">
@@ -83,7 +84,7 @@ const CustomerForm = ({
                     {...register("firstname")}
                   />
                 </TextField.Root>
-<ErrorMessage>{errors.firstname?.message}</ErrorMessage>
+                <ErrorMessage>{errors.firstname?.message}</ErrorMessage>
               </Box>
 
               <Box className="w-1/2" p="2">
