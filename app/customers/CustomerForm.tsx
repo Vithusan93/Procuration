@@ -9,6 +9,7 @@ import { createCustomerSchema } from "../validationSchemas";
 import { z } from "zod";
 import { text } from "stream/consumers";
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
 
 type CustomerForm = z.infer<typeof createCustomerSchema>;
 
@@ -23,6 +24,7 @@ const CustomerForm = ({
     resolver: zodResolver(createCustomerSchema)
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false)
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -33,6 +35,7 @@ const CustomerForm = ({
         onSubmit={handleSubmit(async (data) => {
           try {
             if (customer) {
+              
               const response = await fetch("/api/customers/" + customer.id, {
                 method: "PATCH",
                 body: JSON.stringify(data),
@@ -40,15 +43,18 @@ const CustomerForm = ({
               const updatedCustomer: Customer = await response.json();
               onSuccess(updatedCustomer);
             } else {
-              const response = await fetch("/api/customers/new", {
+              setSubmitting(true);
+              const response = await fetch("/api/customers/", {
                 method: "POST",
                 body: JSON.stringify(data),
               });
               const newCustomer: Customer = await response.json();
               onSuccess(newCustomer);
+              
             }
           } catch (error) {
             setError('An unexpcted error  occurred.');
+            setSubmitting(false);
           }
         })}
       >
@@ -127,9 +133,9 @@ const CustomerForm = ({
           </div>
         </div>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-          <Button size="3" variant="classic">
+          <Button size="3" variant="classic" disabled={isSubmitting}>
             {customer ? "Update Customer" : "Submit New Customer"}
-          </Button>
+          {isSubmitting && <Spinner/>}</Button>
         </div>
       </Form>
     </div>

@@ -10,6 +10,7 @@ import { z } from "zod";
 import {zodResolver} from '@hookform/resolvers/zod';
 import { useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
 
 type StaffForm = z.infer<typeof createStaffSchema>;
 
@@ -17,6 +18,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
   const router = useRouter();
   const { register, handleSubmit,formState:{errors}  } = useForm<Staff>({resolver: zodResolver(createStaffSchema)});
   const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false)
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -31,6 +33,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
               });
               router.push("/staffs");
             } else {
+              setSubmitting(true);
               await fetch("/api/staffs", {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -39,6 +42,7 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
             }
           } catch (error) {
             setError('An unexpcted error  occurred.');
+            setSubmitting(false);
           }
         })}
       >
@@ -112,9 +116,9 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
             </Flex>
           </div>
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-            <Button size="3" variant="classic">
+            <Button size="3" variant="classic" disabled={isSubmitting}>
               {staff ? "Update Staff" : "Submit New Staff"}
-            </Button>
+              {isSubmitting && <Spinner/>}</Button>
           </div>
         </div>
       </Form>

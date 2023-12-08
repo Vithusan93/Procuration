@@ -19,6 +19,7 @@ import "easymde/dist/easymde.min.css";
 import { Form } from "@radix-ui/react-form";
 import { useRouter } from "next/navigation";
 import { Service } from "@prisma/client";
+import Spinner from "@/components/Spinner";
 
 type ServiceForm = z.infer<typeof createServiceSchema>;
 
@@ -26,7 +27,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
   const router = useRouter();
   const { register, handleSubmit,formState:{errors}  } = useForm<Service>({resolver: zodResolver(createServiceSchema)});
   const [error, setError] = useState("");
-  console.log();
+  const [isSubmitting, setSubmitting] = useState(false)
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -41,6 +42,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
               });
               router.push("/services");
             } else {
+              setSubmitting(true);
               await fetch("/api/services", {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -49,6 +51,7 @@ const ServiceForm = ({ service }: { service?: Service }) => {
             }
           } catch (error) {
             setError('An unexpcted error  occurred.');
+            setSubmitting(false);
           }
         })}
       >
@@ -109,9 +112,9 @@ const ServiceForm = ({ service }: { service?: Service }) => {
             </Flex>
           </div>
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-            <Button size="3" variant="classic">
+            <Button size="3" variant="classic" disabled={isSubmitting}>
               {service ? "Update Service" : "Submit New Service"}
-            </Button>
+              {isSubmitting && <Spinner/>}</Button>
           </div>
         </div>
       </Form>

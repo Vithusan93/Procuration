@@ -10,6 +10,7 @@ import { z } from "zod";
 import {zodResolver} from '@hookform/resolvers/zod';
 import { useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
 
 type ProductForm = z.infer<typeof createProductSchema>;
 
@@ -17,6 +18,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const router = useRouter();
   const { register, handleSubmit,formState:{errors}  } = useForm<Product>({resolver: zodResolver(createProductSchema)});
   const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false)
+
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -31,6 +34,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
               });
               router.push("/products");
             } else {
+              setSubmitting(true);
               await fetch("/api/products", {
                 method: "POST",
                 body: JSON.stringify(data),
@@ -39,6 +43,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
             }
           } catch (error) {
             setError('An unexpcted error  occurred.');
+            setSubmitting(false);
           }
         })}
       >
@@ -113,9 +118,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
           </Flex>
         </div>
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-          <Button size="3" variant="classic">
+          <Button size="3" variant="classic" disabled={isSubmitting}>
             {product ? "Update Product" : "Submit New Product"}
-          </Button>
+            {isSubmitting && <Spinner/>}</Button>
         </div>
       </Form>
     </div>
