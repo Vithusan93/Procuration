@@ -52,7 +52,7 @@ const Appointment = async () => {
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {" "}
-                    {appointment.staff.firstname}
+                    {appointment.staff.firstname} {appointment.staff.lastname}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {appointment.time.toLocaleDateString()}

@@ -1,5 +1,5 @@
 "use client";
-import { Appointment, Customer } from "@prisma/client";
+import { Appointment, Customer, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { Box, Button, Heading, Text, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ServiceSelect from "./ServiceSelect";
 import StaffSelect from "./StaffSelect";
-
+import GetStaffButton from "./GetStaffsButton";
 import GetCustomerButton from "./GetCustomerButton";
 
 const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
@@ -15,6 +15,7 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
   const { register, handleSubmit, control, setValue } = useForm<Appointment>();
 
   const [customer, setCustomer] = useState<Customer>();
+  const [staff, setStaff] = useState<Staff>();
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -73,17 +74,24 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
                 />
               </Box>
 
-              <label>
-                <Text as="div" size="2" mb="1" weight="bold">
-                  Staff
-                </Text>
-                <StaffSelect
-                  name="staffId"
-                  label="Staff"
-                  placeholder="Staff"
-                  control={control}
+              <Box className="shadow p-2 bg-gray-100 w-full">
+                <div className="text-gray-800 text-sm font-semibold">Staff</div>
+                <div className="bg-gray-300 rounded-md p-2">
+                  {staff ? (
+                    <span className="text-md text-gray-900 font-semibold ">
+                      {staff.firstname} {staff.lastname}
+                    </span>
+                  ) : (
+                    <span>Staff not selected</span>
+                  )}
+                </div>
+                <GetStaffButton
+                  onStaffSelect={(staff) => {
+                    setStaff(staff);
+                    setValue("staffId", staff.id);
+                  }}
                 />
-              </label>
+              </Box>
               <label>
                 <Text as="div" size="2" mb="1" weight="bold">
                   Service
