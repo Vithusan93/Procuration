@@ -12,7 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { createServiceSchema } from "../validationSchemas";
 import { z } from "zod";
-import {zodResolver} from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
 import "easymde/dist/easymde.min.css";
@@ -25,40 +25,44 @@ type ServiceForm = z.infer<typeof createServiceSchema>;
 
 const ServiceForm = ({ service }: { service?: Service }) => {
   const router = useRouter();
-  const { register, handleSubmit,formState:{errors}  } = useForm<Service>({resolver: zodResolver(createServiceSchema)});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Service>({ resolver: zodResolver(createServiceSchema) });
   const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (service) {
+        await fetch("/api/services/" + service.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        router.push("/services");
+      } else {
+        setSubmitting(true);
+        await fetch("/api/services", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        router.push("/services");
+      }
+    } catch (error) {
+      setError("An unexpcted error  occurred.");
+      setSubmitting(false);
+    }
+  });
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form
-        className="w-full "
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            if (service) {
-              await fetch("/api/services/" + service.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              router.push("/services");
-            } else {
-              setSubmitting(true);
-              await fetch("/api/services", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              router.push("/services");
-            }
-          } catch (error) {
-            setError('An unexpcted error  occurred.');
-            setSubmitting(false);
-          }
-        })}
-      >
+      <Form className="w-full " onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
-        {error &&<Callout.Root color="red" className="mb-5">
-        <Callout.Text> {error}</Callout.Text>
-        </Callout.Root>}
+          {error && (
+            <Callout.Root color="red" className="mb-5">
+              <Callout.Text> {error}</Callout.Text>
+            </Callout.Root>
+          )}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {service ? " Edit Service" : "New Service"}
@@ -114,7 +118,8 @@ const ServiceForm = ({ service }: { service?: Service }) => {
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
             <Button size="3" variant="classic" disabled={isSubmitting}>
               {service ? "Update Service" : "Submit New Service"}
-              {isSubmitting && <Spinner/>}</Button>
+              {isSubmitting && <Spinner />}
+            </Button>
           </div>
         </div>
       </Form>

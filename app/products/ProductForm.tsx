@@ -1,13 +1,21 @@
 "use client";
 import React from "react";
-import { Flex, Heading, Box, Button, TextField,Callout,Text } from "@radix-ui/themes";
+import {
+  Flex,
+  Heading,
+  Box,
+  Button,
+  TextField,
+  Callout,
+  Text,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { Product } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
 import { createProductSchema } from "../validationSchemas";
 import { z } from "zod";
-import {zodResolver} from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
@@ -16,41 +24,44 @@ type ProductForm = z.infer<typeof createProductSchema>;
 
 const ProductForm = ({ product }: { product?: Product }) => {
   const router = useRouter();
-  const { register, handleSubmit,formState:{errors}  } = useForm<Product>({resolver: zodResolver(createProductSchema)});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Product>({ resolver: zodResolver(createProductSchema) });
   const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false)
-  
+  const [isSubmitting, setSubmitting] = useState(false);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (product) {
+        await fetch("/api/products/" + product.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        router.push("/products");
+      } else {
+        setSubmitting(true);
+        await fetch("/api/products", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        router.push("/products");
+      }
+    } catch (error) {
+      setError("An unexpcted error  occurred.");
+      setSubmitting(false);
+    }
+  });
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form
-        className="w-full "
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            if (product) {
-              await fetch("/api/products/" + product.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              router.push("/products");
-            } else {
-              setSubmitting(true);
-              await fetch("/api/products", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              router.push("/products");
-            }
-          } catch (error) {
-            setError('An unexpcted error  occurred.');
-            setSubmitting(false);
-          }
-        })}
-      >
+      <Form className="w-full " onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
-        {error &&<Callout.Root color="red" className="mb-5">
-        <Callout.Text> {error}</Callout.Text>
-        </Callout.Root>}
+          {error && (
+            <Callout.Root color="red" className="mb-5">
+              <Callout.Text> {error}</Callout.Text>
+            </Callout.Root>
+          )}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {product ? " Edit Product" : "New Product"}
@@ -120,7 +131,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
           <Button size="3" variant="classic" disabled={isSubmitting}>
             {product ? "Update Product" : "Submit New Product"}
-            {isSubmitting && <Spinner/>}</Button>
+            {isSubmitting && <Spinner />}
+          </Button>
         </div>
       </Form>
     </div>

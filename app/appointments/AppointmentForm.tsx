@@ -13,40 +13,38 @@ import GetCustomerButton from "./GetCustomerButton";
 const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
   const router = useRouter();
   const { register, handleSubmit, control, setValue } = useForm<Appointment>();
-
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
 
+  const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
+
+    if (data.time) {
+      data.time = new Date(data.time);
+    }
+
+    try {
+      if (appointment) {
+        await fetch("/api/appointment/" + appointment.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        router.push("/appointments");
+      } else {
+        await fetch("/api/appointment", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        router.push("/appointments");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form
-        className="w-full"
-        onSubmit={handleSubmit(async (data) => {
-          console.log(data);
-
-          if (data.time) {
-            data.time = new Date(data.time);
-          }
-
-          try {
-            if (appointment) {
-              await fetch("/api/appointment/" + appointment.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              router.push("/appointments");
-            } else {
-              await fetch("/api/appointment", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              router.push("/appointments");
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        })}
-      >
+      <Form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">Book Appointment</Heading>

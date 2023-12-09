@@ -1,13 +1,20 @@
 "use client";
 import React from "react";
-import { Flex, Heading, Box, Button, TextField,Callout } from "@radix-ui/themes";
+import {
+  Flex,
+  Heading,
+  Box,
+  Button,
+  TextField,
+  Callout,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { useForm } from "react-hook-form";
 import { createStaffSchema } from "../validationSchemas";
 import { z } from "zod";
-import {zodResolver} from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
@@ -16,40 +23,44 @@ type StaffForm = z.infer<typeof createStaffSchema>;
 
 const StaffForm = ({ staff }: { staff?: Staff }) => {
   const router = useRouter();
-  const { register, handleSubmit,formState:{errors}  } = useForm<Staff>({resolver: zodResolver(createStaffSchema)});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Staff>({ resolver: zodResolver(createStaffSchema) });
   const [error, setError] = useState("");
-  const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (staff) {
+        await fetch("/api/staffs/" + staff.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        router.push("/staffs");
+      } else {
+        setSubmitting(true);
+        await fetch("/api/staffs", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        router.push("/staffs");
+      }
+    } catch (error) {
+      setError("An unexpcted error  occurred.");
+      setSubmitting(false);
+    }
+  });
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form
-        className="w-full "
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            if (staff) {
-              await fetch("/api/staffs/" + staff.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              router.push("/staffs");
-            } else {
-              setSubmitting(true);
-              await fetch("/api/staffs", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              router.push("/staffs");
-            }
-          } catch (error) {
-            setError('An unexpcted error  occurred.');
-            setSubmitting(false);
-          }
-        })}
-      >
+      <Form className="w-full " onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
-        {error &&<Callout.Root color="red" className="mb-5">
-        <Callout.Text> {error}</Callout.Text>
-        </Callout.Root>}
+          {error && (
+            <Callout.Root color="red" className="mb-5">
+              <Callout.Text> {error}</Callout.Text>
+            </Callout.Root>
+          )}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {staff ? " Edit Staff" : "New Staff"}
@@ -118,7 +129,8 @@ const StaffForm = ({ staff }: { staff?: Staff }) => {
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
             <Button size="3" variant="classic" disabled={isSubmitting}>
               {staff ? "Update Staff" : "Submit New Staff"}
-              {isSubmitting && <Spinner/>}</Button>
+              {isSubmitting && <Spinner />}
+            </Button>
           </div>
         </div>
       </Form>
