@@ -1,6 +1,6 @@
 "use client";
 import prisma from "@/prisma/client";
-import { Bill } from "@prisma/client";
+import { Bill, Customer, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -8,21 +8,19 @@ import {
   Dialog,
   Flex,
   Heading,
-  Table,
   TextField,
-  Text,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import CustomerSelect from "./CustomerSelect";
-import ProductSelect from "./ProductSelect";
-import ServiceSelect from "./ServiceSelect";
 import StaffSelect from "./StaffSelect";
 import CustomerForm from "../customers/CustomerForm";
 import { useState } from "react";
-import InvoiceProductPanel from "./InvoiceProductPanel";
 import { IoMdAdd } from "react-icons/io";
 import InvoiceProductForm from "./InvoiceProductForm";
+
+import GetCustomerButton from "./GetCustomerButton";
+import GetStaffButton from "./GetStaffsButton";
 
 const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const { register, handleSubmit, control, setValue } = useForm<Bill>();
@@ -31,6 +29,9 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const [addingProduct, setAddingProduct] = useState<boolean>(false);
   //console.log(register("customer"));
   const router = useRouter();
+
+  const [customer, setCustomer] = useState<Customer>();
+  const [staff, setStaff] = useState<Staff>();
 
   /*  useEffect(() => {
     const generatePDF = () => {
@@ -95,19 +96,48 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                     {...register("billnumber")}
                   />
                 </TextField.Root>
+                <Box className="">
+                  <div className="text-gray-800 text-sm font-semibold">
+                    Customer
+                  </div>
+                  <div className="bg-gray-300 rounded-md p-2">
+                    {customer ? (
+                      <span className="text-md text-gray-900 font-semibold ">
+                        {customer.firstname} {customer.lastname}
+                      </span>
+                    ) : (
+                      <span>Customer not selected</span>
+                    )}
+                  </div>
+                  <GetCustomerButton
+                    onCustomerSelect={(customer) => {
+                      setCustomer(customer);
+                      setValue("customerId", customer.id);
+                    }}
+                  />
+                </Box>
+
+                <Box className="">
+                  <div className="text-gray-800 text-sm font-semibold">
+                    Staff
+                  </div>
+                  <div className="bg-gray-300 rounded-md p-2">
+                    {staff ? (
+                      <span className="text-md text-gray-900 font-semibold ">
+                        {staff.firstname} {staff.lastname}
+                      </span>
+                    ) : (
+                      <span>Staff not selected</span>
+                    )}
+                  </div>
+                  <GetStaffButton
+                    onStaffSelect={(staff) => {
+                      setStaff(staff);
+                      setValue("staffId", staff.id);
+                    }}
+                  />
+                </Box>
                 <Flex gap="3" align={"center"}>
-                  <label
-                    htmlFor="customerId"
-                    className="flex align-middle gap-2 items-center my-2"
-                  >
-                    <span className="font-semibold">Customer</span>
-                    <CustomerSelect
-                      name="customerId"
-                      label="Customer"
-                      placeholder="Customer"
-                      control={control}
-                    />
-                  </label>
                   <Button
                     variant="outline"
                     color="gray"
@@ -116,23 +146,7 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                   >
                     Add new customer
                   </Button>
-                  <div>
-                    <Box className="w-1/2" p="2">
-                      <label
-                        htmlFor="customerId"
-                        className="flex align-middle gap-2 items-center my-2"
-                      >
-                        <span className="font-semibold">Staff</span>
-
-                        <StaffSelect
-                          name="staffId"
-                          label="Staff"
-                          placeholder="Staff"
-                          control={control}
-                        />
-                      </label>
-                    </Box>
-                  </div>
+                  <div> </div>
                 </Flex>
               </Box>
 
