@@ -66,7 +66,7 @@ const CustomerForm = ({
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {customer ? " Edit Customer" : "New Customer"}
-            </Heading>
+            </Heading>  
           </div>
           <div className="flex p-2 bg-gray-100">
             <Flex gap="1">

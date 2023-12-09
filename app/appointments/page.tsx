@@ -42,7 +42,8 @@ const Appointment = async () => {
                 <Table.Row key={appointment.id}>
                   <Table.Cell className="hidden md:table-cell">
                     <Link href={`/appointments/${appointment.id}`}>
-                      {appointment.customer.firstname}
+                      {appointment.customer.firstname}{" "}
+                      {appointment.customer.lastname}
                     </Link>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
@@ -57,7 +58,7 @@ const Appointment = async () => {
                     {appointment.time.toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    <AppointmentStatusBadge status={appointment.status}/>
+                    <AppointmentStatusBadge status={appointment.status} />
                   </Table.Cell>
                 </Table.Row>
               ))}
