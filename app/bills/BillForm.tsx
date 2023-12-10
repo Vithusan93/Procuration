@@ -82,7 +82,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
   }, [bill]);
 
   return (
-    <div className="flex items-center max-w-7xl mx-auto w-full">
+    <div className="flex items-center w-full">
       <Form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full bg-gray-100">
           <div className="bg-gray-200 w-full p-4">

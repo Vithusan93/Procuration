@@ -14,7 +14,7 @@ const EditBillPage = async ({ params }: Props) => {
 
   if (!bill) return;
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="">
       <BillFormPage bill={bill} />
     </div>
   );
