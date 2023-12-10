@@ -1,22 +1,16 @@
-import prisma from "@/prisma/client";
+import React from 'react'
 import Link from "next/link";
-import React from "react";
-import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
-import StaffAction from "./StaffAction";
+import { Table } from '@radix-ui/themes';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-const Staffs = async () => {
-  const staffs = await prisma.staff.findMany();
+
+
+const LoadingStaffPage = () => {
+    const staffs= [1,2,3,4];
   return (
-    <>
-      <Theme>
-        <Container size="4">
-          <div className="flex flex-col w-full">
-            <div className="bg-gray-200 w-full p-4">
-              <Heading className="text-gray-900">Staff Liste</Heading>
-            </div>
-          </div>
-
-          <Table.Root variant="surface">
+    <div>
+    <Table.Root variant="surface">
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeaderCell className="hidden md:table-cell">
@@ -35,30 +29,25 @@ const Staffs = async () => {
             </Table.Header>
             <Table.Body>
               {staffs.map((staff) => (
-                <Table.Row key={staff.id}>
+                <Table.Row key={staff}>
                   <Table.Cell className="hidden md:table-cell">
-                    <Link href={`/staffs/${staff.id}`}>{staff.firstname}</Link>
+                    <Link href={`/staffs/${staff}`}><Skeleton/></Link>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {staff.lastname}
+                  <Skeleton/>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {staff.email}
+                  <Skeleton/>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {staff.phone.toString()}
+                  <Skeleton/>
                   </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
           </Table.Root>
-        </Container>
-            <StaffAction/>
-      </Theme>
-    </>
-  );
-};
-export const dynamic = "force-dynamic";
-export const revalidate = false;
+  </div>
+  )
+}
 
-export default Staffs;
+export default LoadingStaffPage

@@ -4,7 +4,6 @@ import React from "react";
 import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
 import 'react-loading-skeleton/dist/skeleton.css'
 import delay from 'delay';
-import LoadingCustomerPage from "./loading";
 import CustomerAction from "./CustomerAction";
 
 

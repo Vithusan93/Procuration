@@ -6,42 +6,35 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 
 
-const LoadingCustomerPage = () => {
-    const customers= [1,2,3,4];
+const LoadingServicePage = () => {
+    const services= [1,2,3];
   return (
-    <div> <Table.Root variant="surface">
+    <div>
+    <Table.Root variant="surface">
     <Table.Header>
       <Table.Row>
         <Table.ColumnHeaderCell className="hidden md:table-cell">
-          FirstName
+          Name
         </Table.ColumnHeaderCell>
         <Table.ColumnHeaderCell className="hidden md:table-cell">
-          LastName
+          Duration
         </Table.ColumnHeaderCell>
         <Table.ColumnHeaderCell className="hidden md:table-cell">
-          Email
-        </Table.ColumnHeaderCell>
-        <Table.ColumnHeaderCell className="hidden md:table-cell">
-          Phone
+          Price
         </Table.ColumnHeaderCell>
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {customers.map((customer) => (
-        <Table.Row key={customer}>
+      {services.map((service) => (
+        <Table.Row key={service}>
           <Table.Cell className="hidden md:table-cell">
-          <Link href={`/customers/${customer}`}>
-              <Skeleton/>
-            </Link>
+            <Link href={`/services/${service}`}><Skeleton/></Link>
           </Table.Cell>
           <Table.Cell className="hidden md:table-cell">
-            <Skeleton/>
+          <Skeleton/>
           </Table.Cell>
           <Table.Cell className="hidden md:table-cell">
-            <Skeleton/>
-          </Table.Cell>
-          <Table.Cell className="hidden md:table-cell">
-            <Skeleton/>
+          <Skeleton/>
           </Table.Cell>
         </Table.Row>
       ))}
@@ -52,4 +45,4 @@ const LoadingCustomerPage = () => {
   )
 }
 
-export default LoadingCustomerPage
+export default LoadingServicePage

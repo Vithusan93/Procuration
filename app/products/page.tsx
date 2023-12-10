@@ -2,6 +2,7 @@ import prisma from "@/prisma/client";
 import Link from "next/link";
 import React from "react";
 import { Table, Button, Theme, Container, Heading } from "@radix-ui/themes";
+import ProductAction from "./ProductAction";
 
 const Products = async () => {
   const products = await prisma.product.findMany();
@@ -51,13 +52,7 @@ const Products = async () => {
             </Table.Body>
           </Table.Root>
         </Container>
-        <Container className="mb-5 ">
-          <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-            <Button size="3" variant="classic">
-              <Link href={"/products/new"}>Add Product</Link>
-            </Button>
-          </div>
-        </Container>
+<ProductAction/>
       </Theme>
     </>
   );

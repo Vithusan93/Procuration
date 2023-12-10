@@ -37,7 +37,7 @@ const GetCustomerButton = ({
         <Dialog.Content style={{ maxWidth: 450 }}>
           <Dialog.Title>Select Customer</Dialog.Title>
           <Dialog.Description size="2" mb="4">
-            search for exising customerß
+            search for exising customer
           </Dialog.Description>
 
           <Flex direction="column" gap="3">

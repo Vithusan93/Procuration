@@ -2,6 +2,7 @@ import prisma from "@/prisma/client";
 import Link from "next/link";
 import React from "react";
 import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
+import ServiceAction from "./ServiceAciton";
 
 const Services = async () => {
   const services = await prisma.service.findMany();
@@ -46,13 +47,7 @@ const Services = async () => {
             </Table.Body>
           </Table.Root>
         </Container>
-        <Container className="mb-5 ">
-          <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
-            <Button size="3" variant="classic">
-              <Link href={"/services/new"}>Add Service</Link>
-            </Button>
-          </div>
-        </Container>
+       <ServiceAction/>
       </Theme>
     </>
   );
