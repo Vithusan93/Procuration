@@ -1,5 +1,4 @@
 "use client";
-import prisma from "@/prisma/client";
 import { Bill, Customer, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
@@ -12,8 +11,6 @@ import {
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import CustomerSelect from "./CustomerSelect";
-import StaffSelect from "./StaffSelect";
 import CustomerForm from "../customers/CustomerForm";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -27,11 +24,31 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const [addingNewCustomer, setAddingNewCustomer] = useState<boolean>(false);
 
   const [addingProduct, setAddingProduct] = useState<boolean>(false);
-  //console.log(register("customer"));
   const router = useRouter();
-
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
+  const onSubmit = handleSubmit(async (data) => {
+    if (data.createdAt) {
+      data.createdAt = new Date(data.createdAt);
+    }
+    try {
+      if (bill) {
+        await fetch("/api/bills/" + bill.id, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+        router.push("/bills");
+      } else {
+        await fetch("/api/bills", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        router.push("/bills");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   /*  useEffect(() => {
     const generatePDF = () => {
@@ -51,31 +68,7 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
   }, []); */
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form
-        className="w-full"
-        onSubmit={handleSubmit(async (data) => {
-          if (data.createdAt) {
-            data.createdAt = new Date(data.createdAt);
-          }
-          try {
-            if (bill) {
-              await fetch("/api/bills/" + bill.id, {
-                method: "PATCH",
-                body: JSON.stringify(data),
-              });
-              router.push("/bills");
-            } else {
-              await fetch("/api/bills", {
-                method: "POST",
-                body: JSON.stringify(data),
-              });
-              router.push("/bills");
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        })}
-      >
+      <Form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
