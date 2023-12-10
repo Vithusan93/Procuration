@@ -18,6 +18,7 @@ import GetCustomerButton from "./GetCustomerButton";
 import GetServiceButton from "./GetServiceButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
+import InvoiceSummary from "./_components/InvoiceSummary";
 
 interface BillDetail extends Bill {
   customer: Customer;
@@ -83,7 +84,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
       <Form className="w-full" onSubmit={onSubmit}>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full bg-gray-100">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
               {bill ? " Edit Invoice" : " New Invoice"}
@@ -174,47 +175,6 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
               </Box>
             </Flex>
 
-            {/* <Flex direction="column" gap="1">
-              <div className="bg-gray-300 w-full p-1 direction=row">
-                {false && (
-                  <Table.Root variant="surface">
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
-                          Buy
-                        </Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
-                          Label
-                        </Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
-                          Quantity
-                        </Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className="hidden md:table-cell">
-                          Price
-                        </Table.ColumnHeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      <Table.Row>
-                        <Table.Cell className="hidden md:table-cell">
-                          <span className="font-semibold">Service</span>
-                        </Table.Cell>
-                        <Table.Cell className="hidden md:table-cell">
-                          {}
-                        </Table.Cell>
-                        <Table.Cell className="hidden md:table-cell">
-                          {}
-                        </Table.Cell>
-                        <Table.Cell className="hidden md:table-cell">
-                          {}
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table.Body>
-                  </Table.Root>
-                )}
-              </div>
-            </Flex> */}
-
             <div className="flex p-2 justify-end">
               <Button
                 variant="outline"
@@ -229,6 +189,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
           </div>
         </div>
 
+        <InvoiceSummary invoiceId={bill?.id} />
         <InvoiceProducts invoiceId={bill?.id} />
 
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">

@@ -9,8 +9,6 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  console.log("dans le request post api");
-  console.log(body);
 
   const invoiceProduct = await prisma.invoiceProduct.create({
     data: {
