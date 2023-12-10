@@ -1,11 +1,6 @@
-import React from "react";
-
-import { string } from "zod";
 import prisma from "@/prisma/client";
-import { parse } from "path";
 
 import BillFormPage from "../../BillForm";
-import InvoiceProductPanel from "../../InvoiceProductPanel";
 
 interface Props {
   params: { id: string };
@@ -14,6 +9,7 @@ interface Props {
 const EditBillPage = async ({ params }: Props) => {
   const bill = await prisma.bill.findUnique({
     where: { id: parseInt(params.id) },
+    include: { customer: true, staff: true },
   });
 
   if (!bill) return;

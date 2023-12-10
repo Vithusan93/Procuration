@@ -10,7 +10,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdAdd } from "react-icons/io";
 import CustomerForm from "../customers/CustomerForm";
@@ -19,7 +19,12 @@ import GetServiceButton from "./GetServiceButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 
-const BillFormPage = ({ bill }: { bill?: Bill }) => {
+interface BillDetail extends Bill {
+  customer: Customer;
+  staff: Staff;
+}
+
+const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
   const { register, handleSubmit, control, setValue } = useForm<Bill>();
   const [addingNewCustomer, setAddingNewCustomer] = useState<boolean>(false);
   const [addingProduct, setAddingProduct] = useState<boolean>(false);
@@ -67,6 +72,14 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
     // Appeler la fonction de génération de PDF
     generatePDF();
   }, []); */
+
+  useEffect(() => {
+    if (bill) {
+      setCustomer(bill.customer);
+      setStaff(bill.staff);
+    }
+  }, [bill]);
+
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
       <Form className="w-full" onSubmit={onSubmit}>
@@ -90,26 +103,28 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                     {...register("billnumber")}
                   />
                 </TextField.Root>
-                <Box className="">
+                <Flex align={"center"} gap="2">
                   <div className="text-gray-800 text-sm font-semibold">
                     Customer
                   </div>
-                  <div className="bg-gray-300 rounded-md p-2">
+                  <div className="grow bg-gray-300 rounded-md px-2 py-1">
                     {customer ? (
-                      <span className="text-md text-gray-900 font-semibold ">
+                      <span className="text-md text-gray-900 font-semibold">
                         {customer.firstname} {customer.lastname}
                       </span>
                     ) : (
                       <span>Customer not selected</span>
                     )}
                   </div>
-                  <GetCustomerButton
-                    onCustomerSelect={(customer) => {
-                      setCustomer(customer);
-                      setValue("customerId", customer.id);
-                    }}
-                  />
-                </Box>
+                  <div>
+                    <GetCustomerButton
+                      onCustomerSelect={(customer) => {
+                        setCustomer(customer);
+                        setValue("customerId", customer.id);
+                      }}
+                    />
+                  </div>
+                </Flex>
 
                 <Box className="">
                   <div className="text-gray-800 text-sm font-semibold">
