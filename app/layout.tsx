@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme appearance="light" accentColor="red">
+        <Theme appearance="light" accentColor="purple">
           <NavBar />
           <main>{children}</main>
           {/*<ThemePanel />*/}

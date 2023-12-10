@@ -1,22 +1,30 @@
 "use client";
-import { Box, Flex, Tabs, Text, TextField } from "@radix-ui/themes";
+import { Box, Button, Flex, Tabs, Text, TextField } from "@radix-ui/themes";
+import Link from "next/link";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
 const InvoiceListPanel = () => {
   return (
-    <Box style={{ width: "25%" }}>
+    <Box className="bg-gray-50 h-screen w-1/4">
       <Tabs.Root defaultValue="account">
         <Tabs.List size={"2"}>
           <Tabs.Trigger value="account">IN PROGRESS</Tabs.Trigger>
           <Tabs.Trigger value="documents">ISSUED INVOICES</Tabs.Trigger>
         </Tabs.List>
-        <Flex p="2">
-          <TextField.Root>
+        <Flex p="2" gap={"1"}>
+          <TextField.Root className="grow">
             <TextField.Slot>
-              <FaSearch height="16" width="16" />
+              <FaSearch />
             </TextField.Slot>
             <TextField.Input placeholder="Search" />
           </TextField.Root>
+          <Link href={"/bills/new"}>
+            <Button type="button" variant="outline" color="gray">
+              <IoIosAddCircleOutline /> New
+            </Button>
+          </Link>
         </Flex>
         <Box px="4" pt="3" pb="2">
           <Tabs.Content value="account">

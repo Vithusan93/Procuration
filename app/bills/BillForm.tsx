@@ -85,12 +85,12 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
     <div className="flex items-center w-full">
       <Form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full bg-gray-100">
-          <div className="bg-gray-200 w-full p-4">
+          <div className="bg-purple-200 w-full p-4">
             <Heading className="text-gray-900">
               {bill ? " Edit Invoice" : " New Invoice"}
             </Heading>
           </div>
-          <div className="bg-gray-100">
+          <div className="bg-purple-50">
             <Flex gap="2">
               <Box className="w-1/2" p="2">
                 <span className="font-semibold">Invoice Number</span>
@@ -192,11 +192,11 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
         <InvoiceSummary invoiceId={bill?.id} />
         <InvoiceProducts invoiceId={bill?.id} />
 
-        <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
+        <div className="flex bg-purple-100 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
             Create Draft
           </Button>
-          <Button size="3" variant="classic">
+          <Button size="3" variant="solid">
             {bill ? "Update Invoice" : "Create Invoice"}
           </Button>
         </div>
