@@ -1,12 +1,15 @@
-import { Button, Dialog, Flex, Table, TextField, Box } from "@radix-ui/themes";
+"use client";
+import { Product } from "@prisma/client";
+import { Box, Button, Dialog, Flex, Table, TextField } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { Appointment, Product } from "@prisma/client";
 
 const GetProductButton = ({
   onProductSelect,
+  buttonLabel,
 }: {
   onProductSelect: (product: Product) => void;
+  buttonLabel?: string;
 }) => {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,8 +33,9 @@ const GetProductButton = ({
         variant="outline"
         color="gray"
         onClick={() => setOpen(true)}
+        className="cursor-pointer"
       >
-        Select Product
+        {buttonLabel ? buttonLabel : "Select Product"}
       </Button>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -66,10 +70,10 @@ const GetProductButton = ({
                         onProductSelect(product);
                         setOpen(false);
                       }}
+                      className="cursor-pointer hover:bg-gray-300"
                     >
-                      <Table.Cell>
-                        {product.name} {product.price.toString()}
-                      </Table.Cell>
+                      <Table.Cell>{product.name}</Table.Cell>
+                      <Table.Cell>{product.price.toString()} Euros</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

@@ -22,7 +22,6 @@ model Product {
   price           Decimal
   stock           Int
   ProductInvoices InvoiceProduct[]
-  Bill            Bill[]
 }
 
 model Service {
@@ -32,7 +31,6 @@ model Service {
   price           Decimal
   Appointment     Appointment[]
   ServiceInvoices InvoiceService[]
-  Bill            Bill[]
 }
 
 model Customer {
@@ -130,12 +128,6 @@ model Bill {
 
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
-
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  serviceId Int
-  service   Service @relation(fields: [serviceId], references: [id])
 
   billnumber Int
 

@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import { Appointment,Customer,Staff } from "@prisma/client";
-import React from "react";
-import {
-  Button,
-  Table,
-  Box,
-  Heading,
-  Container,
-} from "@radix-ui/themes";
+import { Appointment } from "@prisma/client";
+import { Box, Container, Heading, Table } from "@radix-ui/themes";
 import Link from "next/link";
 
 const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
-
-  const [customer, setCustomer] = useState<Customer>();
-  const [staff, setStaff] = useState<Staff>();
   return (
     <div>
       <Container size="4">
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
-              {" "}
               {appointment ? " Appointment Details " : "New Appointment"}
             </Heading>
             <Box
@@ -53,22 +41,22 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
                   <Table.Row>
                     <Table.Cell className="hidden md:table-cell">
                       <Link href={`/appointments/${appointment.id}`}>
-                      {/*<p>{appointment.customerId}</p>*/}
+                        {/*<p>{appointment.customerId}</p>*/}
                       </Link>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
                       {" "}
-                   {/*   <p>{appointment.serviceId}</p>*/}
+                      {/*   <p>{appointment.serviceId}</p>*/}
                     </Table.Cell>
 
                     <Table.Cell className="hidden md:table-cell">
-                   {/*   <p>{appointment.status}</p>*/}
+                      {/*   <p>{appointment.status}</p>*/}
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                   {/*   <p>{appointment.time.toLocaleDateString()}</p>*/}
+                      {/*   <p>{appointment.time.toLocaleDateString()}</p>*/}
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                   {/* */}
+                      {/* */}
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>

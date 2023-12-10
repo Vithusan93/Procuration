@@ -1,5 +1,5 @@
 "use client";
-import { Bill, Customer, Staff, Product, Service } from "@prisma/client";
+import { Bill, Customer, Product, Service, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -10,15 +10,14 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import CustomerForm from "../customers/CustomerForm";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { IoMdAdd } from "react-icons/io";
-import InvoiceProductForm from "./InvoiceProductForm";
+import CustomerForm from "../customers/CustomerForm";
 import GetCustomerButton from "./GetCustomerButton";
-import GetStaffButton from "./GetStaffsButton";
-import GetProductButton from "./GetProductButton";
 import GetServiceButton from "./GetServiceButton";
+import GetStaffButton from "./GetStaffsButton";
+import InvoiceProducts from "./InvoiceProducts";
 
 const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const { register, handleSubmit, control, setValue } = useForm<Bill>();
@@ -28,7 +27,7 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
   const [service, setService] = useState<Service>();
-  const [product, setProduct] = useState<Product>();
+
   const onSubmit = handleSubmit(async (data) => {
     if (data.createdAt) {
       data.createdAt = new Date(data.createdAt);
@@ -98,7 +97,7 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                   <div className="bg-gray-300 rounded-md p-2">
                     {customer ? (
                       <span className="text-md text-gray-900 font-semibold ">
-                      {customer.firstname} {customer.lastname}
+                        {customer.firstname} {customer.lastname}
                       </span>
                     ) : (
                       <span>Customer not selected</span>
@@ -129,49 +128,6 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                     onStaffSelect={(staff) => {
                       setStaff(staff);
                       setValue("staffId", staff.id);
-                    }}
-                  />
-                </Box>
-
-                <Box className="">
-                  <div className="text-gray-800 text-sm font-semibold">
-                    Product
-                  </div>
-                  <div className="bg-gray-300 rounded-md p-2">
-                    {product ? (
-                      <span className="text-md text-gray-900 font-semibold ">
-                        {product.name} {product.price.toString()}
-                      </span>
-                    ) : (
-                      <span>Product not selected</span>
-                    )}
-                  </div>
-                  <GetProductButton
-                    onProductSelect={(product) => {
-                      setProduct(product);
-                      setValue("productId", product.id);
-                    }}
-                  />
-                </Box>
-
-                <Box className="">
-                  <div className="text-gray-800 text-sm font-semibold">
-                    Service
-                  </div>
-                  <div className="bg-gray-300 rounded-md p-2">
-                    {service ? (
-                      <span className="text-md text-gray-900 font-semibold ">
-                        {service.name} {service.price.toString()}{" "}
-                        {service.duration.toString()}
-                      </span>
-                    ) : (
-                      <span>Service not selected</span>
-                    )}
-                  </div>
-                  <GetServiceButton
-                    onServiceSelect={(service) => {
-                      setService(service);
-                      setValue("serviceId", service.id);
                     }}
                   />
                 </Box>
@@ -257,6 +213,9 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
             </div>
           </div>
         </div>
+
+        <InvoiceProducts invoiceId={bill?.id} />
+
         <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
             Create Draft
@@ -276,11 +235,6 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
               setAddingNewCustomer(false);
             }}
           />
-        </Dialog.Content>
-      </Dialog.Root>
-      <Dialog.Root open={addingProduct} onOpenChange={setAddingProduct}>
-        <Dialog.Content className="p-0">
-          <InvoiceProductForm />
         </Dialog.Content>
       </Dialog.Root>
     </div>

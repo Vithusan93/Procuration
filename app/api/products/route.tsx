@@ -3,6 +3,17 @@ import prisma from "@/prisma/client";
 import { createProductSchema } from "@/app/validationSchemas";
 
 export async function GET(request: NextRequest) {
+  const search = request.nextUrl.searchParams.get("search");
+
+  if (search) {
+    const products = await prisma.product.findMany({
+      where: {
+        OR: [{ name: { contains: search, mode: "insensitive" } }],
+      },
+    });
+    return NextResponse.json(products);
+  }
+
   const products = await prisma.product.findMany({
     orderBy: { name: "asc" },
   });
@@ -12,7 +23,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   //TODO: Add authentication
   const body = await request.json();
- const validation = createProductSchema.safeParse(body);
+  const validation = createProductSchema.safeParse(body);
 
   const product = await prisma.product.create({
     data: {
