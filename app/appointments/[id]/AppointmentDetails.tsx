@@ -1,10 +1,9 @@
-import Customers from "@/app/customers/page";
-import { Appointment } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { Appointment,Customer,Staff } from "@prisma/client";
 import React from "react";
 import {
   Button,
   Table,
-  Theme,
   Box,
   Heading,
   Container,
@@ -12,6 +11,9 @@ import {
 import Link from "next/link";
 
 const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
+
+  const [customer, setCustomer] = useState<Customer>();
+  const [staff, setStaff] = useState<Staff>();
   return (
     <div>
       <Container size="4">
@@ -51,7 +53,7 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
                   <Table.Row>
                     <Table.Cell className="hidden md:table-cell">
                       <Link href={`/appointments/${appointment.id}`}>
-                   {/*     <p>{appointment.customerId}</p>*/}
+                      {/*<p>{appointment.customerId}</p>*/}
                       </Link>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
@@ -70,7 +72,6 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>
-                
               </Table.Root>
             </Box>
           </div>
