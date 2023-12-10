@@ -28,14 +28,14 @@ export const createProductSchema = z.object({
     .string()
     .min(1, { message: "This field has to be filled." })
     .max(255),
-  price: z.number(),
-  stock: z.number(),
+  price: z.string(),
+  stock: z.string(),
 });
 
 export const createServiceSchema = z.object({
   name: z.string().min(1).max(255),
-  duration: z.number(),
-  price: z.number(),
+  duration: z.string(),
+  price: z.string(),
 });
 
 export const createStaffSchema = z.object({

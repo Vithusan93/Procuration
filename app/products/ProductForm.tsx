@@ -110,7 +110,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                   {...register("price")}
                 />
               </TextField.Root>
-              <ErrorMessage>{errors.price?.message}</ErrorMessage>
+              
             </Box>
             <Box className="w-1/2" p="2">
               <span className="font-semibold">Stock</span>
@@ -124,7 +124,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                   {...register("stock")}
                 />
               </TextField.Root>
-              <ErrorMessage>{errors.stock?.message}</ErrorMessage>
+             
             </Box>
           </Flex>
         </div>
