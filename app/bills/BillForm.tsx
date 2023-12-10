@@ -1,5 +1,5 @@
 "use client";
-import { Bill, Customer, Staff } from "@prisma/client";
+import { Bill, Customer, Staff, Product, Service } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -15,18 +15,20 @@ import CustomerForm from "../customers/CustomerForm";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import InvoiceProductForm from "./InvoiceProductForm";
-
 import GetCustomerButton from "./GetCustomerButton";
 import GetStaffButton from "./GetStaffsButton";
+import GetProductButton from "./GetProductButton";
+import GetServiceButton from "./GetServiceButton";
 
 const BillFormPage = ({ bill }: { bill?: Bill }) => {
   const { register, handleSubmit, control, setValue } = useForm<Bill>();
   const [addingNewCustomer, setAddingNewCustomer] = useState<boolean>(false);
-
   const [addingProduct, setAddingProduct] = useState<boolean>(false);
   const router = useRouter();
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
+  const [service, setService] = useState<Service>();
+  const [product, setProduct] = useState<Product>();
   const onSubmit = handleSubmit(async (data) => {
     if (data.createdAt) {
       data.createdAt = new Date(data.createdAt);
@@ -130,6 +132,50 @@ const BillFormPage = ({ bill }: { bill?: Bill }) => {
                     }}
                   />
                 </Box>
+
+                <Box className="">
+                  <div className="text-gray-800 text-sm font-semibold">
+                    Product
+                  </div>
+                  <div className="bg-gray-300 rounded-md p-2">
+                    {product ? (
+                      <span className="text-md text-gray-900 font-semibold ">
+                        {product.name} {product.price.toString()}
+                      </span>
+                    ) : (
+                      <span>Product not selected</span>
+                    )}
+                  </div>
+                  <GetProductButton
+                    onProductSelect={(product) => {
+                      setProduct(product);
+                      setValue("productId", product.id);
+                    }}
+                  />
+                </Box>
+
+                <Box className="">
+                  <div className="text-gray-800 text-sm font-semibold">
+                    Service
+                  </div>
+                  <div className="bg-gray-300 rounded-md p-2">
+                    {service ? (
+                      <span className="text-md text-gray-900 font-semibold ">
+                        {service.name} {service.price.toString()}{" "}
+                        {service.duration.toString()}
+                      </span>
+                    ) : (
+                      <span>Service not selected</span>
+                    )}
+                  </div>
+                  <GetServiceButton
+                    onServiceSelect={(service) => {
+                      setService(service);
+                      setValue("serviceId", service.id);
+                    }}
+                  />
+                </Box>
+
                 <Flex gap="3" align={"center"}>
                   <Button
                     variant="outline"

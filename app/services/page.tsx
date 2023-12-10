@@ -36,7 +36,7 @@ const Services = async () => {
                     <Link href={`/services/${service.id}`}>{service.name}</Link>
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {service.duration}
+                    {service.duration.toString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {service.price.toString()}

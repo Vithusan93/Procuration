@@ -20,7 +20,8 @@ export async function PATCH(
     const updatedProduct = await prisma.product.update({
       where: { id: product.id },
       data: {
-        name: body.name,  description: body.description, price: parseInt(body.price), stock: parseInt(body.stock),
+        name: body.name,  description: body.description,       price: parseInt(body.price),
+        stock: parseInt(body.stock),
       },
     });
   

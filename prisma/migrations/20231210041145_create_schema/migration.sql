@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('PENDIND', 'ACCEPTING', 'FINISHING');
+
 -- CreateTable
 CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
@@ -49,7 +52,7 @@ CREATE TABLE "Appointment" (
     "serviceId" INTEGER NOT NULL,
     "time" TIMESTAMP(3) NOT NULL,
     "duration" INTEGER NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'PENDIND',
 
     CONSTRAINT "Appointment_pkey" PRIMARY KEY ("id")
 );
@@ -113,6 +116,8 @@ CREATE TABLE "Bill" (
     "id" SERIAL NOT NULL,
     "staffId" INTEGER NOT NULL,
     "customerId" INTEGER NOT NULL,
+    "productId" INTEGER NOT NULL,
+    "serviceId" INTEGER NOT NULL,
     "billnumber" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -179,6 +184,12 @@ ALTER TABLE "Bill" ADD CONSTRAINT "Bill_staffId_fkey" FOREIGN KEY ("staffId") RE
 
 -- AddForeignKey
 ALTER TABLE "Bill" ADD CONSTRAINT "Bill_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Bill" ADD CONSTRAINT "Bill_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Bill" ADD CONSTRAINT "Bill_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "Service"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "InvoiceService" ADD CONSTRAINT "InvoiceService_billId_fkey" FOREIGN KEY ("billId") REFERENCES "Bill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

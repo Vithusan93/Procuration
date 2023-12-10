@@ -119,7 +119,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
                   radius="large"
                   variant="classic"
                   size="3"
-                  defaultValue={product?.stock}
+                  defaultValue={product?.stock.toString()}
                   placeholder="Product Stock"
                   {...register("stock")}
                 />
