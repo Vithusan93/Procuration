@@ -5,7 +5,18 @@ import prisma from "@/prisma/client";
 
 import { Flex, Text, Table, Box, Heading, Container } from "@radix-ui/themes";
 
-const BillDetails = ({ bill }: { bill: Bill }) => {
+const BillDetails = async ({ bill }: { bill: Bill }) => {
+
+  const billDetails = await prisma.appointment.findUnique({
+    where: {
+      id: bill.id,
+    },
+    include: {
+      customer: true, 
+      service: true,
+      staff: true,
+    },
+  });
   return (
     <div>
       <Container size="4">
@@ -40,8 +51,8 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
                 </Table.Header>
                 <Table.Body>
                   <Table.Cell className="hidden md:table-cell">
-                    {" "}
-                    {/*bill.customer.firstname*/}
+                    {billDetails?.customer.firstname}
+                  
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {bill.billnumber}
@@ -51,7 +62,7 @@ const BillDetails = ({ bill }: { bill: Bill }) => {
                     {bill.createdAt.toString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
-                    {/*bill.staff.firstname*/}
+                    {billDetails?.staff.firstname}
                   </Table.Cell>
                 </Table.Body>
               </Table.Root>
