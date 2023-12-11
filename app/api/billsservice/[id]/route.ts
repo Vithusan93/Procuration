@@ -29,4 +29,27 @@ export async function PATCH(
   
     return NextResponse.json(updateinvoiceService);
   }
-    
+  
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const invoiceService = await prisma.invoiceService.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!invoiceService)
+    return NextResponse.json(
+      { error: "Invalid Invoice-Service" },
+      { status: 404 }
+    );
+
+  await prisma.invoiceService.delete({
+    where: { id: invoiceService.id },
+  });
+
+  return NextResponse.json({});
+}
