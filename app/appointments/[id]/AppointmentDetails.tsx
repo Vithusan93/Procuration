@@ -1,8 +1,23 @@
 import { Appointment } from "@prisma/client";
+import prisma from "@/prisma/client";
 import { Box, Container, Heading, Table } from "@radix-ui/themes";
 import Link from "next/link";
 
-const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
+const AppointmentDetails = async ({ appointment }: { appointment: Appointment }) => {
+  
+    
+    const appointmentDetails = await prisma.appointment.findUnique({
+      where: {
+        id: appointment.id,
+      },
+      include: {
+        customer: true, 
+        service: true,
+        staff: true,
+      },
+    });
+
+  
   return (
     <div>
       <Container size="4">
@@ -41,22 +56,22 @@ const AppointmentDetails = ({ appointment }: { appointment: Appointment }) => {
                   <Table.Row>
                     <Table.Cell className="hidden md:table-cell">
                       <Link href={`/appointments/${appointment.id}`}>
-                        {/*<p>{appointment.customerId}</p>*/}
+                        <p>{appointmentDetails?.customer.firstname}</p>
                       </Link>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
                       {" "}
-                      {/*   <p>{appointment.serviceId}</p>*/}
+                      <p>{appointmentDetails?.service.name}</p>
                     </Table.Cell>
 
                     <Table.Cell className="hidden md:table-cell">
-                      {/*   <p>{appointment.status}</p>*/}
+                        <p>{appointment.status}</p>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                      {/*   <p>{appointment.time.toLocaleDateString()}</p>*/}
+                        <p>{appointment.time.toLocaleDateString()}</p>
                     </Table.Cell>
                     <Table.Cell className="hidden md:table-cell">
-                      {/* */}
+                    <p>{appointmentDetails?.staff.firstname}</p>
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>
