@@ -19,6 +19,7 @@ import GetServiceButton from "./GetServiceButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 import InvoiceSummary from "./_components/InvoiceSummary";
+import InvoiceServices from "./InvoiceServices";
 
 interface BillDetail extends Bill {
   customer: Customer;
@@ -191,6 +192,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
 
         <InvoiceSummary invoiceId={bill?.id} />
         <InvoiceProducts invoiceId={bill?.id} />
+        <InvoiceServices invoiceId={bill?.id} />
 
         <div className="flex bg-purple-100 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
