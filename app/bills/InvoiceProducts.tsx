@@ -34,7 +34,9 @@ const InvoiceProducts = ({ invoiceId }: { invoiceId?: number }) => {
       const data: InvoiceProductDetail[] = await response.json();
       setInvoiceProducts(data);
     };
-    getInvoiceProducts();
+    if (invoiceId) {
+      getInvoiceProducts();
+    }
   }, [invoiceId]);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -86,7 +88,7 @@ const InvoiceProducts = ({ invoiceId }: { invoiceId?: number }) => {
           <Table.Body>
             {invoiceProducts.length > 0 ? (
               invoiceProducts.map((invoiceProduct) => (
-                <Table.Row>
+                <Table.Row key={invoiceProduct.id}>
                   <Table.Cell>
                     <span className="font-semibold">
                       {invoiceProduct.product.name}

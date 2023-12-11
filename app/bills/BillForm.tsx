@@ -206,7 +206,6 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
         <Dialog.Content className="p-0">
           <CustomerForm
             onSuccess={(customer) => {
-              console.log(customer);
               setValue("customerId", customer.id);
               setAddingNewCustomer(false);
             }}

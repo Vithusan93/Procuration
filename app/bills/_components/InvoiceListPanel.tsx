@@ -1,11 +1,27 @@
 "use client";
+import { Bill, Staff, Customer } from "@prisma/client";
 import { Box, Button, Flex, Tabs, Text, TextField } from "@radix-ui/themes";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
+interface BillDetail extends Bill {
+  staff: Staff;
+  customer: Customer;
+}
+
 const InvoiceListPanel = () => {
+  const [invoices, setInvoices] = useState<BillDetail[]>([]);
+
+  useEffect(() => {
+    const getInvoices = async () => {
+      const reponse = await fetch("/api/bills", { cache: "no-store" });
+      const fetchedBills = await reponse.json();
+      setInvoices(fetchedBills);
+    };
+    getInvoices();
+  }, []);
   return (
     <Box className="bg-gray-50 h-screen w-1/4">
       <Tabs.Root defaultValue="account">
@@ -35,6 +51,18 @@ const InvoiceListPanel = () => {
           </Tabs.Content>
         </Box>
       </Tabs.Root>
+      <Box>
+        {invoices.map((invoice) => (
+          <Link href={`/bills/${invoice.id}/edit`}>
+            <div className="flex flex-col py-2 px-1 hover:bg-purple-100">
+              <div>
+                {invoice.customer.firstname} {invoice.customer.lastname}
+              </div>
+              <div>{invoice.createdAt}</div>
+            </div>
+          </Link>
+        ))}
+      </Box>
     </Box>
   );
 };
