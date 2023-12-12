@@ -1,7 +1,8 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
-import { Grid, Box, Theme } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
+import { Form } from "@radix-ui/react-form";
 import Link from "next/link";
 import EditCustomerButton from "./EditCustomerButton";
 import CustomerDetails from "./CustomerDetails";
@@ -18,16 +19,14 @@ const CustomerDetailPage = async ({ params }: Props) => {
   if (!customer) notFound();
 
   return (
-    <div>
-      <Theme>
-        <Grid columns="3" gap="3" width="auto">
-          <Box height="9">
-            <CustomerDetails customer={customer} />
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
+          <CustomerDetails customer={customer} />
 
-            <EditCustomerButton customerId={customer.id} />
-          </Box>
-        </Grid>
-      </Theme>
+          <EditCustomerButton customerId={customer.id} />
+        </Box>
+      </div>
     </div>
   );
 };

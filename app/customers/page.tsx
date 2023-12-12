@@ -9,7 +9,7 @@ const Customers = async () => {
 
   return (
     <>
-      <Container size="4">
+      <Container size="4" className="w-full p-20">
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">Customer Liste</Heading>

@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
-import { Grid, Box, Theme } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import Link from "next/link";
 import EditAppointmentButton from "./EditAppointmentButton";
 import AppointmentDetails from "./AppointmentDetails";
@@ -21,16 +21,14 @@ const AppointmentDetailPage = async ({ params }: Props) => {
   appointment.customer.firstname;
 
   return (
-    <div>
-      <Theme>
-        <Grid columns="3" gap="3" width="auto">
-          <Box height="9">
-            <AppointmentDetails appointment={appointment} />
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
+          <AppointmentDetails appointment={appointment} />
 
-            <EditAppointmentButton appointmentId={appointment.id} />
-          </Box>
-        </Grid>
-      </Theme>
+          <EditAppointmentButton appointmentId={appointment.id} />
+        </Box>
+      </div>
     </div>
   );
 };

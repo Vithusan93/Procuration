@@ -53,12 +53,12 @@ const InvoiceListPanel = () => {
       </Tabs.Root>
       <Box>
         {invoices.map((invoice) => (
-          <Link href={`/bills/${invoice.id}/edit`}>
+          <Link key={invoice.id} href={`/bills/${invoice.id}/edit`}>
             <div className="flex flex-col py-2 px-1 hover:bg-purple-100">
               <div>
                 {invoice.customer.firstname} {invoice.customer.lastname}
               </div>
-              <div>{invoice.createdAt}</div>
+              <div>{invoice.createdAt.toLocaleString()}</div>
             </div>
           </Link>
         ))}

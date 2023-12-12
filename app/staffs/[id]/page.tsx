@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
-import { Button, Theme } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import Link from "next/link";
 import EditStaffButton from "./EditStaffButton";
 import StaffDetails from "./StaffDetails";
@@ -18,15 +18,14 @@ const StaffDetailPage = async ({ params }: Props) => {
   if (!staff) notFound();
 
   return (
-    <div>
-      <Theme>
-        <div>
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
           <StaffDetails staff={staff} />
-        </div>
-        <div>
+
           <EditStaffButton staffId={staff.id} />
-        </div>
-      </Theme>
+        </Box>
+      </div>
     </div>
   );
 };

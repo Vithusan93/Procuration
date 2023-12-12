@@ -63,7 +63,7 @@ const CustomerForm = ({
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
-      <Form className="w-full " onSubmit={onSubmit}>
+      <Form className="w-full p-20" onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
           {error && (
             <Callout.Root color="red" className="mb-5">

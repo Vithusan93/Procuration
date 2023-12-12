@@ -18,16 +18,14 @@ const ServiceDetailPage = async ({ params }: Props) => {
   if (!service) notFound();
 
   return (
-    <div>
-      <Theme>
-        <Grid columns="3" gap="3" width="auto">
-          <Box height="9">
-            <ServiceDetails service={service} />
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
+          <ServiceDetails service={service} />
 
-            <EditServiceButton serviceId={service.id} />
-          </Box>
-        </Grid>
-      </Theme>
+          <EditServiceButton serviceId={service.id} />
+        </Box>
+      </div>
     </div>
   );
 };

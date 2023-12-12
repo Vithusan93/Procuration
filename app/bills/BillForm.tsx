@@ -15,11 +15,11 @@ import { useForm } from "react-hook-form";
 import { IoMdAdd } from "react-icons/io";
 import CustomerForm from "../customers/CustomerForm";
 import GetCustomerButton from "./GetCustomerButton";
-import GetServiceButton from "../../components/services/GetServiceButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 import InvoiceSummary from "./_components/InvoiceSummary";
 import InvoiceServices from "./InvoiceServices";
+import Spinner from "@/components/Spinner";
 
 interface BillDetail extends Bill {
   customer: Customer;
@@ -57,6 +57,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
       console.log(error);
     }
   });
+  const [isSubmitting, setSubmitting] = useState(false);
 
   /*  useEffect(() => {
     const generatePDF = () => {
@@ -198,8 +199,9 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
           <Button color="gray" size="3" variant="outline">
             Create Draft
           </Button>
-          <Button size="3" variant="solid">
+          <Button size="3" variant="solid" disabled={isSubmitting}>
             {bill ? "Update Invoice" : "Create Invoice"}
+            {isSubmitting && <Spinner />}
           </Button>
         </div>
       </Form>

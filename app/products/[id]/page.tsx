@@ -18,16 +18,14 @@ const ProductDetailPage = async ({ params }: Props) => {
   if (!product) notFound();
 
   return (
-    <div>
-      <Theme>
-        <Grid columns="3" gap="3" width="auto">
-          <Box height="9">
-            <ProductDetails product={product} />
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
+          <ProductDetails product={product} />
 
-            <EditProductButton productId={product.id} />
-          </Box>
-        </Grid>
-      </Theme>
+          <EditProductButton productId={product.id} />
+        </Box>
+      </div>
     </div>
   );
 };

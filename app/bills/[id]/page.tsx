@@ -19,16 +19,14 @@ const BillDetailPage = async ({ params }: Props) => {
   if (!bill) notFound();
 
   return (
-    <div>
-      <Theme>
-        <Grid columns="3" gap="3" width="auto">
-          <Box height="9">
-            <BillDetails bill={bill} />
+    <div className="flex items-center max-w-7xl mx-auto w-full">
+      <div className="w-full p-20">
+        <Box height="9">
+          <BillDetails bill={bill} />
 
-            <EditBillButton billId={bill.id} />
-          </Box>
-        </Grid>
-      </Theme>
+          <EditBillButton billId={bill.id} />
+        </Box>
+      </div>
     </div>
   );
 };

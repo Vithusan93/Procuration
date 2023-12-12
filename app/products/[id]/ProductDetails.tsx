@@ -5,7 +5,7 @@ import { Flex, Text, Table, Box, Heading, Container } from "@radix-ui/themes";
 const ProductDetails = ({ product }: { product: Product }) => {
   return (
     <div>
-      <Container size="4">
+      <Container size="4" className="w-full p-20">
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">
