@@ -1,5 +1,5 @@
 "use client";
-import GetServiceButton from "./GetServiceButton";
+import GetServiceButton from "../../components/services/GetServiceButton";
 import { InvoiceService, Service } from "@prisma/client";
 import { Box, Button, Flex, Table, Text, TextField } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
@@ -79,7 +79,7 @@ const InvoiceServices = ({ invoiceId }: { invoiceId?: number }) => {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeaderCell>Service</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Quantity</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Duration</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Total Price</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell></Table.ColumnHeaderCell>

@@ -1,12 +1,15 @@
-import { Button, Dialog, Flex, Table, TextField, Box } from "@radix-ui/themes";
+"use client";
+import { Service } from "@prisma/client";
+import { Box, Button, Dialog, Flex, Table, TextField } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { Appointment, Service } from "@prisma/client";
 
 const GetServiceButton = ({
   onServiceSelect,
+  buttonLabel,
 }: {
   onServiceSelect: (service: Service) => void;
+  buttonLabel?: string;
 }) => {
   const [open, setOpen] = useState(false);
   const [services, setServices] = useState<Service[]>([]);
@@ -30,8 +33,9 @@ const GetServiceButton = ({
         variant="outline"
         color="gray"
         onClick={() => setOpen(true)}
+        className="cursor-pointer"
       >
-        Select Service
+        {buttonLabel ? buttonLabel : "Select Service"}
       </Button>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Content style={{ maxWidth: 450 }}>
@@ -66,11 +70,10 @@ const GetServiceButton = ({
                         onServiceSelect(service);
                         setOpen(false);
                       }}
+                      className="cursor-pointer hover:bg-gray-300"
                     >
-                      <Table.Cell>
-                        {service.name} {service.price.toString()}{" "}
-                        {service.duration.toString()}
-                      </Table.Cell>
+                      <Table.Cell>{service.name}</Table.Cell>
+                      <Table.Cell>{service.price.toString()} Euros</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { IoMdAdd } from "react-icons/io";
 import CustomerForm from "../customers/CustomerForm";
 import GetCustomerButton from "./GetCustomerButton";
-import GetServiceButton from "./GetServiceButton";
+import GetServiceButton from "../../components/services/GetServiceButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 import InvoiceSummary from "./_components/InvoiceSummary";
