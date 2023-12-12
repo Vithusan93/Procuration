@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 import { createAppointmentSchema } from "@/app/validationSchemas";
 
+export async function GET(request: NextRequest) {
+  const appointmens = await prisma.appointment.findMany({
+    include: { staff: true, customer: true },
+  });
+  return NextResponse.json(appointmens);
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = createAppointmentSchema.safeParse(body);

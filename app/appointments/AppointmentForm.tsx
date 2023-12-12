@@ -1,5 +1,5 @@
 "use client";
-import { Appointment, Customer, Staff } from "@prisma/client";
+import { Appointment, Customer, Staff, Service } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import { Box, Button, Heading, Text, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -9,11 +9,21 @@ import ServiceSelect from "./ServiceSelect";
 import GetStaffButton from "./GetStaffsButton";
 import GetCustomerButton from "./GetCustomerButton";
 
-const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
+interface AppointmentDetail extends Appointment {
+  customer: Customer;
+  staff: Staff;
+}
+
+const AppointmentForm = ({
+  appointment,
+}: {
+  appointment?: AppointmentDetail;
+}) => {
   const router = useRouter();
   const { register, handleSubmit, control, setValue } = useForm<Appointment>();
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
+  const [service, setService] = useState<Service>();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
@@ -40,6 +50,13 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
       console.log(error);
     }
   });
+
+  useEffect(() => {
+    if (appointment) {
+      setCustomer(appointment.customer);
+      setStaff(appointment.staff);
+    }
+  }, [appointment]);
 
   return (
     <div className="flex items-center max-w-7xl mx-auto w-full">
@@ -89,7 +106,7 @@ const AppointmentForm = ({ appointment }: { appointment?: Appointment }) => {
                   }}
                 />
               </Box>
-              <label>
+              <label className="w-full">
                 <Text as="div" size="2" mb="1" weight="bold">
                   Service
                 </Text>
