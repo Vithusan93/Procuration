@@ -6,13 +6,12 @@ import prisma from "@/prisma/client";
 import { Flex, Text, Table, Box, Heading, Container } from "@radix-ui/themes";
 
 const BillDetails = async ({ bill }: { bill: Bill }) => {
-
   const billDetails = await prisma.appointment.findUnique({
     where: {
       id: bill.id,
     },
     include: {
-      customer: true, 
+      customer: true,
       service: true,
       staff: true,
     },
@@ -52,14 +51,13 @@ const BillDetails = async ({ bill }: { bill: Bill }) => {
                 <Table.Body>
                   <Table.Cell className="hidden md:table-cell">
                     {billDetails?.customer.firstname}
-                  
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {bill.billnumber}
                   </Table.Cell>
 
                   <Table.Cell className="hidden md:table-cell">
-                    {bill.createdAt.toString()}
+                    {bill.createdAt.toLocaleString()}
                   </Table.Cell>
                   <Table.Cell className="hidden md:table-cell">
                     {billDetails?.staff.firstname}
