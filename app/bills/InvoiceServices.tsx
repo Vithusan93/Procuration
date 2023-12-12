@@ -91,7 +91,7 @@ const InvoiceServices = ({ invoiceId }: { invoiceId?: number }) => {
                 <Table.Row key={invoiceService.id}>
                   <Table.Cell>
                     <span className="font-semibold">
-                      {invoiceService.service.name}
+                      {invoiceService.service?.name}
                     </span>
                   </Table.Cell>
                   <Table.Cell>{invoiceService.duration}</Table.Cell>
