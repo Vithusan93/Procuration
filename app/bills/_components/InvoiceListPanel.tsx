@@ -58,7 +58,7 @@ const InvoiceListPanel = () => {
               <div>
                 {invoice.customer.firstname} {invoice.customer.lastname}
               </div>
-              <div>{invoice.createdAt.toLocaleString()}</div>
+              <div>{invoice.createdAt ? new Date(invoice.createdAt).toLocaleDateString() : 'Date non disponible'}</div>
             </div>
           </Link>
         ))}

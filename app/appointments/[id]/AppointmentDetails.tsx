@@ -10,7 +10,7 @@ const AppointmentDetails = async ({
 }) => {
   const appointmentDetails = await prisma.appointment.findUnique({
     where: {
-      id: appointment.id,
+            id: appointment.id,
     },
     include: {
       customer: true,
