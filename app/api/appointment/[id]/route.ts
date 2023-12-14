@@ -25,7 +25,7 @@ export async function PATCH(
       duration: parseInt(body.duration),
       
     },
-    include: { customer: true },
+    include: { customer: true, staff: true, service:true   },
   });
 
   return NextResponse.json(updatedAppointment);

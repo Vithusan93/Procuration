@@ -12,6 +12,7 @@ import GetCustomerButton from "./GetCustomerButton";
 interface AppointmentDetail extends Appointment {
   customer: Customer;
   staff: Staff;
+  service: Service;
 }
 
 const AppointmentForm = ({
@@ -55,6 +56,7 @@ const AppointmentForm = ({
     if (appointment) {
       setCustomer(appointment.customer);
       setStaff(appointment.staff);
+      setService(appointment.service);
     }
   }, [appointment]);
 
@@ -80,6 +82,7 @@ const AppointmentForm = ({
                     <span>Customer not selected</span>
                   )}
                 </div>
+                
                 <GetCustomerButton
                   onCustomerSelect={(customer) => {
                     setCustomer(customer);
@@ -103,6 +106,7 @@ const AppointmentForm = ({
                   onStaffSelect={(staff) => {
                     setStaff(staff);
                     setValue("staffId", staff.id);
+                    
                   }}
                 />
               </Box>

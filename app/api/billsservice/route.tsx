@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       price: parseInt(body.price),
       duration: parseInt(body.duration),
     },
+    include: { service: true },
   });
 
   return NextResponse.json(invoiceservice, { status: 201 });

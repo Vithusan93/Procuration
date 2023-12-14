@@ -3,6 +3,17 @@ import prisma from "@/prisma/client";
 import { createServiceSchema } from "@/app/validationSchemas";
 
 export async function GET(request: NextRequest) {
+  const search = request.nextUrl.searchParams.get("search");
+
+  if (search) {
+    const services = await prisma.service.findMany({
+      where: {
+        OR: [{ name: { contains: search, mode: "insensitive" } }],
+      },
+    });
+    return NextResponse.json(services);
+  }
+
   const services = await prisma.service.findMany({
     orderBy: { name: "asc" },
   });

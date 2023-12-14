@@ -4,7 +4,7 @@ import { createAppointmentSchema } from "@/app/validationSchemas";
 
 export async function GET(request: NextRequest) {
   const appointmens = await prisma.appointment.findMany({
-    include: { staff: true, customer: true },
+    include: { staff: true, customer: true, service: true },
   });
   return NextResponse.json(appointmens);
 }
@@ -25,6 +25,8 @@ export async function POST(request: NextRequest) {
     },
     include: {
       customer: true,
+      staff: true,
+      service: true,
     },
   });
 
