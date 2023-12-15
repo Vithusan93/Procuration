@@ -55,3 +55,10 @@ export const createAppointmentSchema = z.object({
   serviceId: z.string().min(1).max(255),
   time: z.date(),
 });
+
+export const bill = z.object({
+  customerId: z.string().min(1).max(255),
+  staffId: z.string().min(1).max(255),
+  serviceId: z.string().min(1).max(255),
+  time: z.date(),
+});
