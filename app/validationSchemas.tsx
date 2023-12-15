@@ -50,14 +50,19 @@ export const createStaffSchema = z.object({
 });
 
 export const createAppointmentSchema = z.object({
-  customerId: z.string().min(1).max(255),
-  staffId: z.string().min(1).max(255),
-  serviceId: z.string().min(1).max(255),
-  time: z.date(),
+  // customerId: z.number(),
+  // staffId: z.number(),
+  // serviceId: z.number(),
+  // time: z.date(),
+  //duration: z.string(),
 });
 
-export const bill = z.object({
-  customerId: z.string().min(1).max(255),
+export const createBillSchema = z.object({
+  customerId: createCustomerSchema.pick({
+    firstname: true,
+    lastname: true,
+    email: true,
+  }),
   staffId: z.string().min(1).max(255),
   serviceId: z.string().min(1).max(255),
   time: z.date(),

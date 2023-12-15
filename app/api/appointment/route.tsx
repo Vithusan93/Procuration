@@ -12,6 +12,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = createAppointmentSchema.safeParse(body);
+  if (!validation.success)
+    return NextResponse.json(validation.error.format(), { status: 400 });
   console.log(body);
 
   const appointment = await prisma.appointment.create({

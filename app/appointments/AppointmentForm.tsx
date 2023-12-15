@@ -1,13 +1,27 @@
 "use client";
 import { Appointment, Customer, Staff, Service } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
-import { Box, Button, Heading, Text, TextField } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Heading,
+  Text,
+  TextField,
+  Callout,
+} from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ServiceSelect from "./ServiceSelect";
 import GetStaffButton from "./GetStaffsButton";
 import GetCustomerButton from "./GetCustomerButton";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createAppointmentSchema } from "../validationSchemas";
+import { z } from "zod";
+import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
+
+type AppointmentForm = z.infer<typeof createAppointmentSchema>;
 
 interface AppointmentDetail extends Appointment {
   customer: Customer;
@@ -17,14 +31,24 @@ interface AppointmentDetail extends Appointment {
 
 const AppointmentForm = ({
   appointment,
+  onSuccess,
 }: {
   appointment?: AppointmentDetail;
+  onSuccess: (appointment: Appointment) => void;
 }) => {
   const router = useRouter();
-  const { register, handleSubmit, control, setValue } = useForm<Appointment>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<Appointment>({ resolver: zodResolver(createAppointmentSchema) });
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
   const [service, setService] = useState<Service>();
+  const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
@@ -35,12 +59,15 @@ const AppointmentForm = ({
 
     try {
       if (appointment) {
-        await fetch("/api/appointment/" + appointment.id, {
+        const response = await fetch("/api/appointment/" + appointment.id, {
           method: "PATCH",
           body: JSON.stringify(data),
         });
         router.push("/appointments");
+        const updatedAppointment: Appointment = await response.json();
+        onSuccess(updatedAppointment);
       } else {
+        setSubmitting(true);
         await fetch("/api/appointment", {
           method: "POST",
           body: JSON.stringify(data),
@@ -48,7 +75,8 @@ const AppointmentForm = ({
         router.push("/appointments");
       }
     } catch (error) {
-      console.log(error);
+      setError("An unexpcted error  occurred.");
+      setSubmitting(false);
     }
   });
 
@@ -64,6 +92,11 @@ const AppointmentForm = ({
     <div className="flex items-center max-w-7xl mx-auto w-full">
       <Form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full">
+          {error && (
+            <Callout.Root color="red" className="mb-5">
+              <Callout.Text> {error}</Callout.Text>
+            </Callout.Root>
+          )}
           <div className="bg-gray-200 w-full p-4">
             <Heading className="text-gray-900">Book Appointment</Heading>
           </div>
@@ -82,13 +115,14 @@ const AppointmentForm = ({
                     <span>Customer not selected</span>
                   )}
                 </div>
-                
+
                 <GetCustomerButton
                   onCustomerSelect={(customer) => {
                     setCustomer(customer);
                     setValue("customerId", customer.id);
                   }}
                 />
+                <ErrorMessage>{errors?.customerId?.message}</ErrorMessage>
               </Box>
 
               <Box className="shadow p-2 bg-gray-100 w-full">
@@ -106,9 +140,9 @@ const AppointmentForm = ({
                   onStaffSelect={(staff) => {
                     setStaff(staff);
                     setValue("staffId", staff.id);
-                    
                   }}
                 />
+                <ErrorMessage>{errors?.staffId?.message}</ErrorMessage>
               </Box>
               <label className="w-full">
                 <Text as="div" size="2" mb="1" weight="bold">
@@ -120,6 +154,7 @@ const AppointmentForm = ({
                   placeholder="Service"
                   control={control}
                 />
+                <ErrorMessage>{errors?.serviceId?.message}</ErrorMessage>
               </label>
             </div>
 
@@ -134,6 +169,7 @@ const AppointmentForm = ({
                     {...register("time")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors?.time?.message}</ErrorMessage>
               </label>
               <label htmlFor="time">
                 <span className="font-semibold">
@@ -148,6 +184,7 @@ const AppointmentForm = ({
                     {...register("duration")}
                   />
                 </TextField.Root>
+                <ErrorMessage>{errors?.duration?.message}</ErrorMessage>
               </label>
             </div>
           </div>
