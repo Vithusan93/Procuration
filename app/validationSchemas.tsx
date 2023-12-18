@@ -49,13 +49,13 @@ export const createStaffSchema = z.object({
   phone: z.string().min(10).max(14).optional(),
 });
 
-export const createAppointmentSchema = z.object({
-  // customerId: z.number(),
-  // staffId: z.number(),
-  // serviceId: z.number(),
-  // time: z.date(),
-  //duration: z.string(),
-});
+//export const createAppointmentSchema = z.object({
+// customerId: z.number(),
+// staffId: z.number(),
+// serviceId: z.number(),
+// time: z.date(),
+//duration: z.string(),
+//});
 
 export const createBillSchema = z.object({
   customerId: createCustomerSchema.pick({

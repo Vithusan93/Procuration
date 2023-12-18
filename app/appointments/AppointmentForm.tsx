@@ -16,12 +16,12 @@ import ServiceSelect from "./ServiceSelect";
 import GetStaffButton from "./GetStaffsButton";
 import GetCustomerButton from "./GetCustomerButton";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createAppointmentSchema } from "../validationSchemas";
+//import { createAppointmentSchema } from "../validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
 
-type AppointmentForm = z.infer<typeof createAppointmentSchema>;
+//type AppointmentForm = z.infer<typeof createAppointmentSchema>;
 
 interface AppointmentDetail extends Appointment {
   customer: Customer;
@@ -43,7 +43,9 @@ const AppointmentForm = ({
     control,
     setValue,
     formState: { errors },
-  } = useForm<Appointment>({ resolver: zodResolver(createAppointmentSchema) });
+  } = useForm<Appointment>({
+    /* resolver: zodResolver(createAppointmentSchema)*/
+  });
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
   const [service, setService] = useState<Service>();
@@ -122,7 +124,7 @@ const AppointmentForm = ({
                     setValue("customerId", customer.id);
                   }}
                 />
-                <ErrorMessage>{errors?.customerId?.message}</ErrorMessage>
+                {/*<ErrorMessage>{errors?.customerId?.message}</ErrorMessage> */}
               </Box>
 
               <Box className="shadow p-2 bg-gray-100 w-full">
@@ -142,7 +144,7 @@ const AppointmentForm = ({
                     setValue("staffId", staff.id);
                   }}
                 />
-                <ErrorMessage>{errors?.staffId?.message}</ErrorMessage>
+                {/*<ErrorMessage>{errors?.customerId?.message}</ErrorMessage> */}
               </Box>
               <label className="w-full">
                 <Text as="div" size="2" mb="1" weight="bold">
@@ -154,7 +156,7 @@ const AppointmentForm = ({
                   placeholder="Service"
                   control={control}
                 />
-                <ErrorMessage>{errors?.serviceId?.message}</ErrorMessage>
+                {/*<ErrorMessage>{errors?.customerId?.message}</ErrorMessage> */}
               </label>
             </div>
 
@@ -169,7 +171,6 @@ const AppointmentForm = ({
                     {...register("time")}
                   />
                 </TextField.Root>
-                <ErrorMessage>{errors?.time?.message}</ErrorMessage>
               </label>
               <label htmlFor="time">
                 <span className="font-semibold">
@@ -184,7 +185,7 @@ const AppointmentForm = ({
                     {...register("duration")}
                   />
                 </TextField.Root>
-                <ErrorMessage>{errors?.duration?.message}</ErrorMessage>
+                {/*<ErrorMessage>{errors?.customerId?.message}</ErrorMessage> */}
               </label>
             </div>
           </div>
