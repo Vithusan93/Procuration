@@ -41,16 +41,21 @@ model Customer {
   phone        Int
   Appointments Appointment[]
   Bills        Bill[]
+  Payment      Payment[]
+  Ticket       Ticket[]
 }
 
 model Staff {
-  id           Int           @id @default(autoincrement())
-  firstname    String
-  lastname     String
-  email        String
-  phone        Int
-  Appointments Appointment[]
-  Bills        Bill[]
+  id               Int               @id @default(autoincrement())
+  firstname        String
+  lastname         String
+  email            String
+  phone            Int
+  Appointments     Appointment[]
+  Bills            Bill[]
+  CashTransactions CashTransaction[]
+  Payments         Payment[]
+  Tickets          Ticket[]
 }
 
 model Appointment {
@@ -118,4 +123,61 @@ enum Status {
   PENDIND
   ACCEPTING
   FINISHING
+}
+
+// ... (Votre modèle Prisma existant)
+
+model CashTransaction {
+  id Int @id @default(autoincrement())
+
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  amount    Decimal
+  type      TransactionType
+  createdAt DateTime        @default(now())
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  amount        Decimal
+  paymentMethod PaymentMethod
+  createdAt     DateTime      @default(now())
+}
+
+model Ticket {
+  id Int @id @default(autoincrement())
+
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  status    TicketStatus
+  createdAt DateTime     @default(now())
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  ONLINE
+}
+
+enum TicketStatus {
+  OPEN
+  SUSPENDED
+  CLOSED
 }
