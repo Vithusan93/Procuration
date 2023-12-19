@@ -86,9 +86,12 @@ model Bill {
 
   billnumber Int
 
-  createdAt       DateTime         @default(now())
-  InvoiceServices InvoiceService[]
-  InvoiceProducts InvoiceProduct[]
+  createdAt        DateTime          @default(now())
+  InvoiceServices  InvoiceService[]
+  InvoiceProducts  InvoiceProduct[]
+  CashTransactions CashTransaction[]
+  Payment          Payment[]
+  Ticket           Ticket[]
 }
 
 model InvoiceService {
@@ -102,7 +105,10 @@ model InvoiceService {
 
   price Decimal
 
-  duration Int
+  duration         Int
+  CashTransactions CashTransaction[]
+  Payments         Payment[]
+  Tickets          Ticket[]
 }
 
 model InvoiceProduct {
@@ -116,7 +122,11 @@ model InvoiceProduct {
 
   price Decimal
 
-  quantity Int
+  quantity         Int
+  CashTransactions CashTransaction[]
+
+  Payment Payment[]
+  Ticket  Ticket[]
 }
 
 enum Status {
@@ -133,9 +143,15 @@ model CashTransaction {
   staffId Int
   staff   Staff @relation(fields: [staffId], references: [id])
 
-  amount    Decimal
-  type      TransactionType
-  createdAt DateTime        @default(now())
+  amount           Decimal
+  type             TransactionType
+  createdAt        DateTime        @default(now())
+  billId           Int
+  bill             Bill            @relation(fields: [billId], references: [id])
+  invoiceproductId Int
+  invoiceproduct   InvoiceProduct  @relation(fields: [invoiceproductId], references: [id])
+  invoiceserviceId Int
+  invoiceservice   InvoiceService  @relation(fields: [invoiceserviceId], references: [id])
 }
 
 model Payment {
@@ -147,9 +163,15 @@ model Payment {
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
 
-  amount        Decimal
-  paymentMethod PaymentMethod
-  createdAt     DateTime      @default(now())
+  amount           Decimal
+  paymentMethod    PaymentMethod
+  createdAt        DateTime       @default(now())
+  billId           Int
+  bill             Bill           @relation(fields: [billId], references: [id])
+  invoiceproductId Int
+  invoiceproduct   InvoiceProduct @relation(fields: [invoiceproductId], references: [id])
+  invoiceserviceId Int
+  invoiceservice   InvoiceService @relation(fields: [invoiceserviceId], references: [id])
 }
 
 model Ticket {
@@ -161,8 +183,14 @@ model Ticket {
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
 
-  status    TicketStatus
-  createdAt DateTime     @default(now())
+  status           TicketStatus
+  createdAt        DateTime       @default(now())
+  billId           Int
+  bill             Bill           @relation(fields: [billId], references: [id])
+  invoiceproductId Int
+  invoiceproduct   InvoiceProduct @relation(fields: [invoiceproductId], references: [id])
+  invoiceserviceId Int
+  invoiceservice   InvoiceService @relation(fields: [invoiceserviceId], references: [id])
 }
 
 enum TransactionType {
