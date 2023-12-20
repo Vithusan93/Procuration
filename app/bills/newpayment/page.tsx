@@ -1,8 +1,13 @@
+"use client";
 import React from "react";
-import CashManagement from "../CashManagement";
+import PaymentForm from "../PaymentForm";
 
-const NewInvoicePage = () => {
-  return <CashManagement />;
+const Paymentpage = () => {
+  return (
+    <div>
+      <PaymentForm />
+    </div>
+  );
 };
 
-export default NewInvoicePage;
+export default Paymentpage;
