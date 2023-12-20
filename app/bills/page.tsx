@@ -61,6 +61,12 @@ const Bill = async () => {
           <Button size="3" variant="classic">
             <Link href={"/bills/new"}>Add Invoice</Link>
           </Button>
+          <div>
+            {" "}
+            <Button size="3" variant="classic">
+              <Link href={"/bills/newpayment"}>CashMnagement</Link>
+            </Button>
+          </div>
         </div>
       </Container>
     </Theme>

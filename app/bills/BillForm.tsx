@@ -1,5 +1,14 @@
 "use client";
-import { Bill, Customer, Product, Service, Staff } from "@prisma/client";
+import {
+  Bill,
+  CashTransaction,
+  Customer,
+  Payment,
+  Product,
+  Service,
+  Staff,
+  TransactionType,
+} from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -20,7 +29,10 @@ import InvoiceProducts from "./InvoiceProducts";
 import InvoiceSummary from "./_components/InvoiceSummary";
 import InvoiceServices from "./InvoiceServices";
 import Spinner from "@/components/Spinner";
-
+import Link from "next/link";
+import CashTransactionForm from "./CashTransactionForm";
+import PaymentForm from "./PaymentForm";
+import { Decimal } from "@prisma/client/runtime/library";
 interface BillDetail extends Bill {
   customer: Customer;
   staff: Staff;
@@ -106,6 +118,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                     {...register("billnumber")}
                   />
                 </TextField.Root>
+
                 <Flex align={"center"} gap="2">
                   <div className="text-gray-800 text-sm font-semibold">
                     Customer
