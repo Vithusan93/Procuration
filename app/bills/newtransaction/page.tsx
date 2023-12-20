@@ -1,8 +1,8 @@
 import React from "react";
 import CashManagement from "../CashManagement";
 
-const NewInvoicePage = () => {
+const NewTransactionPage = () => {
   return <CashManagement />;
 };
 
-export default NewInvoicePage;
+export default NewTransactionPage;
