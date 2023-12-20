@@ -1,8 +1,8 @@
 import React from "react";
-import CashManagement from "../CashManagement";
+import CashTransactionForm from "../CashTransactionForm";
 
 const NewTransactionPage = () => {
-  return <CashManagement />;
+  return <CashTransactionForm />;
 };
 
 export default NewTransactionPage;
