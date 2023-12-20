@@ -6,13 +6,13 @@ import prisma from "@/prisma/client";
 import { Flex, Text, Table, Box, Heading, Container } from "@radix-ui/themes";
 
 const BillDetails = async ({ bill }: { bill: Bill }) => {
-  const billDetails = await prisma.appointment.findUnique({
+  const billDetails = await prisma.bill.findUnique({
     where: {
       id: bill.id,
     },
     include: {
       customer: true,
-      service: true,
+
       staff: true,
     },
   });

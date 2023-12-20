@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import PaymentForm from "../PaymentForm";
+import PaymentFormPage from "../PaymentForm";
 
 const Paymentpage = () => {
   return (
     <div>
-      <PaymentForm />
+      <PaymentFormPage />
     </div>
   );
 };
