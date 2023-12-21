@@ -31,12 +31,6 @@ const Bill = async () => {
               <Table.ColumnHeaderCell className="hidden md:table-cell">
                 Staff Name
               </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                Transaction
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                Payment Method
-              </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -56,16 +50,6 @@ const Bill = async () => {
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {bill.staff.firstname}
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  <Button size="3" variant="classic">
-                    <Link href={"/bills/newtransaction"}>Transaction</Link>
-                  </Button>
-                </Table.Cell>
-                <Table.Cell className="hidden md:table-cell">
-                  <Button size="3" variant="classic">
-                    <Link href={"/bills/newpayment"}>payment method</Link>
-                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}

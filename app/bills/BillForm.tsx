@@ -16,6 +16,7 @@ import {
   Dialog,
   Flex,
   Heading,
+  Select,
   TextField,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -30,8 +31,7 @@ import InvoiceSummary from "./_components/InvoiceSummary";
 import InvoiceServices from "./InvoiceServices";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
-import CashTransactionForm from "./CashTransactionForm";
-import PaymentForm from "./PaymentForm";
+
 import { Decimal } from "@prisma/client/runtime/library";
 interface BillDetail extends Bill {
   customer: Customer;
@@ -142,7 +142,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                   </div>
                 </Flex>
 
-                <Box className="">
+                <Flex align={"center"} gap="3">
                   <div className="text-gray-800 text-sm font-semibold">
                     Staff
                   </div>
@@ -161,8 +161,28 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                       setValue("staffId", staff.id);
                     }}
                   />
-                </Box>
-
+                </Flex>
+                <div>
+                  <Select.Root defaultValue="cash">
+                    <Select.Trigger />
+                    <Select.Content position="popper">
+                      <Select.Item value="cash">Cash</Select.Item>
+                      <Select.Item value="card">Card</Select.Item>
+                    </Select.Content>
+                  </Select.Root>
+                  <div className="flex p-2 justify-center">
+                    <span className="font-semibold">Cash : </span>
+                    <TextField.Root>
+                      <TextField.Input placeholder="Cash" />
+                    </TextField.Root>
+                  </div>
+                  <div className="flex p-2 justify-center">
+                    <span className="font-semibold">Card : </span>
+                    <TextField.Root>
+                      <TextField.Input placeholder="Card" />
+                    </TextField.Root>
+                  </div>
+                </div>
                 <Flex gap="3" align={"center"}>
                   <Button
                     variant="outline"
@@ -172,7 +192,6 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                   >
                     Add new customer
                   </Button>
-                  <div> </div>
                 </Flex>
               </Box>
 
@@ -189,18 +208,6 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                 </label>
               </Box>
             </Flex>
-
-            <div className="flex p-2 justify-end">
-              <Button
-                variant="outline"
-                color="gray"
-                onClick={() => setAddingProduct(true)}
-                type="button"
-              >
-                <IoMdAdd />
-                Add Product
-              </Button>
-            </div>
           </div>
         </div>
 

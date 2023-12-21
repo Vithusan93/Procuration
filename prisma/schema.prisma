@@ -41,7 +41,6 @@ model Customer {
   phone        Int
   Appointments Appointment[]
   Bills        Bill[]
-  Payment      Payment[]
   Ticket       Ticket[]
 }
 
@@ -54,7 +53,6 @@ model Staff {
   Appointments     Appointment[]
   Bills            Bill[]
   CashTransactions CashTransaction[]
-  Payments         Payment[]
   Tickets          Ticket[]
 }
 
@@ -107,8 +105,8 @@ model InvoiceService {
 
   duration         Int
   CashTransactions CashTransaction[]
-  Payments         Payment[]
-  Tickets          Ticket[]
+
+  Tickets Ticket[]
 }
 
 model InvoiceProduct {
@@ -125,8 +123,7 @@ model InvoiceProduct {
   quantity         Int
   CashTransactions CashTransaction[]
 
-  Payment Payment[]
-  Ticket  Ticket[]
+  Ticket Ticket[]
 }
 
 enum Status {
@@ -157,21 +154,11 @@ model CashTransaction {
 model Payment {
   id Int @id @default(autoincrement())
 
-  staffId Int
-  staff   Staff @relation(fields: [staffId], references: [id])
-
-  customerId Int
-  customer   Customer @relation(fields: [customerId], references: [id])
-
-  amount           Decimal
-  paymentMethod    PaymentMethod
-  createdAt        DateTime       @default(now())
-  billId           Int
-  bill             Bill           @relation(fields: [billId], references: [id])
-  invoiceproductId Int
-  invoiceproduct   InvoiceProduct @relation(fields: [invoiceproductId], references: [id])
-  invoiceserviceId Int
-  invoiceservice   InvoiceService @relation(fields: [invoiceserviceId], references: [id])
+  amount        Decimal
+  paymentMethod PaymentMethod
+  createdAt     DateTime      @default(now())
+  billId        Int
+  bill          Bill          @relation(fields: [billId], references: [id])
 }
 
 model Ticket {

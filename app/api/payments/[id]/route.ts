@@ -20,14 +20,12 @@ export async function PATCH(
   const updatePayment = await prisma.payment.update({
     where: { id: payment.id },
     data: {
-        staffId: parseInt(body.staffId),
-        customerId: parseInt(body.customerId),
+
         amount: parseFloat(body.amount),
         paymentMethod: body.paymentMethod,
         createdAt: new Date(body.createdAt),
         billId: parseInt(body.billId),
-        invoiceserviceId: parseInt(body.invoiceServiceId), // Modifiez le nom de la propriété ici
-        invoiceproductId: parseInt(body.invoiceProductId),
+
     },
   });
 
