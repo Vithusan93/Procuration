@@ -141,7 +141,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                   </div>
                 </Flex>
 
-                <Flex align={"center"} gap="3">
+                <Box>
                   <div className="text-gray-800 text-sm font-semibold">
                     Staff
                   </div>
@@ -160,7 +160,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                       setValue("staffId", staff.id);
                     }}
                   />
-                </Flex>
+                </Box>
                 <div>
                   <Select.Root defaultValue="cash">
                     <Select.Trigger />
@@ -169,7 +169,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                       <Select.Item value="card">Card</Select.Item>
                     </Select.Content>
                   </Select.Root>
-                  <div></div>
+
                   <div className="flex p-2 justify-center">
                     <span className="font-semibold">Cash : </span>
                     <TextField.Root>
