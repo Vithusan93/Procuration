@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Bill" ALTER COLUMN "TotalAmount" SET DEFAULT 0.0,
+ALTER COLUMN "TotalPaid" SET DEFAULT 0.0;

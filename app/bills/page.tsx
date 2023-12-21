@@ -37,7 +37,7 @@ const Bill = async () => {
             {bills.map((bill) => (
               <Table.Row key={bill.id}>
                 <Table.Cell className="hidden md:table-cell">
-                  <Link href={`/bills/${bill.id}`}>
+                  <Link href={`/bills/${bill.id}/edit`}>
                     {bill.customer.firstname}
                   </Link>
                 </Table.Cell>
@@ -46,7 +46,7 @@ const Bill = async () => {
                 </Table.Cell>
 
                 <Table.Cell className="hidden md:table-cell">
-                  {bill.createdAt.toLocaleDateString()}
+                  {bill.invoiceDate.toLocaleDateString()}
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {bill.staff.firstname}

@@ -83,10 +83,13 @@ model Bill {
   customer   Customer @relation(fields: [customerId], references: [id])
 
   billnumber  Int
-  TotalAmount Decimal
-  TotalPaid   Decimal
+  TotalAmount Decimal @default(0.0)
+  TotalPaid   Decimal @default(0.0)
 
-  createdAt        DateTime          @default(now())
+  invoiceDate DateTime @default(now()) @db.Date
+
+  createdAt DateTime @default(now())
+
   InvoiceServices  InvoiceService[]
   InvoiceProducts  InvoiceProduct[]
   CashTransactions CashTransaction[]
@@ -159,8 +162,9 @@ model Payment {
   amount        Decimal
   paymentMethod PaymentMethod
   createdAt     DateTime      @default(now())
-  billId        Int
-  bill          Bill          @relation(fields: [billId], references: [id])
+
+  billId Int
+  bill   Bill @relation(fields: [billId], references: [id])
 }
 
 model Ticket {

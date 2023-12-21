@@ -15,12 +15,10 @@ export async function POST(request: NextRequest) {
 
   const bill = await prisma.bill.create({
     data: {
-      createdAt: new Date(body.createdAt),
+      invoiceDate: new Date(body.invoiceDate),
       billnumber: parseInt(body.billnumber),
       customerId: parseInt(body.customerId),
       staffId: parseInt(body.staffId),
-      TotalAmount: parseInt(body.TotalAmount),
-      TotalPaid: parseInt(body.TotalAmount),
     },
   });
 

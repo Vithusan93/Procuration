@@ -13,11 +13,18 @@ const EditBillPage = async ({ params }: Props) => {
   });
 
   if (!bill) return;
+
+  const convertedBill = JSON.parse(JSON.stringify(bill));
+  console.log("edit", convertedBill);
+
   return (
     <div className="">
-      <BillFormPage bill={bill} />
+      <BillFormPage bill={convertedBill} />
     </div>
   );
 };
 
 export default EditBillPage;
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;

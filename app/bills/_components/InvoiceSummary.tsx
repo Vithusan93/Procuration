@@ -5,6 +5,9 @@ import ServicesCard from "./InvoiceServicesCard";
 import TotalsCard from "./InvoiceTotalsPanel";
 
 const InvoiceSummary = ({ invoiceId }: { invoiceId?: number }) => {
+  if (!invoiceId) {
+    return <></>;
+  }
   return (
     <Box p="2">
       <Box className="rounded-md border" p="2">

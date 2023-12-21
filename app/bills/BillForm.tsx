@@ -1,14 +1,6 @@
 "use client";
-import {
-  Bill,
-  CashTransaction,
-  Customer,
-  Payment,
-  Product,
-  Service,
-  Staff,
-  TransactionType,
-} from "@prisma/client";
+import Spinner from "@/components/Spinner";
+import { Bill, Customer, Service, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -22,33 +14,37 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IoMdAdd } from "react-icons/io";
 import CustomerForm from "../customers/CustomerForm";
 import GetCustomerButton from "./GetCustomerButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
-import InvoiceSummary from "./_components/InvoiceSummary";
 import InvoiceServices from "./InvoiceServices";
-import Spinner from "@/components/Spinner";
-import Link from "next/link";
+import InvoiceSummary from "./_components/InvoiceSummary";
 
-import { Decimal } from "@prisma/client/runtime/library";
 interface BillDetail extends Bill {
   customer: Customer;
   staff: Staff;
 }
 
 const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
-  const { register, handleSubmit, control, setValue } = useForm<Bill>();
+  const defaultValues = { ...bill };
+
+  if (defaultValues) {
+    defaultValues.invoiceDate = undefined;
+  }
+
+  const { register, handleSubmit, control, setValue } = useForm<Bill>({
+    defaultValues: defaultValues,
+  });
+
   const [addingNewCustomer, setAddingNewCustomer] = useState<boolean>(false);
   const router = useRouter();
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
-  const [service, setService] = useState<Service>();
 
   const onSubmit = handleSubmit(async (data) => {
-    if (data.createdAt) {
-      data.createdAt = new Date(data.createdAt);
+    if (data.invoiceDate) {
+      data.invoiceDate = new Date(data.invoiceDate);
     }
     try {
       if (bill) {
@@ -112,7 +108,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                     radius="large"
                     variant="classic"
                     size="3"
-                    defaultValue={bill?.billnumber}
+                    // defaultValue={bill?.billnumber}
                     placeholder="Bill Number"
                     {...register("billnumber")}
                   />
@@ -196,13 +192,14 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
               </Box>
 
               <Box className="w-1/2" p="2">
-                <label htmlFor="time">
+                <label htmlFor="invoiceDate">
                   <span className="font-semibold">Date Facture</span>
                   <TextField.Root>
                     <TextField.Input
                       type="date"
                       placeholder="Date"
-                      {...register("createdAt")}
+                      defaultValue={bill?.invoiceDate.toString().split("T")[0]}
+                      {...register("invoiceDate")}
                     />
                   </TextField.Root>
                 </label>
