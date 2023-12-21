@@ -33,6 +33,7 @@ import Spinner from "@/components/Spinner";
 import Link from "next/link";
 
 import { Decimal } from "@prisma/client/runtime/library";
+import InvoiceTotalsCard from "./_components/InvoiceTotalsPanel";
 interface BillDetail extends Bill {
   customer: Customer;
   staff: Staff;
@@ -165,11 +166,12 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                 <div>
                   <Select.Root defaultValue="cash">
                     <Select.Trigger />
-                    <Select.Content position="popper">
+                    <Select.Content position="popper" sideOffset={5}>
                       <Select.Item value="cash">Cash</Select.Item>
                       <Select.Item value="card">Card</Select.Item>
                     </Select.Content>
                   </Select.Root>
+                  <div></div>
                   <div className="flex p-2 justify-center">
                     <span className="font-semibold">Cash : </span>
                     <TextField.Root>

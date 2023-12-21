@@ -82,7 +82,9 @@ model Bill {
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
 
-  billnumber Int
+  billnumber  Int
+  TotalAmount Decimal
+  TotalPaid   Decimal
 
   createdAt        DateTime          @default(now())
   InvoiceServices  InvoiceService[]
