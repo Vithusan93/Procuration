@@ -57,13 +57,13 @@ export const createStaffSchema = z.object({
 //duration: z.string(),
 //});
 
-export const createBillSchema = z.object({
-  customerId: createCustomerSchema.pick({
-    firstname: true,
-    lastname: true,
-    email: true,
-  }),
-  staffId: z.string().min(1).max(255),
-  serviceId: z.string().min(1).max(255),
-  time: z.date(),
-});
+//export const createBillSchema = z.object({
+// customerId: createCustomerSchema.pick({
+// firstname: true,
+//  lastname: true,
+//  email: true,
+// }),
+//  staffId: z.string().min(1).max(255),
+//  serviceId: z.string().min(1).max(255),
+// time: z.date(),
+//});

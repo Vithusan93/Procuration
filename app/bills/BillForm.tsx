@@ -33,7 +33,6 @@ import Spinner from "@/components/Spinner";
 import Link from "next/link";
 
 import { Decimal } from "@prisma/client/runtime/library";
-import InvoiceTotalsCard from "./_components/InvoiceTotalsPanel";
 interface BillDetail extends Bill {
   customer: Customer;
   staff: Staff;
@@ -42,7 +41,6 @@ interface BillDetail extends Bill {
 const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
   const { register, handleSubmit, control, setValue } = useForm<Bill>();
   const [addingNewCustomer, setAddingNewCustomer] = useState<boolean>(false);
-  const [addingProduct, setAddingProduct] = useState<boolean>(false);
   const router = useRouter();
   const [customer, setCustomer] = useState<Customer>();
   const [staff, setStaff] = useState<Staff>();
