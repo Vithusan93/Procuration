@@ -1,4 +1,5 @@
 "use client";
+
 import Spinner from "@/components/Spinner";
 import { Bill, Customer, Service, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
@@ -20,6 +21,7 @@ import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 import InvoiceServices from "./InvoiceServices";
 import InvoiceSummary from "./_components/InvoiceSummary";
+import InvoiceTotals from "./InvoiceTotals";
 
 interface BillDetail extends Bill {
   customer: Customer;
@@ -69,12 +71,12 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
   /*  useEffect(() => {
     const generatePDF = () => {
       const pdf = new jsPDF();
-
+      
       // Ajouter le contenu de la facture au PDF
       pdf.text("Facture", 20, 20);
       pdf.text("Détails du client", 20, 30);
       // Ajouter d'autres détails de la facture
-
+      
       // Sauvegarder le fichier PDF
       pdf.save("facture.pdf");
     };
@@ -211,6 +213,7 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
         <InvoiceSummary invoiceId={bill?.id} />
         <InvoiceProducts invoiceId={bill?.id} />
         <InvoiceServices invoiceId={bill?.id} />
+        <InvoiceTotals invoiceId={bill?.id} />
 
         <div className="flex bg-purple-100 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
