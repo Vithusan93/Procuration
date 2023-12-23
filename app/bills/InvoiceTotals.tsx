@@ -43,6 +43,7 @@ const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
             <Table.Row>
               <Table.ColumnHeaderCell>Payment Method</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Total Amount</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Total Paid</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
@@ -51,23 +52,18 @@ const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
               <Table.Row key={bill.id}>
                 <Table.Cell>
                   <Flex justify={"start"} align={"center"}>
-                    <div>
-                      <Select.Root value="cash" onValueChange={() => {}}>
-                        <Select.Trigger />
-                        <Select.Content position="popper" sideOffset={5}>
-                          <Select.Item value="cash">Cash</Select.Item>
-                          <Select.Item value="card">Card</Select.Item>
-                        </Select.Content>
-                      </Select.Root>
-                    </div>
+                    <Select.Root value="cash" onValueChange={() => {}}>
+                      <Select.Trigger />
+                      <Select.Content position="popper" sideOffset={5}>
+                        <Select.Item value="cash">Cash</Select.Item>
+                        <Select.Item value="card">Card</Select.Item>
+                      </Select.Content>
+                    </Select.Root>
                   </Flex>
                 </Table.Cell>
 
-                {/* Placeholder for Total Amount calculation */}
                 <Table.Cell>{Number(bill.TotalAmount).toFixed(2)}</Table.Cell>
-
-                <Table.Cell>Action buttons here</Table.Cell>
-
+                <Table.Cell>{Number(bill.TotalPaid).toFixed(2)}</Table.Cell>
                 <Table.Cell>
                   <Button
                     type="button"
