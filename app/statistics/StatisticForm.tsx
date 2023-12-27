@@ -10,6 +10,10 @@ const StatisticForm: React.FC = () => {
   const pieChartInstanceRef = useRef<Chart<"pie"> | null>(null);
 
   useEffect(() => {
+    const options: ChartConfiguration<"bar">["options"] = {
+      // ... autres options spécifiques au graphique
+    };
+
     const data: ChartConfiguration<"bar"> = {
       type: "bar",
       data: {
@@ -19,20 +23,38 @@ const StatisticForm: React.FC = () => {
             label: "Ventes",
             backgroundColor: "rgba(75,192,192,0.2)",
             borderColor: "rgba(75,192,192,1)",
-            borderWidth: 1,
+            borderWidth: 0,
+
             hoverBackgroundColor: "rgba(75,192,192,0.4)",
             hoverBorderColor: "rgba(75,192,192,1)",
             data: [65, 59, 80, 81],
+            barPercentage: 0.5,
           },
         ],
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        onResize: (
+          chart: Chart,
+          newSize: { width: number; height: number }
+        ) => {
+          console.log("Graphique redimensionné à :", newSize);
+        },
+        resizeDelay: 200,
         scales: {
           x: {
-            beginAtZero: true,
+            stacked: true,
+            ticks: {
+              stepSize: 1, // Ajustez la taille de l'étape selon vos besoins
+            },
           },
           y: {
-            beginAtZero: true,
+            stacked: true,
+            ticks: {
+              stepSize: 10, // Ajustez la taille de l'étape selon vos besoins
+            },
           },
         },
       },
@@ -121,11 +143,20 @@ const StatisticForm: React.FC = () => {
   }, [chartRef, doughnutChartRef, pieChartRef]);
 
   return (
-    <div>
-      <canvas ref={chartRef}></canvas>
-      <canvas ref={doughnutChartRef}></canvas>
-      <canvas ref={pieChartRef}></canvas>
-      {/* Autres éléments de votre formulaire de statistiques */}
+    <div className="w-full">
+      <div className="flex w-full">
+        <div className="block">
+          <canvas ref={chartRef}></canvas>
+        </div>
+        <div>
+          <canvas ref={doughnutChartRef}></canvas>
+        </div>
+      </div>
+
+      <div>
+        {/* <canvas ref={pieChartRef}></canvas> */}
+        {/* Autres éléments de votre formulaire de statistiques */}
+      </div>
     </div>
   );
 };
