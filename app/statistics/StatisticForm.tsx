@@ -62,7 +62,7 @@ const StatisticForm: React.FC = () => {
     const pieData: ChartConfiguration<"pie"> = {
       type: "pie",
       data: {
-        labels: ["Vente en ligne", "Vente en magasin"],
+        labels: ["Service", "Produit "],
         datasets: [
           {
             data: [450, 200],
