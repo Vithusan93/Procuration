@@ -35,7 +35,7 @@ export async function PATCH(
       billnumber: parseInt(body.billnumber),
       customerId: parseInt(body.customerId),
       staffId: parseInt(body.staffId),
-      TotalAmount: totalAmount,
+      TotalAmount: totalAmount.toString(),
       TotalPaid: parseInt(body.TotalAmount),
     },
   });

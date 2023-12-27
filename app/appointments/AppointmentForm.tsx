@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import ServiceSelect from "./ServiceSelect";
 import GetStaffButton from "./GetStaffsButton";
 import GetCustomerButton from "./GetCustomerButton";
+import MyCalendar from "./Calendar";
 import { zodResolver } from "@hookform/resolvers/zod";
 //import { createAppointmentSchema } from "../validationSchemas";
 import { z } from "zod";
@@ -187,6 +188,10 @@ const AppointmentForm = ({
                 </TextField.Root>
                 {/*<ErrorMessage>{errors?.customerId?.message}</ErrorMessage> */}
               </label>
+
+              <div>
+                <MyCalendar />
+              </div>
             </div>
           </div>
           <div className="flex bg-gray-200 p-3 justify-center items-center gap-2">

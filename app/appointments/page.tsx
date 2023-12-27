@@ -1,7 +1,16 @@
 import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 import prisma from "@/prisma/client";
-import { Button, Table, Theme, Heading, Container } from "@radix-ui/themes";
+import {
+  Button,
+  Table,
+  Theme,
+  Heading,
+  Container,
+  Flex,
+} from "@radix-ui/themes";
 import Link from "next/link";
+import MyCalendar from "./Calendar";
+import moment from "moment";
 
 const Appointment = async () => {
   const appointments = await prisma.appointment.findMany({
@@ -65,6 +74,7 @@ const Appointment = async () => {
             </Table.Body>
           </Table.Root>
         </Container>
+
         <Container className="mb-5 ">
           <div className="flex bg-gray-200 p-6 justify-center items-center gap-2">
             <Button size="3" variant="classic">

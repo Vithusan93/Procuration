@@ -53,7 +53,7 @@ const Staffs = async () => {
             </Table.Body>
           </Table.Root>
         </Container>
-            <StaffAction/>
+        <StaffAction />
       </Theme>
     </>
   );

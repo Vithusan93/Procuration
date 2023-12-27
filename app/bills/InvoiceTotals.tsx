@@ -1,17 +1,25 @@
-import { PrismaClient, Bill } from "@prisma/client";
-import { Box, Button, Flex, Table, Select } from "@radix-ui/themes";
+// app/bills/invoiceTotals.tsx
+
 import { useEffect, useState } from "react";
+import { Box, Button, Flex, Table, Select } from "@radix-ui/themes";
+import { Bill } from "@prisma/client";
 
-const prisma = new PrismaClient();
+interface InvoiceTotalsProps {
+  invoiceId?: number;
+}
 
-const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
+const InvoiceTotals: React.FC<InvoiceTotalsProps> = ({ invoiceId }) => {
   const [bills, setBills] = useState<Bill[]>([]);
 
   useEffect(() => {
     const fetchBills = async () => {
-      const response = await fetch("/api/bills");
-      const data: Bill[] = await response.json();
-      setBills(data);
+      try {
+        const response = await fetch(`/api/bills?invoiceId=${invoiceId}`);
+        const data: Bill[] = await response.json();
+        setBills(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des factures:", error);
+      }
     };
 
     if (invoiceId) {
@@ -51,7 +59,7 @@ const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
             {bills.map((bill) => (
               <Table.Row key={bill.id}>
                 <Table.Cell>
-                  <Flex justify={"start"} align={"center"}>
+                  <Flex>
                     <Select.Root value="cash" onValueChange={() => {}}>
                       <Select.Trigger />
                       <Select.Content position="popper" sideOffset={5}>
