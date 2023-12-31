@@ -24,7 +24,7 @@ const InvoiceServices = ({ invoiceId }: { invoiceId?: number }) => {
     if (invoiceId) {
       setValue("billId", invoiceId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invoiceId]);
 
   useEffect(() => {
@@ -74,7 +74,8 @@ const InvoiceServices = ({ invoiceId }: { invoiceId?: number }) => {
   }
 
   return (
-    <div>
+    <div className="bg-purple-100 p-2 rounded-md">
+      <div className="text-lg font-semibold">Services</div>
       <Box>
         <Table.Root>
           <Table.Header>

@@ -1,7 +1,7 @@
-import { Button, Dialog, Flex, Table, TextField, Box } from "@radix-ui/themes";
+import { Staff } from "@prisma/client";
+import { Box, Button, Dialog, Flex, Table, TextField } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { Appointment, Staff } from "@prisma/client";
 
 const GetStaffButton = ({
   onStaffSelect,

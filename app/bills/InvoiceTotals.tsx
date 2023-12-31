@@ -55,7 +55,8 @@ const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
   }
 
   return (
-    <div>
+    <div className="bg-purple-100 p-2 rounded-md">
+      <div className="text-lg font-semibold">Payments</div>
       <Box>
         <Table.Root>
           <Table.Header>
@@ -68,6 +69,61 @@ const InvoiceTotals = ({ invoiceId }: { invoiceId?: number }) => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+            <Table.Row>
+              <Table.Cell width={"50%"}>
+                <Flex justify={"start"} align={"center"}>
+                  <div className="">
+                    {service
+                      ? service.name
+                      : "Click the button to select service"}
+                  </div>
+                  <div>
+                    <GetServiceButton
+                      onServiceSelect={(service) => {
+                        setValue("price", service.price);
+                        setValue("serviceId", service.id);
+                        setService(service);
+                      }}
+                      buttonLabel={
+                        service ? "Change Service" : "Select Service"
+                      }
+                    />
+                  </div>
+                </Flex>
+              </Table.Cell>
+              <Table.Cell>
+                <TextField.Input
+                  {...register("amount")}
+                  type="number"
+                  defaultValue={"1"}
+                ></TextField.Input>
+              </Table.Cell>
+              <Table.Cell>
+                <TextField.Input
+                  {...register("price")}
+                  type="number"
+                  min="0.00"
+                  step="0.01"
+                  defaultValue={"0.00"}
+                ></TextField.Input>
+              </Table.Cell>
+              <Table.Cell>
+                <Text>
+                  {(duration * parseFloat(price?.toString())).toFixed(2)}
+                </Text>
+              </Table.Cell>
+              <Table.Cell>
+                <Button
+                  type="button"
+                  variant="outline"
+                  color="gray"
+                  onClick={onSubmit}
+                  className="w-full"
+                >
+                  Add
+                </Button>
+              </Table.Cell>
+            </Table.Row>
             {
               //invoiceBills.length > 0 ? (
               invoiceBills.map((invoiceBills) => (

@@ -1,7 +1,7 @@
-import { Button, Dialog, Flex, Table, TextField, Box } from "@radix-ui/themes";
+import { Customer } from "@prisma/client";
+import { Box, Button, Dialog, Flex, Table, TextField } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { Appointment, Customer } from "@prisma/client";
 
 const GetCustomerButton = ({
   onCustomerSelect,

@@ -10,11 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//datasource db {
-//  provider = "sqlite"
-//  url      = "file:./dev.db"
-//}
-
 model Product {
   id              Int              @id @default(autoincrement())
   name            String
@@ -41,19 +36,16 @@ model Customer {
   phone        Int
   Appointments Appointment[]
   Bills        Bill[]
-  Ticket       Ticket[]
 }
 
 model Staff {
-  id               Int               @id @default(autoincrement())
-  firstname        String
-  lastname         String
-  email            String
-  phone            Int
-  Appointments     Appointment[]
-  Bills            Bill[]
-  CashTransactions CashTransaction[]
-  Tickets          Ticket[]
+  id           Int           @id @default(autoincrement())
+  firstname    String
+  lastname     String
+  email        String
+  phone        Int
+  Appointments Appointment[]
+  Bills        Bill[]
 }
 
 model Appointment {
@@ -90,11 +82,9 @@ model Bill {
 
   createdAt DateTime @default(now())
 
-  InvoiceServices  InvoiceService[]
-  InvoiceProducts  InvoiceProduct[]
-  CashTransactions CashTransaction[]
-  Payment          Payment[]
-  Ticket           Ticket[]
+  InvoiceServices InvoiceService[]
+  InvoiceProducts InvoiceProduct[]
+  Payment         Payment[]
 }
 
 model InvoiceService {
@@ -108,10 +98,7 @@ model InvoiceService {
 
   price Decimal
 
-  duration         Int
-  CashTransactions CashTransaction[]
-
-  Tickets Ticket[]
+  duration Int
 }
 
 model InvoiceProduct {
@@ -125,10 +112,7 @@ model InvoiceProduct {
 
   price Decimal
 
-  quantity         Int
-  CashTransactions CashTransaction[]
-
-  Ticket Ticket[]
+  quantity Int
 }
 
 enum Status {
@@ -137,24 +121,7 @@ enum Status {
   FINISHING
 }
 
-// ... (Votre modèle Prisma existant)
 
-model CashTransaction {
-  id Int @id @default(autoincrement())
-
-  staffId Int
-  staff   Staff @relation(fields: [staffId], references: [id])
-
-  amount           Decimal
-  type             TransactionType
-  createdAt        DateTime        @default(now())
-  billId           Int
-  bill             Bill            @relation(fields: [billId], references: [id])
-  invoiceproductId Int
-  invoiceproduct   InvoiceProduct  @relation(fields: [invoiceproductId], references: [id])
-  invoiceserviceId Int
-  invoiceservice   InvoiceService  @relation(fields: [invoiceserviceId], references: [id])
-}
 
 model Payment {
   id Int @id @default(autoincrement())
@@ -167,34 +134,9 @@ model Payment {
   bill   Bill @relation(fields: [billId], references: [id])
 }
 
-model Ticket {
-  id Int @id @default(autoincrement())
-
-  staffId Int
-  staff   Staff @relation(fields: [staffId], references: [id])
-
-  customerId Int
-  customer   Customer @relation(fields: [customerId], references: [id])
-
-  status           TicketStatus
-  createdAt        DateTime       @default(now())
-  billId           Int
-  bill             Bill           @relation(fields: [billId], references: [id])
-  invoiceproductId Int
-  invoiceproduct   InvoiceProduct @relation(fields: [invoiceproductId], references: [id])
-  invoiceserviceId Int
-  invoiceservice   InvoiceService @relation(fields: [invoiceserviceId], references: [id])
-}
-
-enum TransactionType {
-  INCOME
-  EXPENSE
-}
-
 enum PaymentMethod {
   CASH
   CARD
-  ONLINE
 }
 
 enum TicketStatus {

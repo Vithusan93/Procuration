@@ -24,7 +24,7 @@ export async function POST(
     data: {
       billId: parseInt(params.id),
       productId: parseInt(body.productId),
-      price: parseInt(body.price),
+      price: parseInt(body.price), // Decimal todo
       quantity: parseInt(body.quantity),
     },
   });

@@ -6,7 +6,6 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   const body = await request.json();
-  console.log(body);
 
   const payment = await prisma.payment.findUnique({
     where: {
@@ -20,14 +19,34 @@ export async function PATCH(
   const updatePayment = await prisma.payment.update({
     where: { id: payment.id },
     data: {
-
-        amount: parseFloat(body.amount),
-        paymentMethod: body.paymentMethod,
-        createdAt: new Date(body.createdAt),
-        billId: parseInt(body.billId),
-
+      amount: parseFloat(body.amount),
+      paymentMethod: body.paymentMethod,
+      billId: parseInt(body.billId),
     },
   });
 
   return NextResponse.json(updatePayment);
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const payment = await prisma.payment.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  if (!payment)
+    return NextResponse.json(
+      { error: "Invalid Invoice-payment" },
+      { status: 404 }
+    );
+
+  await prisma.payment.delete({
+    where: { id: payment.id },
+  });
+
+  return NextResponse.json({});
 }

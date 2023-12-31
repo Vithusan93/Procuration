@@ -73,7 +73,8 @@ const InvoiceProducts = ({ invoiceId }: { invoiceId?: number }) => {
   }
 
   return (
-    <div>
+    <div className="bg-purple-100 p-2 rounded-md">
+      <div className="text-lg font-semibold">Products</div>
       <Box>
         <Table.Root>
           <Table.Header>

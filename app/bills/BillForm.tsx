@@ -22,6 +22,7 @@ import InvoiceProducts from "./InvoiceProducts";
 import InvoiceServices from "./InvoiceServices";
 import InvoiceSummary from "./_components/InvoiceSummary";
 import InvoiceTotals from "./InvoiceTotals";
+import InvoicePayments from "./_components/InvoicePayments";
 
 interface BillDetail extends Bill {
   customer: Customer;
@@ -67,23 +68,6 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
     }
   });
   const [isSubmitting, setSubmitting] = useState(false);
-
-  /*  useEffect(() => {
-    const generatePDF = () => {
-      const pdf = new jsPDF();
-      
-      // Ajouter le contenu de la facture au PDF
-      pdf.text("Facture", 20, 20);
-      pdf.text("Détails du client", 20, 30);
-      // Ajouter d'autres détails de la facture
-      
-      // Sauvegarder le fichier PDF
-      pdf.save("facture.pdf");
-    };
-
-    // Appeler la fonction de génération de PDF
-    generatePDF();
-  }, []); */
 
   useEffect(() => {
     if (bill) {
@@ -138,12 +122,11 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                     />
                   </div>
                 </Flex>
-
-                <Box>
+                <Flex align={"center"} gap="2">
                   <div className="text-gray-800 text-sm font-semibold">
                     Staff
                   </div>
-                  <div className="bg-gray-300 rounded-md p-2">
+                  <div className="grow bg-gray-300 rounded-md px-2 py-1">
                     {staff ? (
                       <span className="text-md text-gray-900 font-semibold ">
                         {staff.firstname} {staff.lastname}
@@ -152,44 +135,14 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
                       <span>Staff not selected</span>
                     )}
                   </div>
-                  <GetStaffButton
-                    onStaffSelect={(staff) => {
-                      setStaff(staff);
-                      setValue("staffId", staff.id);
-                    }}
-                  />
-                </Box>
-                <div>
-                  <Select.Root defaultValue="cash">
-                    <Select.Trigger />
-                    <Select.Content position="popper" sideOffset={5}>
-                      <Select.Item value="cash">Cash</Select.Item>
-                      <Select.Item value="card">Card</Select.Item>
-                    </Select.Content>
-                  </Select.Root>
-
-                  <div className="flex p-2 justify-center">
-                    <span className="font-semibold">Cash : </span>
-                    <TextField.Root>
-                      <TextField.Input placeholder="Cash" />
-                    </TextField.Root>
+                  <div>
+                    <GetStaffButton
+                      onStaffSelect={(staff) => {
+                        setStaff(staff);
+                        setValue("staffId", staff.id);
+                      }}
+                    />
                   </div>
-                  <div className="flex p-2 justify-center">
-                    <span className="font-semibold">Card : </span>
-                    <TextField.Root>
-                      <TextField.Input placeholder="Card" />
-                    </TextField.Root>
-                  </div>
-                </div>
-                <Flex gap="3" align={"center"}>
-                  <Button
-                    variant="outline"
-                    color="gray"
-                    type="button"
-                    onClick={() => setAddingNewCustomer(true)}
-                  >
-                    Add new customer
-                  </Button>
                 </Flex>
               </Box>
 
@@ -210,10 +163,12 @@ const BillFormPage = ({ bill }: { bill?: BillDetail }) => {
           </div>
         </div>
 
-        <InvoiceSummary invoiceId={bill?.id} />
-        <InvoiceProducts invoiceId={bill?.id} />
-        <InvoiceServices invoiceId={bill?.id} />
-        <InvoiceTotals invoiceId={bill?.id} />
+        <div className="flex flex-col gap-2 p-2">
+          <InvoiceSummary invoiceId={bill?.id} />
+          <InvoiceProducts invoiceId={bill?.id} />
+          <InvoiceServices invoiceId={bill?.id} />
+          <InvoicePayments invoiceId={bill?.id} />
+        </div>
 
         <div className="flex bg-purple-100 p-6 justify-center items-center gap-2">
           <Button color="gray" size="3" variant="outline">
