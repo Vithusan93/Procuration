@@ -35,7 +35,7 @@ const AppointmentForm = ({
   onSuccess,
 }: {
   appointment?: AppointmentDetail;
-  onSuccess: (appointment: Appointment) => void;
+  onSuccess?: (appointment: Appointment) => void;
 }) => {
   const router = useRouter();
   const {
@@ -68,7 +68,9 @@ const AppointmentForm = ({
         });
         router.push("/appointments");
         const updatedAppointment: Appointment = await response.json();
-        onSuccess(updatedAppointment);
+        if (onSuccess) {
+          onSuccess(updatedAppointment);
+        }
       } else {
         setSubmitting(true);
         await fetch("/api/appointment", {

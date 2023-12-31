@@ -21,7 +21,7 @@ const SelectControl = ({
       control={control}
       render={({ field }) => (
         <Select.Root onValueChange={field.onChange} defaultValue={field.value}>
-          <Select.Trigger placeholder={placeholder} />
+          <Select.Trigger />
           <Select.Content>
             <Select.Group>
               <Select.Label>{label}</Select.Label>

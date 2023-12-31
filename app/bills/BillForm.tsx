@@ -1,7 +1,7 @@
 "use client";
 
 import Spinner from "@/components/Spinner";
-import { Bill, Customer, Service, Staff } from "@prisma/client";
+import { Bill, Customer, Staff } from "@prisma/client";
 import { Form } from "@radix-ui/react-form";
 import {
   Box,
@@ -9,7 +9,6 @@ import {
   Dialog,
   Flex,
   Heading,
-  Select,
   TextField,
 } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -20,9 +19,8 @@ import GetCustomerButton from "./GetCustomerButton";
 import GetStaffButton from "./GetStaffsButton";
 import InvoiceProducts from "./InvoiceProducts";
 import InvoiceServices from "./InvoiceServices";
-import InvoiceSummary from "./_components/InvoiceSummary";
-import InvoiceTotals from "./InvoiceTotals";
 import InvoicePayments from "./_components/InvoicePayments";
+import InvoiceSummary from "./_components/InvoiceSummary";
 
 interface BillDetail extends Bill {
   customer: Customer;

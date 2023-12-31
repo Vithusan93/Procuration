@@ -1,8 +1,4 @@
-import React from "react";
-
-import { string } from "zod";
 import prisma from "@/prisma/client";
-import { parse } from "path";
 import AppointmentForm from "../../AppointmentForm";
 
 interface Props {
@@ -12,11 +8,11 @@ interface Props {
 const EditAppointmentPage = async ({ params }: Props) => {
   const appointment = await prisma.appointment.findUnique({
     where: { id: parseInt(params.id) },
-    include: { customer: true },
+    include: { customer: true, staff: true, service: true },
   });
 
   if (!appointment) return;
-  return <AppointmentForm appointment={appointment} />;
+  return <AppointmentForm appointment={appointment} onSuccess={() => {}} />;
 };
 
 export default EditAppointmentPage;
